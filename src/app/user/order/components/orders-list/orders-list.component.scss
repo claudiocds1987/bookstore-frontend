@@ -1,0 +1,52 @@
+.box-principal{
+    min-height: 100vh !important;
+}
+
+.card{
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+img{
+    width: 100%;
+    max-height: 200px;
+    //height:100vh;
+    object-fit: cover !important;
+}
+
+label{
+    margin-right: 15px;
+}
+
+#row-filter{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+// de esta forma se cambia de color el mat-button de Angular Material
+.mat-celeste {
+    background-color: #2b93e6 !important;
+    color: #fff !important;
+}
+
+.box-buttons{
+    margin-top: 10px !important;  
+}
+
+#btn-filtrar{
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .box-buttons{
+       margin: 0 auto !important;
+       display: flex;
+       justify-content: center;
+    }
+
+    .box{
+        margin: 0 auto !important;
+        display: flex;
+        justify-content: center;
+    }
+}

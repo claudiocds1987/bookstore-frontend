@@ -1,0 +1,60 @@
+ Spinner o Loader en Angular en peticiones HTTP | Interceptor | NgxSpinner
+ tutorial: https://www.youtube.com/watch?v=5QbcdXeinTM
+
+ El spinner/loader se va a activar cada vez que se haga una solicitud HTTP. Por ejemplo cuando se efectúa
+ el pago con la api Stripe,se genera un tiempo demora en procesar el pago, durante este tiempo de demora
+ se activa el spinner/loader de NgxSpinner, al finalizar el pago, el spinner desparece.
+
+ 1) Creacion del servicio "spinner.service.ts".
+
+ 2) Creacion del servicio "interceptor.service.ts". Este interceptor se encarga de interceptar la solicitud 
+ HTTPrequest y llama al servicio spinner.service.ts para mostrar el spinner/loader. Y cuando la solicitud 
+ finaliza (por ejemplo, cuando un determinado servicio termina de traer los datos de los clientes), 
+ este interceptor hace desaparecer el spinner. En resumen, en el archivo "interceptor.service.ts" esta la logica
+ donde Angular sabe que en cada solicitud HTTP hay un interceptor que muestra y quita el spinner/loader.
+
+a) importar en el app.module.ts: import { HTTP_INTERCEPTORS } from '@angular/common/http';
+b) y abajo de todo en providers:
+
+ providers: [
+    {
+      // interceptor para el token
+      // provide: HTTP_INTERCEPTORS,
+      // useClass: AuthInterceptorService,
+      //multi: true,
+    },
+    {
+      // interceptor para el spinner/loader de cada peticion HTTP
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true,
+    }
+  ],
+
+ 3) instalacion de NgxSpinner: 
+ a) npm install ngx-spinner --save
+ b) Importar el modulo "NgxSpinnerModule", "HttpClientModule" y "BrowserAnimationsModule" por ejemplo en el 
+ modulo donde quiero mostrar el spinner, por ejemplo en order.module.ts: 
+Nota: "en mi caso el "HttpClientModule" y "BrowserAnimationsModule" los tengo importados en app.module.ts, 
+por eso no los importo aca. 
+
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+@NgModule({
+  declarations: [
+  ],
+  imports: [
+    NgxSpinnerModule,
+  ]
+})
+export class OrderModule { }
+
+c) Ahora hay que poner el spinner/loader en alguna parte del html para que se visualize de esta forma:
+
+<div class="container">
+    <table> 
+    </table>
+<!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+    <ngx-spinner></ngx-spinner>
+|</div>
+

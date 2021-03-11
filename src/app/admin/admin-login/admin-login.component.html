@@ -1,0 +1,50 @@
+<div class="box">
+  <div class="card mt-4">
+    <div style="background: #ff0226" class="card-header">
+      <div class="text-center">
+        <mat-icon class="icon-account-circle">account_circle</mat-icon>
+        <h2 style="color: white">Admin</h2>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="login($event)">
+        <div class="form-group d-flex align-items-center">
+          <mat-icon class="mr-2">email</mat-icon>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            (ngModelChange)="adminExist = true"
+            placeholder="@email"
+          />
+        </div>
+        <div class="form-group d-flex align-items-center">
+          <mat-icon class="mr-2">vpn_key</mat-icon>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            (ngModelChange)="adminExist = true"
+            placeholder="password"
+          />
+        </div>
+        <button
+          type="submit"
+          style="background: #ff0226"
+          class="btn btn-primary table"
+        >
+          Login
+        </button>
+      </form>
+      <div *ngIf="!adminExist">
+        <p class="text-center text-danger">No existe el administrador</p>
+      </div>
+    </div>
+  </div>
+  <div class="col1">
+    <span>col1</span>
+  </div>
+  <div class="col2">
+    <span>col2</span>
+  </div>
+</div>

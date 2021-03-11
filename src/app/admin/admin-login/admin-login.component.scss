@@ -1,0 +1,40 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center; // (alinea al centro eje horizontal cualquier elemento que este en div .container)
+  align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
+}
+
+.card {
+  width: 270px !important;
+  position: absolute;
+  z-index: 10;
+}
+
+.icon-account-circle{
+    font-size: 50px !important;
+    color: white !important;
+    float: left !important;
+}
+
+.col1,
+.col2 {
+  width: 100%;
+  display: flex;
+  //align-items: center; // alineo en centro vertical todo lo que haya en aside y main
+  //justify-content: center;
+  min-height: 50vh;
+  span {
+    opacity: 0;
+  }
+}
+
+.col1 {
+  background: rgb(41, 50, 64);
+}
+
+.col2 {
+  background: #ff0226;
+}
+

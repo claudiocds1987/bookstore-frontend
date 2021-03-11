@@ -1,0 +1,128 @@
+header{
+  width: 100%;
+  height: 50px;
+  background: #293240;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+h1{
+  color: white;
+  margin-top: 8px;
+  float: left;
+  //letter-spacing: 0.1em;
+  letter-spacing: 1px;
+}
+
+.icon-bookstore{
+  float:left;
+  //color: rgb(10, 110, 189);
+  color: #c5fd43;
+  margin-top:8px;
+}
+
+.sub-menu{
+  position: absolute;
+  margin-left: 200px;
+  margin-top: 5px;
+
+}
+
+.icon-menu{
+  margin: 0 auto;
+}
+
+.icon-shopping-cart{
+  color: #fff !important;
+}
+
+.icon-perm-identity{
+  vertical-align: middle !important;
+}
+
+.contenedor{
+  width: 98%;
+  margin: auto;
+}
+
+#menu-bar{
+  display: none;
+}
+
+header label{
+  float: right;
+  font-size: 28px;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+// h1 {
+//   float: left;
+// }
+
+header .contenedor{
+  display: table; // para limpia los floats
+}
+
+.menu{
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgb(41, 50, 64, 0.8);
+  transition: all 0.5s;
+  transform: translateX(-100%);
+}
+
+.menu a{
+  display: block;
+  color: #fff;
+  height: 50px;
+  text-decoration: none;
+  padding: 15px;
+  //border-bottom: 1px solid rgb(255, 255, 255,0.5);
+  border-bottom: 1px solid rgb(41, 50, 64);
+}
+
+.menu a:hover{
+  border-bottom:rgb(255, 255, 255,0.3);
+  background: rgb(41, 50, 64);
+  color: #c5fd43;
+}
+
+#a-shopping-cart:hover{
+  cursor: pointer;
+}
+
+// ~ es alt+126
+#menu-bar:checked ~ .menu{
+  transform: translateX(0%);
+}
+
+@media (min-width:900px){
+  .menu{
+    position: static;
+    width: auto;
+    height: auto;
+    transform: translateX(0%);
+    float: right;
+    display: flex;
+  }
+
+  .menu a{
+    border: none;
+  }
+
+  header label{
+    display: none;
+  }
+}
+
+// @media (min-width:320px){
+
+// }

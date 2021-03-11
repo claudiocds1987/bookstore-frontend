@@ -1,0 +1,103 @@
+@import "./../../sass/variables";
+
+nav{
+  width: 100%;
+  position:fixed;
+  top: 0;
+  z-index: 10;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  a{
+    cursor: pointer;
+  }
+}
+
+.fondo {
+  background: #f2f2f2;
+  //background: $colorNav;
+  margin: 0px !important;
+}
+
+#box-sections{
+  position: fixed;
+  z-index: 10;
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+
+.box-principal {
+  min-height: 100vh;
+  .fila1 {
+    margin-top: 50px;
+    justify-content: center;
+    .card {
+      margin-top: 20px;
+      padding: 10px;
+      .box{
+        display: flex;
+        justify-content: space-between;
+        a{
+          cursor: pointer;
+        }
+      }
+      .box-container {
+        display: flex;
+        align-items: center;
+        .icon {
+          color: white;
+        }
+        .square-primary,
+        .square-green,
+        .square-green2,
+        .square-blue-light,
+        .square-brown {
+          width: 28px;
+          height: 28px;
+          border-radius: 2px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .square-primary {
+          background-color: #3f51b5;
+        }
+        .square-green {
+          background-color: #00bb2d;
+        }
+        .square-green2 {
+          background-color: #03bb85;
+        }
+        .square-blue-light {
+          background-color: #04c0d5;
+        }
+        .square-brown {
+          background-color: #db3729;
+        }
+      }
+    }
+  }
+  .fila2, .fila3, .fila4 {
+    margin-bottom: 25px;  
+    display: flex;
+    justify-content: space-between;
+    .card {
+      margin-top: 20px;
+      padding: 10px;
+      .box-flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .img-container {
+          
+          img {
+            //max-width: 100%;
+            //max-height: 100%;
+            //display: block; /* remove extra space below image */
+            width: 200px;
+            height: 200px;
+            object-fit: cover; // object-fit funciona cuando la img tiene width y height
+          }
+        }
+      }
+    }
+  }
+}

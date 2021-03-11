@@ -1,0 +1,64 @@
+@import "./../../../../sass/variables";
+
+.fondo {
+  display: flex;
+  align-items: center;
+  background: $colorFondo; // este color esta en carpeta sass/_variables.scss
+}
+
+.box-principal {
+  min-height: 100vh;
+}
+
+.box-filter{
+  display:flex;
+  button{
+    border-radius: 0;
+  }
+}
+
+.box-fila {
+  margin-top: 80px;
+}
+
+table{
+  tr{
+    a{
+      cursor: pointer;
+    }
+  }
+}
+
+img {
+  width: 80px;
+  height: 100px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+// poniendo en html color="celeste" de esta forma se cambia de color el mat-button de Angular Material
+.mat-celeste {
+  background-color: #2b93e6 !important;
+  color: #fff !important;
+  margin-bottom: 5px !important;
+}
+
+// si el book tiene como state = false se pinta de amarillo los <td> de tabla
+.paintYellow{
+  background-color: yellow;
+}
+
+.modal-header{
+  background: $colorNav;
+  color: white;
+  button{
+    color: white;
+  }
+}
+

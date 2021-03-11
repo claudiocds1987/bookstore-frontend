@@ -1,0 +1,75 @@
+<div class="container-fluid box-principal">
+  <div class="card">
+    <div class="card-header">
+      <div class="text-center">
+        <h2>Contacto</h2>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form">
+        <div class="form-group">
+          <div class="d-flex align-items-center">
+            <mat-icon class="icon">email</mat-icon>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="example@gmail.com"
+              [ngClass]="{ 'border-danger': f.email.errors && f.email.dirty }"
+            />
+          </div>
+          <p
+            class="text-center mt-1 text-danger"
+            *ngIf="f.email.hasError('email') && f.email.dirty"
+          >
+            <small>El formato de email no es valido</small>
+          </p>
+          <p
+            class="text-center mt-1 text-danger"
+            *ngIf="f.email.hasError('required') && f.email.dirty"
+          >
+            <small>Campo obligatorio</small>
+          </p>
+          <p
+            class="text-center mt-1 text-danger"
+            *ngIf="f.email.hasError('maxlength')"
+          >
+            <small>El email es muy largo!</small>
+          </p>
+        </div>
+        <div class="form-group">
+          <label for="text">Mensaje</label>
+          <textarea
+            cols="30"
+            rows="10"
+            id="texto"
+            formControlName="text"
+            class="form-control"
+            placeholder="Escribe tu mensaje"
+            [ngClass]="{ 'border-danger': f.text.errors && f.text.dirty }"
+          ></textarea>
+          <p
+            class="text-center mt-1 text-danger"
+            *ngIf="f.text.hasError('required') && f.text.dirty"
+          >
+            <small>El campo no puedo estar vacio!</small>
+          </p>
+          <p
+            class="text-center mt-1 text-danger"
+            *ngIf="f.text.hasError('maxlength')"
+          >
+            <small>El mensaje es muy largo!</small>
+          </p>
+        </div>
+
+        <button
+          [disabled]="form.invalid"
+          type="submit"
+          class="btn btn-primary btn-block btn-enviar"
+        >
+          Enviar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

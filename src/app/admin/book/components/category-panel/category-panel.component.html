@@ -1,0 +1,186 @@
+<div class="container box-principal">
+  <div class="row box-fila">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group capitalize">
+            <input
+              type="text"
+              name="name"
+              class="form-control capitalize"
+              [formControl]="categoryName"
+              (blur)="cleanUnnecessaryWhiteSpaces(categoryName)"
+              placeholder="Ingrese nombre de categoria"
+              maxlength="26"
+            />
+            <p *ngIf="categoryName.hasError('pattern') && categoryName.dirty">
+              <small class="text-danger">No ingrese números.</small>
+            </p>
+            <p *ngIf="categoryName.hasError('maxlength') && categoryName.dirty">
+              <small class="text-danger">Solo hasta 25 caracteres.</small>
+            </p>
+            <p *ngIf="categoryName.hasError('minlength') && categoryName.dirty">
+              <small class="text-danger">Mínimo 4 caracteres.</small>
+            </p>
+            <button
+              type="button"
+              class="btn btn-success btn-block"
+              [disabled]="categoryName.invalid"
+              (click)="createCategory()"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <input
+            class="form-control mr-sm-2 search capitalize"
+            type="text"
+            name="search"
+            placeholder="nombre de categoria"
+            aria-label="Search"
+            [formControl]="inputValueSearch"
+            (blur)="cleanUnnecessaryWhiteSpaces(inputValueSearch)"
+            maxlength="26"
+          />
+          <p
+            *ngIf="
+              inputValueSearch.hasError('pattern') && inputValueSearch.dirty
+            "
+          >
+            <small class="text-danger">No ingrese números.</small>
+          </p>
+          <p
+            *ngIf="
+              inputValueSearch.hasError('maxlength') && inputValueSearch.dirty
+            "
+          >
+            <small class="text-danger">Solo hasta 35 caracteres.</small>
+          </p>
+          <p
+            *ngIf="
+              inputValueSearch.hasError('minlength') && inputValueSearch.dirty
+            "
+          >
+            <small class="text-danger">Mínimo 4 caracteres.</small>
+          </p>
+          <button
+            [disabled]="inputValueSearch.invalid"
+            class="btn btn-outline-success mr-1"
+            type="button"
+            (click)="getCategoryByName()"
+          >
+            Search
+          </button>
+          <button
+            [disabled]="activated"
+            class="btn btn-outline-success"
+            type="button"
+            (click)="getCategories()"
+          >
+            Listar categorias
+          </button>
+          <table class="table table-striped mt-4" *ngIf="searchResult">
+            <thead>
+              <tr>
+                <td></td>
+                <th class="text-center">Categoria</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let c of categoryArray
+                    | paginate: { itemsPerPage: 7, currentPage: actualPage };
+                  let i = index
+                "
+              >
+                <input type="hidden" value="{{ c.id_category }}" />
+                <td>{{ i + 1 }}</td>
+                <td class="text-center">
+                  {{ c.name }}
+                  <div
+                    *ngIf="editing && categoryEdit.id_category == c.id_category"
+                  >
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="editedName"
+                        [formControl]="categoryNameEdit"
+                        (blur)="cleanUnnecessaryWhiteSpaces(categoryNameEdit)"
+                        class="form-control capitalize"
+                        maxlength="26"
+                        placeholder="{{ c.name }}"
+                      />
+                      <p
+                        *ngIf="
+                          categoryNameEdit.hasError('pattern') &&
+                          categoryNameEdit.dirty
+                        "
+                      >
+                        <small class="text-danger">No ingrese números.</small>
+                      </p>
+                      <p
+                        *ngIf="
+                          categoryNameEdit.hasError('maxlength') &&
+                          categoryNameEdit.dirty
+                        "
+                      >
+                        <small class="text-danger"
+                          >Solo hasta 35 caracteres.</small
+                        >
+                      </p>
+                      <p
+                        *ngIf="
+                          categoryNameEdit.hasError('minlength') &&
+                          categoryNameEdit.dirty
+                        "
+                      >
+                        <small class="text-danger">Mínimo 4 caracteres.</small>
+                      </p>
+                      <button
+                        class="btn btn-outline-success mr-1"
+                        type="submit"
+                        [disabled]="categoryNameEdit.invalid"
+                        (click)="updateCategory()"
+                      >
+                        Update
+                      </button>
+                      <button
+                        class="btn btn-outline-warning mr-1"
+                        type="button"
+                        (click)="editing = false"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="editCategory($event, c.id_category)"
+                  >
+                    Editar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- controles del pagination -->
+          <pagination-controls
+            (pageChange)="actualPage = $event"
+          ></pagination-controls>
+          <p *ngIf="!searchResult">
+            <small class="text-danger">No se encontraron resultados</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

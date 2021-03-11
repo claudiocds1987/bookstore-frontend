@@ -1,0 +1,166 @@
+<div class="box-principal">
+  <div class="container-fluid box-container1">
+    <div class="row fila">
+      <div class="col-md-4">
+        <div class="box-search">
+          <input
+            type="text"
+            id="input-search"
+            class="form-control input-buscar"
+            [(ngModel)]="inputValue"
+            (keydown.enter)="filterBook()"
+            placeholder="Buscar libro"
+          />
+          <select id="select" (change)="selectChangeHandler($event)" class="form-control">
+            <option selected value="all">Todos</option>
+            <option value="title">Título</option>
+            <option value="author">Autor</option>
+            <option value="editorial">Editorial</option>
+          </select>
+          <button class="btn btn-info btn-buscar" (click)="filterBook()">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="text-center box-intro">
+          <h1 class="font-weight-bold">Bookstore</h1>
+          <p class="font-italic text-muted">
+            An awesome Bootstrap 4 cards collection with variant content.
+          </p>
+          <p class="font-italic text-muted">
+            Snippet By
+            <a href="https://bootstrapious.com" class="text-muted">
+              <u>Bootstrapious</u></a
+            >
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="box-icons-social-media">
+          <p>seguinos...</p>
+          <img
+            class="logo"
+            src="./../../../../assets/images/icono-whatsapp.png"
+          />
+          <img
+            class="logo"
+            src="./../../../../assets/images/icono-instagram.png"
+          />
+          <img
+            class="logo"
+            src="./../../../../assets/images/icono-facebook.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- First Row [Prosucts]-->
+  <!-- <h2 class="font-weight-bold mb-2">From the Shop</h2>
+    <p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+        incididunt.</p> -->
+
+  <div class="container box-container2">
+    <div *ngIf="bookList$ | async as books">
+      <div *ngIf="books.length > 0" class="book-grid">
+        <div
+          *ngFor="
+            let book of books
+              | paginate: { itemsPerPage: 15, currentPage: actualPage }
+          "
+          class="card rounded shadow-sm border-0 fade-in"
+        >
+          <img [src]="book.url_image" [alt]="book.name" class="crop-image" />
+          <div class="text-center box-description">
+            <a
+              class="font-italic font-weight-light"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+              (click)="getBookDetail(book.id_book)"
+            >
+              {{ book.name }}
+            </a>
+          </div>
+          <div class="text-center box-btn-border">
+            <button
+              class="btn-border"
+              mat-raised-button
+              color="banner-color"
+              (click)="addCarrito(book)"
+            >
+              <i
+                class="fa fa-shopping-cart mr-2 icon-shopping-cart"
+                aria-hidden="true"
+              ></i>
+              <span style="font-size: smaller; color: white">$ {{
+                book.price
+              }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- controles del pagination -->
+  <div class="text-center">
+    <pagination-controls
+      class="custom-pagination"
+      (pageChange)="actualPage = $event"
+    ></pagination-controls>
+  </div>
+  <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+  <ngx-spinner></ngx-spinner>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalCenterTitle">
+          {{ book.name }}
+        </h1>
+        <button
+          type="button"
+          class="close text-white"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-muted">
+        <img
+          [src]="book.url_image"
+          class="img-fluid img-thumbnail float-left mr-2"
+        />
+        <p>Autor: {{ authorName }}</p>
+        <p>Editorial: {{ editorialName }}</p>
+        <p>Categoria: {{ categoryName }}</p>
+        <hr />
+        <p id="p-description" class="text-justify">{{ book.description }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="addCarrito(book)"
+        >
+          <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

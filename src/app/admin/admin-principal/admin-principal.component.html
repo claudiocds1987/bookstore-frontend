@@ -1,0 +1,132 @@
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <div class="row">
+      <div class="col-md-4 box">
+        <div class="card">
+          <img
+            src="../../../../assets/images/clients.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h4 class="card-title">Sección libros</h4>
+            <p class="card-text">
+              Sección para agregar y editar un libro. Ver el listado completo de
+              todos los libros, búsqueda de un libro particular.
+            </p>
+            <button
+              class="btn btn-primary table"
+              data-toggle="modal"
+              data-target="#miModal"
+            >
+              Seccion libros
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 box">
+        <div class="card">
+          <img
+            src="../../../../assets/images/clients.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h4 class="card-title">Sección clientes</h4>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </p>
+            <a routerLink="/customer/customer-list" class="btn btn-primary table">Clientes</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 box">
+        <div class="card">
+          <img
+            src="../../../../assets/images/sales.jpg"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h4 class="card-title">Sección ventas</h4>
+            <p class="card-text">
+              Total de ventas en el mes, año. Promedios.
+              Libros mas vendidos...
+            </p>
+            <a [routerLink]="'/sales/dashboard-sales'" class="btn btn-primary table">Ventas</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--------------- MODAL LIBROS------------------------>
+<div
+  class="modal fade"
+  id="miModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>¿Qué desea hacer?</h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>
+            <a [routerLink]="'/book/book-list'" data-dismiss="modal" aria-label="Close"
+              >
+              <mat-icon style="vertical-align: middle">build_circle</mat-icon>
+              Panel de libro (Agregar, listar, editar, eliminar)</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="'/book/author-panel'"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <mat-icon style="vertical-align: middle">build_circle</mat-icon>
+              Panel autores</a
+            >
+          </li>
+          <li>
+            <a
+            [routerLink]="'/book/editorial-panel'"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <mat-icon style="vertical-align: middle">build_circle</mat-icon>
+              Panel editoriales</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="'/book/category-panel'"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <mat-icon style="vertical-align: middle">build_circle</mat-icon>
+              Panel categorias</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

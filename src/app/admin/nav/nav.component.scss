@@ -1,0 +1,150 @@
+nav{
+  width: 100%;
+  position:fixed;
+  top: 0;
+  z-index: 10;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  a{
+    cursor: pointer;
+  }
+}
+
+// // clase que pone el boton activado
+// .activo{
+//     background-color: #ff0226;
+//     color: white;
+// }
+
+// header{
+//     width: 100%;
+//     height: 50px;
+//     //background: #293240;
+//     background: #4582ec;
+//     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+//     color: #fff;
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     z-index: 100;
+//   }
+  
+//   .icon-bookstore{
+//     float: left;
+//     margin-top: 8px;
+//     color: #c5fd43;
+//   }
+
+//   h1 {
+//     float: left;
+//     margin-top: 8px;
+//   }
+
+//   .sub-menu{
+//     position: absolute;
+//     margin-left: 200px;
+//     margin-top: 5px;
+//   }
+  
+//   .icon-menu{
+//     margin: 0 auto;
+//   }
+  
+//   .icon-shopping-cart{
+//     color: #fff !important;
+//   }
+  
+//   .icon-perm-identity{
+//     vertical-align: middle !important;
+//   }
+  
+//   .contenedor{
+//     width: 98%;
+//     margin: auto;
+//   }
+  
+//   #menu-bar{
+//     display: none;
+//   }
+  
+//   header label{
+//     float: right;
+//     font-size: 28px;
+//     margin: 6px 0;
+//     cursor: pointer;
+//   }
+
+//   header .contenedor{
+//     display: table; // para limpiar los floats
+//   }
+  
+//   .menu{
+//     position: absolute;
+//     top: 50px;
+//     left: 0;
+//     width: 100%;
+//     height: 100vh;
+//     background: rgb(41, 50, 64, 0.8);
+//     transition: all 0.5s;
+//     transform: translateX(-100%);
+//   }
+  
+//   .menu a{
+//     display: block;
+//     color: #fff;
+//     height: 50px;
+//     text-decoration: none;
+//     padding: 15px;
+//     //border-bottom: 1px solid rgb(255, 255, 255,0.5);
+//     border-bottom: 1px solid rgb(41, 50, 64);
+//   }
+  
+//   .menu a:hover{
+//     border-bottom:rgb(255, 255, 255,0.3);
+//     //background: rgb(41, 50, 64);
+//     background:  #ff0226;
+//     color: white;
+//   }
+  
+//   #a-shopping-cart:hover{
+//     cursor: pointer;
+//   }
+  
+//   // ~ es alt+126
+//   #menu-bar:checked ~ .menu{
+//     transform: translateX(0%);
+//   }
+
+//   .dropdown-menu{
+//     background: rgb(41, 50, 64, 0.8) !important;  
+//     border-radius: 0px 0px 0px 0px !important;
+//     transform: translate3d(0px, 50px, 0px) !important;
+//     padding-top: 0px;
+//     padding-bottom: 0px;
+//   }
+  
+//   @media (min-width:900px){
+//     .menu{
+//       position: static;
+//       width: auto;
+//       height: auto;
+//       transform: translateX(0%);
+//       float: right;
+//       display: flex;
+//     }
+  
+//     .menu a{
+//       border: none;
+//     }
+  
+//     header label{
+//       display: none;
+//     }
+
+//     // .dropdown-menu{
+//     //   // si el btn libros (dropdown-menu) esta al final de la nav uso left: -50% para mejor visualizacion
+//     //   left: -50px !important;
+//     // }
+
+//   }
+  
+

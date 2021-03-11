@@ -1,0 +1,50 @@
+@import "./../../../../sass/variables";
+
+.box-principal {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to right top,
+    #051937,
+    #004d7a,
+    #008793,
+    #00bf72,
+    #a8eb12
+  );
+  .card {
+    flex: auto; // para que funcione el max-width
+    max-width: 500px;
+    top: 25px;
+    .btn-enviar {
+      background: $colorNav;
+    }
+    .card-header {
+      background: $colorNav;
+      color: white;
+      height: 80px;
+      h2{
+        margin-top: 10px;
+      }
+    }
+    .card-body {
+      .icon {
+        vertical-align: middle !important;
+        margin-right: 5px !important;
+      }
+      textarea {
+        border: 1px solid #f8f8f8;
+        //overflow-y: scroll;
+        height: 200px;
+        // resize: none; /* evita que el usuario pueda agrandarlo*/
+        padding: 5px;
+      }
+    }
+  }
+}
+
+// esta clase es llamada con [ngClase] cuando formControl encuentra error
+.border-danger {
+  border: 2px solid red;
+}

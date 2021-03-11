@@ -1,0 +1,292 @@
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="text-center">Nuevo libro</h2>
+        <form [formGroup]="form" (ngSubmit)="createBook($event)">
+          <div class="form-row">
+            <div class="form-group col-md-9 mb-3">
+              <input
+                type="text"
+                class="form-control capitalize"
+                formControlName="name"
+                [(ngModel)]="book.name"
+                placeholder="Nombre de libro"
+                (blur)="book.name = cleanUnnecessaryWhiteSpaces(book.name)"
+              />
+              <div *ngIf="form.get('name').errors && form.get('name').dirty">
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('name').hasError('required')"
+                >
+                  <small> Este campo es obligatorio!</small>
+                </p>
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('name').hasError('maxlength')"
+                >
+                  <small class="text-danger">El nombre es muy largo!</small>
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3 mb-3">
+              <input
+                type="number"
+                class="form-control"
+                formControlName="year"
+                [(ngModel)]="book.year"
+                placeholder="Año"
+              />
+              <div *ngIf="form.get('year').errors && form.get('year').dirty">
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('year').hasError('required')"
+                >
+                  <small class="text-danger">Este campo es obligatorio!</small>
+                </p>
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('year').hasError('max')"
+                >
+                  <small>El año es invalido!</small>
+                </p>
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('year').hasError('min')"
+                >
+                  <small class="text-danger"
+                    >El año debe ser igual o mayor al 1500!</small
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="form-group">
+              <label class="text-muted">Autor</label>
+              <select
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="book.id_author"
+                class="form-control"
+                FormControlName="author"
+                (change)="captureIdAutor($event)"
+                onmousedown="if(this.options.length>5){this.size=5;}"
+                onchange="this.size=0;"
+                onblur="this.size=0;"
+              >
+                <option
+                  *ngFor="let author of authorList$ | async"
+                  [value]="author.id_author"
+                >
+                  {{ author.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.get('author').invalid && form.dirty"
+                class="error"
+              >
+                <p *ngIf="form.get('author').hasError('invalid')">
+                  <small class="text-danger">Este campo es obligatorio!</small>
+                </p>
+              </div>
+              <a
+                class="my-2 btn btn-primary btn-sm"
+                [routerLink]="'./../author-panel'"
+                >Nuevo autor</a
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="text-muted">Categoria</label>
+              <select
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="book.id_category"
+                class="form-control"
+                FormControlName="category"
+                (change)="captureIdCategory($event)"
+                onmousedown="if(this.options.length>5){this.size=5;}"
+                onchange="this.size=0;"
+                onblur="this.size=0;"
+              >
+                <option
+                  *ngFor="let category of categoryList$ | async"
+                  [value]="category.id_category"
+                >
+                  {{ category.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.get('category').invalid && form.dirty"
+                class="error"
+              >
+                <p *ngIf="form.get('category').hasError('invalid')">
+                  <small class="text-danger">Este campo es obligatorio!</small>
+                </p>
+              </div>
+              <a
+                class="my-2 btn btn-primary btn-sm"
+                [routerLink]="'./../category-panel'"
+                >Nueva categoria</a
+              >
+            </div>
+            <div class="form-group">
+              <label class="text-muted">Editorial</label>
+              <select
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="book.id_editorial"
+                class="form-control"
+                FormControlName="editorial"
+                (change)="captureIdEditorial($event)"
+                onmousedown="if(this.options.length>5){this.size=5;}"
+                onchange="this.size=0;"
+                onblur="this.size=0;"
+              >
+                <option
+                  *ngFor="let editorial of editorialList$ | async"
+                  [value]="editorial.id_editorial"
+                >
+                  {{ editorial.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.get('editorial').invalid && form.dirty"
+                class="error"
+              >
+                <p *ngIf="form.get('editorial').hasError('invalid')">
+                  Profile required.
+                </p>
+              </div>
+              <a
+                class="my-2 btn btn-primary btn-sm"
+                [routerLink]="'./../editorial-panel'"
+                >Nueva editorial</a
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              formControlName="description"
+              [(ngModel)]="book.description"
+              (blur)="
+                book.description = cleanUnnecessaryWhiteSpaces(book.description)
+              "
+              placeholder="Description..."
+            ></textarea>
+            <div
+              *ngIf="
+                form.get('description').errors && form.get('description').dirty
+              "
+            >
+              <p
+                class="text-center mt-1"
+                *ngIf="form.get('description').hasError('required')"
+              >
+                <small class="text-danger">Este campo es obligatorio!</small>
+              </p>
+              <p
+                class="text-center mt-1"
+                *ngIf="form.get('description').hasError('maxlength')"
+              >
+                <small class="text-danger">la descripción es muy larga!</small>
+              </p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+              <input
+                type="number"
+                class="form-control"
+                formControlName="quantity"
+                [(ngModel)]="book.quantity"
+                placeholder="Cantidad"
+              />
+              <div
+                *ngIf="
+                  form.get('quantity').errors && form.get('quantity').dirty
+                "
+              >
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('quantity').hasError('required')"
+                >
+                  <small class="text-danger">Este campo es obligatorio!</small>
+                </p>
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('quantity').hasError('pattern')"
+                >
+                  <small class="text-danger"> Escriba un valor valido!</small>
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="price"
+                mask="separator.2"
+                prefix="$ "
+                thousandSeparator="."
+              />
+              <div *ngIf="form.get('price').errors && form.get('price').dirty">
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('price').hasError('required')"
+                >
+                  <small class="text-danger">Este campo es obligatorio!</small>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="text-muted">Imagen</label>
+            <input
+              type="file"
+              class="form-control"
+              name="image"
+              formControlName="image"
+              multiple
+              (change)="selectImage($event)"
+            />
+            <div *ngIf="imgPreview != null" class="text-center my-2">
+              <div style="display: block">
+                <img [src]="imgPreview" class="img-fluid" />
+              </div>
+              <div style="display: block">
+                <a class="btn btn-danger mt-1" (click)="cleanImgPreview()"
+                  >Cancelar imagen</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center box-buttons">
+            <div class="cac">
+              <button
+                [disabled]="form.invalid"
+                type="submit"
+                class="btn btn-primary mr-2"
+              >
+                Guardar
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning text-white"
+                (click)="resetForm()"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

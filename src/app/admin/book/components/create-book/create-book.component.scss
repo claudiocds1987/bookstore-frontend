@@ -1,0 +1,50 @@
+@import "./../../../../sass/variables";
+
+.fondo {
+  display: flex;
+  align-items: center;
+  background: $colorUno; // este color esta en carpeta sass/_variables.scss
+}
+
+.box-buttons{
+
+  button{
+    margin-top: 20px;
+    width: 100px;
+  }
+}
+
+.box-principal {
+  min-height: 100vh;
+}
+
+.card {
+  margin-top: 80px !important;
+}
+
+a {
+  text-transform: capitalize;
+  text-decoration: none;
+}
+
+p {
+  color: red;
+}
+
+// capitalize convierte de cada palabra la 1er letra a mayuscula solo en el input
+.capitalize {
+  text-transform: capitalize;
+}
+
+.box {
+  display: flex !important; //?
+  flex-wrap: wrap !important; // ?
+  justify-content: space-between !important; //?
+}
+
+@media only screen and (min-width: 768px) {
+  .card {
+    margin: 0 auto;
+    max-width: 700px;
+  }
+}

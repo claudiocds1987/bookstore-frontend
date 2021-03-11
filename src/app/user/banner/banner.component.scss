@@ -1,0 +1,26 @@
+.swiper-container {
+    width: 100%;
+    max-height: 200px;
+}
+
+img{
+    //object-fit: contain;
+    height: 100% !important;
+    width: 100% !important;
+    //object-position: center !important;
+    object-fit: cover;
+}
+
+// .pepe{
+//     position: fixed;
+//     top: 0;
+//     z-index: 100;
+// }
+
+// @supports(object-fit: cover){
+//     img{
+//       height: 100%;
+//       object-fit: cover;
+//       object-position: center center;
+//     }
+// }

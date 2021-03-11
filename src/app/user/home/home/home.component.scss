@@ -1,0 +1,188 @@
+@import "./../../../sass/variables";
+
+p {
+  font-style: italic;
+  margin-top: 5px;
+}
+
+// .fila{
+//   background: url('./../../../../assets/images/banner-nature.jpg') $colorNav; //si falla img carga color de la nav
+//   // background-repeat: no-repeat;
+//   //background-size: cover;
+//   object-fit: contain;
+//   //background-size: 100% 100%;
+// }
+
+.box-principal {
+  min-height: 100vh;
+  .box-container1 {
+    margin-top: 50px;
+      .box-intro, .box-icons-social-media, .box-search{
+        margin-top: 15px;
+      }
+      .box-search {
+        display: flex;
+        justify-content: space-around;
+        #select{
+          width: 115px;
+        }
+        .btn-buscar {
+          border-radius: 0;
+        }
+      }
+  }
+  
+}
+
+
+.box-icons-social-media { 
+  display: flex;
+  // cuando es flex la prop. margin deja de funcionar, utilizo flex-end para alinear a la derecha
+  justify-content: flex-end;
+  .logo {
+  
+    max-width: 30px;
+    max-height: 30px;
+  }
+}
+
+.box-container2 {
+  a {
+    cursor: pointer;
+  }
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(200px, 1fr)
+    ); // nos hará breakpoints cada 200px
+    .card {
+      margin: 15px;
+      border-radius: 5px;
+      display: block; // para que el ancho y alto sean dinamico respecto al elemento
+      .crop-image {
+        margin-top: 2px;
+        padding: 8px;
+        display: block;
+        height: 250px;
+        width: 100%;     
+        img {
+          object-fit: contain;
+          height: 100%;
+          width: 100%;
+          object-position: center;
+        }
+      }
+      .box-btn-border {
+        margin-bottom: 10px;
+        .btn-border {
+          border-radius: 15px !important;
+        }
+        // boton para agregar a carrito
+        .mat-banner-color {
+          background: rgb(41, 50, 64);
+         
+        }
+        .mat-banner-color:hover {
+          //background: rgb(86, 93, 104);
+          transition: all linear 0.25s;
+          opacity: 0.5;
+        }
+        .icon-shopping-cart {
+          color: #c5fd43 !important;
+        }
+        .box-btn-border {
+          margin-bottom: 10px;
+          .btn-border {
+            border-radius: 15px !important;
+          }
+          // boton para agregar a carrito
+          .mat-banner-color {
+            background: rgb(41, 50, 64);
+          }
+          .icon-shopping-cart {
+            color: #c5fd43 !important;
+          }
+        }
+      }
+    }
+    .card:hover{
+      transition: all linear 0.50s;
+      background: $colorNav;
+    }
+  } 
+}
+
+.modal{
+  .modal-dialog{
+    // importante poner width 100% para que el modal en resoluciones de pantalla movil como 320x568 y 375x667
+    // quede bien centrado
+    width: 100%;
+    .modal-header, .modal-footer{
+      background: $colorTres; 
+      color: white;
+    }
+    .modal-content{
+      background: $colorTres;
+      .modal-body{
+        background: #ffffff;
+      }
+    }
+    .modal-title{
+      letter-spacing: 0.1em;
+    }
+    .modal-body{
+      #p-description{
+        line-height: 25px;
+      }
+    }
+    .img-thumbnail{
+      //border: solid;
+      background-color: #e5e5e5;
+    }
+    img{
+      max-width: 200px;
+      max-height: 220px;
+    }
+  }  
+}
+
+
+@media (max-width: 760px) {
+  .box-icons-social-media {
+    justify-content: center;
+  }
+
+  .header {
+    margin-top: 15px;
+  }
+}
+
+.box-description {
+  margin-bottom: 10px !important;
+}
+
+a {
+  color: grey;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #298ccf;
+}
+
+.fade-in {
+  animation: fadeIn 3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+

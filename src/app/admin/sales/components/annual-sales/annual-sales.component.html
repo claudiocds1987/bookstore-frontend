@@ -1,0 +1,67 @@
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <div class="row fila">
+      <div class="col-md-6">
+        <div id="box">
+          <label class="mr-2">Año:</label>
+          <input
+            type="number"
+            #searchValue
+            [value]="currentYear"
+            min="2021"
+            [max]="currentYear"
+          />
+          <button
+            class="btn btn-primary btn-sm"
+            (click)="filter()"
+          >
+            Search
+          </button>
+        </div>
+
+        <canvas
+          baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"
+        ></canvas>
+        <button
+          mat-button
+          mat-raised-button
+          color="primary"
+          (click)="refreshData()"
+          class="mt-4"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <div class="col-md-6 mt-4">
+        <table class="table table-responsive table-condensed">
+          <thead>
+            Total recaudado por mes
+          </thead>
+          <tr>
+            <th *ngFor="let label of lineChartLabels">{{ label }}</th>
+          </tr>
+          <tr
+            *ngFor="let d of lineChartData; let i = index"
+            [class]="'line-' + i"
+          >
+            <td *ngFor="let label of lineChartLabels; let j = index">
+              {{ d && d.data[j] | currency: "ARS ":"symbol" }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+    <ngx-spinner></ngx-spinner>
+  </div>
+</div>

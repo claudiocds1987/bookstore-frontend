@@ -1,0 +1,33 @@
+La libreria ngx-mask sirve para cuando hay que poner el precio en un input text.
+Mientras se tipea el precio en el input automaticamente va formando el numero.
+
+Básicamente convierte un string al formato deseado y te devuelve una cadena limpia. 
+Hay que notar que el input debe ser type="text" para que funcione.
+
+Instalacion: 
+1) npm install --save ngx-mask
+
+2) Importamos el módulo: 
+   import { NgxMaskModule, IConfig } from 'ngx-mask'
+
+3) En el input="text" colocar lo siguiente:
+
+<input
+    type="text"
+    class="form-control"
+    formControlName="price"
+    mask="separator.2"
+    prefix="$ "
+    thousandSeparator="."
+/>
+
+De la forma que esta hecho es para moneda Peso Argentino es decir el numero mil con punto "."
+y si el numero es decimal le agrega la coma ej 1.500,25
+
+nota: el punto decimal "." lo agrega automaticamente, no lo puedo poner de forma manual. 
+Si el numero es decimal, la coma "," si la tengo que agregar de forma manual.
+
+thousandSeparator="." => cuando es un numero mil le agrega el punto automaticamente ej: 1.500
+mask="separator.2" => significa que permite hasta dos decimales despues de la coma
+
+url: https://www.npmjs.com/package/ngx-mask

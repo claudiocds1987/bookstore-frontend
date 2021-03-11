@@ -1,0 +1,34 @@
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <div class="row">
+      <div class="box">
+        <div
+          class="chart-container"
+          style="position: relative; height: 40vh; width: 80vw"
+        >
+          <canvas
+            baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [colors]="barChartColors"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+          >
+          </canvas>
+          <button
+            mat-button
+            mat-raised-button
+            color="primary"
+            (click)="refreshData()"
+          >
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+    <ngx-spinner></ngx-spinner>
+  </div>
+</div>

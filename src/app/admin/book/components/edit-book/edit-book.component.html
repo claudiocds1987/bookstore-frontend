@@ -1,0 +1,288 @@
+<div class="container-fluid box-principal">
+  <div class="row box-fila">
+    <div class="col-sm-4">
+      <!-- col vacia para centrar el form -->
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body card-body-form-libro">
+          <h5 class="text-center">EDITAR LIBRO</h5>
+          <form [formGroup]="form" (ngSubmit)="updateBook($event)">
+            <div class="form-row">
+              <div class="form-group col-md-9 mb-3">
+                <label>Nombre</label>
+                <input
+                  type="text"
+                  class="form-control capitalize"
+                  formControlName="name"
+                  [(ngModel)]="book.name"
+                  (blur)="book.name = cleanUnnecessaryWhiteSpaces(book.name)"
+                  placeholder="Nombre de libro"
+                />
+                <div *ngIf="form.get('name').errors && form.get('name').dirty">
+                  <p
+                    class="text-center mt-1"
+                    *ngIf="form.get('name').hasError('required')"
+                  >
+                    Este campo es obligatorio!
+                  </p>
+                  <p
+                    class="text-center mt-1"
+                    *ngIf="form.get('name').hasError('maxlength')"
+                  >
+                    El nombre es muy largo!
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group col-md-3 mb-3">
+                <label>Año</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="year"
+                  [(ngModel)]="book.year"
+                  placeholder="Año"
+                />
+                <div *ngIf="form.get('year').errors && form.get('year').dirty">
+                  <p
+                    class="text-center mt-1"
+                    *ngIf="form.get('year').hasError('required')"
+                  >
+                    Este campo es obligatorio!
+                  </p>
+                  <p
+                    class="text-center mt-1"
+                    *ngIf="form.get('year').hasError('max')"
+                  >
+                    El año es invalido!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Autor</label>
+              <select
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="book.id_author"
+                class="form-control"
+                FormControlName="author"
+                (change)="captureIdAutor($event)"
+                [value]="book.id_author"
+                onmousedown="if(this.options.length>5){this.size=5;}"
+                onchange="this.size=0;"
+                onblur="this.size=0;"
+              >
+                <option
+                  *ngFor="let author of authorList$ | async"
+                  [value]="author.id_author"
+                >
+                  {{ author.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.get('author').invalid && form.dirty"
+                class="error"
+              >
+                <p *ngIf="form.get('author').hasError('invalid')">
+                  Este campo es obligatorio!
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Categoria</label>
+              <select
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="book.id_category"
+                class="form-control"
+                FormControlName="category"
+                (change)="captureIdCategory($event)"
+                [value]="book.id_category"
+                onmousedown="if(this.options.length>5){this.size=5;}"
+                onchange="this.size=0;"
+                onblur="this.size=0;"
+              >
+                <option
+                  *ngFor="let category of categoryList$ | async"
+                  [value]="category.id_category"
+                >
+                  {{ category.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.get('category').invalid && form.dirty"
+                class="error"
+              >
+                <p *ngIf="form.get('category').hasError('invalid')">
+                  Este campo es obligatorio!
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Editorial</label>
+              <select
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="book.id_editorial"
+                class="form-control"
+                FormControlName="editorial"
+                (change)="captureIdEditorial($event)"
+                onmousedown="if(this.options.length>5){this.size=5;}"
+                onchange="this.size=0;"
+                onblur="this.size=0;"
+              >
+                <option
+                  *ngFor="let editorial of editorialList$ | async"
+                  [value]="editorial.id_editorial"
+                >
+                  {{ editorial.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.get('editorial').invalid && form.dirty"
+                class="error"
+              >
+                <p *ngIf="form.get('editorial').hasError('invalid')">
+                  Profile required.
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Descripción</label>
+              <textarea
+                class="form-control"
+                formControlName="description"
+                [(ngModel)]="book.description"
+                (blur)="
+                  book.description = cleanUnnecessaryWhiteSpaces(
+                    book.description
+                  )
+                "
+                placeholder="Description..."
+              ></textarea>
+              <div
+                *ngIf="
+                  form.get('description').errors &&
+                  form.get('description').dirty
+                "
+              >
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('description').hasError('required')"
+                >
+                  Este campo es obligatorio!
+                </p>
+                <p
+                  class="text-center mt-1"
+                  *ngIf="form.get('description').hasError('maxlength')"
+                >
+                  La descripción es muy larga!
+                </p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6 mb-3">
+                <label>Cantidad</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="quantity"
+                  [(ngModel)]="book.quantity"
+                  placeholder="Cantidad"
+                />
+                <div
+                  *ngIf="
+                    form.get('quantity').errors && form.get('quantity').dirty
+                  "
+                >
+                  <p
+                    class="text-center mt-1"
+                    *ngIf="form.get('quantity').hasError('required')"
+                  >
+                    Este campo es obligatorio!
+                  </p>
+                  <p
+                    class="text-center mt-1"
+                    *ngIf="form.get('quantity').hasError('pattern')"
+                  >
+                    Este!
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6 mb-3">
+                <label>Precio</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="price"
+                  mask="separator.2"
+                  prefix="$ "
+                  thousandSeparator="."
+                  [value]="book.price"
+                />
+                <div
+                  *ngIf="form.get('price').errors && form.get('price').dirty"
+                >
+                  <p
+                    class="text-center mt-1"
+                    *ngIf="form.get('price').hasError('required')"
+                  >
+                    Este campo es obligatorio!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Imagen</label>
+              <input
+                type="file"
+                class="form-control"
+                name="image"
+                formControlName="image"
+                multiple
+                (change)="selectImage($event)"
+              />
+
+              <div *ngIf="mostrar" class="text-center my-2">
+                <img [src]="imageDefault" class="img-fluid" />
+              </div>
+
+              <div *ngIf="imgPreview != null" class="text-center my-2">
+                <!-- <div class="div-box"> -->
+                <img [src]="imgPreview" class="img-fluid" />
+                <a class="btn-block" (click)="cleanImgPreview()"
+                  >Cancelar imagen</a
+                >
+                <!-- </div> -->
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button
+                [disabled]="form.invalid"
+                type="submit"
+                class="btn btn-dark btn-block"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning btn-block text-white"
+                [routerLink]="['/book/book-list']"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>

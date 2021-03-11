@@ -1,0 +1,17 @@
+En app-routing.ts abajo de todo tengo declarado que la estrategia de precarga de los modulos sea "preloadAllModules"
+Esto significa que por ejemplo cuando carga la url de home va a traer el modulo de Home de mi proyecto 
+y mientras el navegador este inactivo se va encargar de traer todos los módulos restantes. Entonces cuando se va a otra url
+que trabaja con otro módulo, ya lo tiene precargado. Esta estrategia es muy buena para redes lentas y en un proyecto 
+con pocos modulos y obviamente mi proyecto tiene que estar modularizado (lazy loading). 
+Ahora la desventaja que tiene es que si mi proyecto tiene como 100 modulos, son 100 modulos que el browser/navegador 
+tiene que precargar y ademas sumale la interaccion del usuario cuando empieza a navegar por el proyecto.
+El navegador va a estar por un lado precargando los modulos restantes y al mismo tiempo esta trabajando con la interaccion
+del usuario, generando un proceso lento.
+
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules
+  })],
+  exports: [RouterModule]
+})

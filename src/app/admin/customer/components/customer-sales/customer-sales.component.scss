@@ -1,0 +1,32 @@
+@import "./../../../../sass/variables";
+
+.box{
+    min-height: 100vh !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    .card{
+        margin-top: 70px;
+        margin-bottom: 20px;
+    }        
+}
+
+.image-size {
+    margin-top: 2px;
+    display: block;
+    width: 80px;
+    height: 100px;
+    img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+      object-position: center;
+    }
+}
+
+// color del boton detalle
+.mat-blue {
+    background-color: $colorNav;
+    color: white;
+  }
+

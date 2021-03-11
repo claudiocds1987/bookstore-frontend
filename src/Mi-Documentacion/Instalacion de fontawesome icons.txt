@@ -1,0 +1,20 @@
+Para instalar fontawesome:
+
+1) npm i --save @fortawesome/fontawesome-free
+2) Abrir angular.json e incluir lo siguiente en "styles" y "scripts"
+
+ "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+            ],
+            "scripts": [        
+              "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+            ]
+          },
+
+
+tutorial: https://www.youtube.com/watch?v=xS0qA0ntQN4
+git hub del tutorial: https://gist.github.com/nicobytes/6b7e3446258e19a88010cee85b33b41f

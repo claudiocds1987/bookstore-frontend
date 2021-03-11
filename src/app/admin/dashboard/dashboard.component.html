@@ -1,0 +1,298 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">ADMIN</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarColor01"
+    aria-controls="navbarColor01"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" (click)="toSaleSection()"
+          >Venta
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="toBookSection()">Libro</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="toCustomerSection()">Cliente</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <div class="row fila1">
+      <div style="width: 100%">
+        <section id="sale-section">
+          <h1 class="mt-4" id="venta">Sección ventas</h1>
+        </section>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este mes
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+
+          <div class="box-container">
+            <div class="square-primary">
+              <i class="fa fa-tag icon" aria-hidden="true"></i>
+            </div>
+            <div>
+              <div>
+                <span class="font-weight-bold ml-2">{{
+                  quantityCurrentMonthSales
+                }}</span>
+              </div>
+              <div><span class="text-muted ml-2">Total de ventas</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este mes
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+
+          <div class="box-container">
+            <div class="square-green2">
+              <i class="fas fa-money-bill-alt icon" aria-hidden="true"></i>
+            </div>
+            <div>
+              <div>
+                <span class="font-weight-bold ml-2">{{
+                  currentMonthRevenue | currency: "ARS $ ":"symbol"
+                }}</span>
+              </div>
+              <div><span class="text-muted ml-2">Total recaudado</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este año
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+
+          <div class="box-container">
+            <div class="square-blue-light">
+              <i class="fa fa-tag icon" aria-hidden="true"></i>
+            </div>
+            <div>
+              <div>
+                <span class="font-weight-bold ml-2">{{
+                  quantityCurrentYearSales
+                }}</span>
+              </div>
+              <div>
+                <span class="text-muted ml-2">Ventas en el año</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card">
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este año
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+
+          <div class="box-container">
+            <div class="square-brown">
+              <i class="fas fa-shopping-basket icon" aria-hidden="true"></i>
+            </div>
+            <div>
+              <div>
+                <span class="font-weight-bold ml-2">{{
+                  currentYearRevenue | currency: "ARS $ ":"symbol"
+                }}</span>
+              </div>
+              <div>
+                <span class="text-muted ml-2 text-small">Total recaudado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row fila2">
+      <div class="card">
+        <h4 class="font-weight-bold">Libros mas vendidos top 10</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/bar-chart.jpg" />
+          </div>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <div>
+            <i class="fas fa-star" style="color: #fbdb4b"></i>
+            <i class="fas fa-star" style="color: #fbdb4b"></i>
+            <i class="fas fa-star" style="color: #fbdb4b"></i>
+          </div>
+          <a class="text-right" [routerLink]="'/sales/top-sales'"
+            >Ver detalle ></a
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 class="font-weight-bold">Recaudacion anual</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/line-chart.jpg" />
+          </div>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <i class="fas fa-search-dollar fa-lg" style="color: #41c572"></i>
+          <a class="text-right" [routerLink]="'/sales/annual-sales'"
+            >Ver detalle ></a
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 class="font-weight-bold">Promedio anual de ventas</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/lineChart.png" />
+          </div>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <i class="fas fa-balance-scale fa-lg" style="color: #04c0d5"></i>
+          <a class="text-right" [routerLink]="'/sales/annual-average-sales'"
+            >Ver detalle ></a
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 class="font-weight-bold">Top 5 localidades de consumo</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/grafico-circular-1.png" />
+          </div>
+        </div>
+        <hr />
+        <a class="text-right" href="#">Ver detalle ></a>
+      </div>
+    </div>
+
+    <div class="row fila3">
+      <div style="width: 100%">
+        <hr />
+        <section id="book-section"><h1>Sección libro</h1></section>
+      </div>
+      <div class="card">
+        <h4 class="font-weight-bold">Panel libro</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/books.jpg" />
+          </div>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between">
+          <span>Total: 25</span>
+          <a class="text-right" [routerLink]="'/book/book-list'">Ir ></a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 class="font-weight-bold">Panel autor</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/author.jpg" />
+          </div>
+        </div>
+        <hr />
+        <a class="text-right" [routerLink]="'/book/author-panel'">Ir ></a>
+      </div>
+
+      <div class="card">
+        <h4 class="font-weight-bold">Panel editorial</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/editorial.jpg" />
+          </div>
+        </div>
+        <hr />
+        <a class="text-right" [routerLink]="'/book/editorial-panel'">Ir ></a>
+      </div>
+
+      <div class="card">
+        <h4 class="font-weight-bold">Panel categoria</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/category.jpg" />
+          </div>
+        </div>
+        <hr />
+        <a class="text-right" [routerLink]="'/book/category-panel'">Ir ></a>
+      </div>
+    </div>
+    <div class="row fila4">
+      <div style="width: 100%">
+        <hr />
+        <section id="customer-section"><h1 id="cliente">Clientes</h1></section>
+      </div>
+      <div class="card">
+        <h4 class="font-weight-bold">Clientes</h4>
+        <div class="box-flex">
+          <div class="img-container">
+            <img src="./../../../../../assets/images/customer.jpg" />
+          </div>
+        </div>
+        <hr />
+        <a class="text-right" [routerLink]="'/customer/customer-list'">Ir ></a>
+      </div>
+    </div>
+
+    <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+    <ngx-spinner></ngx-spinner>
+  </div>
+  <footer style="background: #4582ec">
+    <div class="footer-copyright text-center py-3" style="background: #4582ec">
+      <span class="text-white">© 2020 Copyright</span>
+    </div>
+  </footer>
+</div>

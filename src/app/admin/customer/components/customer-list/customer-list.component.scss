@@ -1,0 +1,67 @@
+@import "./../../../../sass/variables";
+
+.fondo {
+  display: flex;
+  align-items: center;
+  background: $colorFondo; // este color esta en carpeta sass/_variables.scss
+}
+
+.box-principal {
+  min-height: 100vh !important;
+  table {
+    width: 100%;
+    //background: #ffffff;
+    th {
+      vertical-align: middle;
+    }
+    td {
+      vertical-align: middle;
+    }
+  }
+}
+
+.card{
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+// color del boton ventas
+.mat-blue {
+  background-color: $colorNav;
+  color: white;
+}
+
+// color del placeholder del input search
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  //color:    #909;
+  color: #2199e8;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  //color:    #909;
+  color: #2199e8;
+  opacity: 1;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  // color:    #909;
+  color: #2199e8;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  //color:    #909;
+  color: #2199e8;
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  //color:    #909;
+  color: #2199e8;
+}
+
+::placeholder {
+  /* Most modern browsers support this now. */
+  //color:    #909;
+  color: #2199e8;
+}

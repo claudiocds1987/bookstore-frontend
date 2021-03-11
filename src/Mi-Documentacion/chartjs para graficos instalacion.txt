@@ -1,0 +1,27 @@
+
+
+Chart.js es una biblioteca JavaScript gratuita de código abierto para la visualización de datos, 
+que admite 8 tipos de gráficos: barra, línea ,área, circular, burbuja, radar, polar, dispersión. 
+Para graficar reportes.
+
+Para combinar chart.js con Angular se instala ng2-charts. Este paquete le da 
+acceso a las directivas Angular que puede usar para incluir gráficos de la biblioteca Chart.js. 
+
+Instalacion:
+
+npm install ng2-charts chart.js
+
+En esta pagina https://valor-software.com/ng2-charts/#/BarChart se muestran los diferentes graficos
+y como integrarlos a Angular. Fijarse abajo del grafico hay 2 opciones: "Markup" donde muestra como 
+integrarlo al html y "Typescript", donde muestra la lógica en el component.ts
+
+Importante: Al compilar el proyecto con ng serve, Angular por consola mostraba este mensaje:
+"Warning: C:\bookstore\frontend\node_modules\ng2-charts\__ivy_ngcc__\fesm2015\ng2-charts.js depends on 'chart.js'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies"
+Para que no mostrara mas ese mensaje en el archivo angular.json agregue esta linea 
+"allowedCommonJsDependencies": ["chart.js"].
+
+"build": {
+"builder": "@angular-devkit/build-angular:browser",
+"options": {
+"allowedCommonJsDependencies": ["chart.js"],

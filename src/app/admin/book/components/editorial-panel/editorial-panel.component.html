@@ -1,0 +1,175 @@
+<div class="container box-principal">
+  <div class="row box-fila">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label>Nombre de editorial</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control capitalize"
+              [formControl]="editorialName"
+              (blur)="cleanUnnecessaryWhiteSpaces(editorialName)"
+              placeholder="Ingrese nombre de editorial"
+              maxlength="31"
+            />
+            <p
+              *ngIf="
+                editorialName.hasError('maxlength') && editorialName.dirty
+              "
+            >
+              <small class="text-danger"
+                >No ingrese mas de 30 caracteres.</small
+              >
+            </p>
+            <p
+              *ngIf="
+                editorialName.hasError('minlength') && editorialName.dirty
+              "
+            >
+              <small class="text-danger">Mínimo 4 caracteres.</small>
+            </p>
+            <button
+              type="button"
+              class="btn btn-success btn-block"
+              (click)="createEditorial()"
+              [disabled]="editorialName.invalid"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <input
+            class="form-control mr-sm-2 search capitalize"
+            type="text"
+            name="search"
+            placeholder="nombre de editorial"
+            aria-label="Search"
+            [formControl]="inputValueSearch"
+            (blur)="cleanUnnecessaryWhiteSpaces(inputValueSearch)"
+            maxlength="31"
+          />
+          <p
+              *ngIf="
+                inputValueSearch.hasError('maxlength') && inputValueSearch.dirty
+              "
+            >
+              <small class="text-danger"
+                >No ingrese mas de 30 caracteres.</small
+              >
+            </p>
+            <p
+              *ngIf="
+              inputValueSearch.hasError('minlength') && inputValueSearch.dirty
+              "
+            >
+              <small class="text-danger">Mínimo 4 caracteres.</small>
+            </p>
+          <button
+            class="btn btn-outline-success mr-1"
+            type="button"
+            (click)="getEditorialByName()"
+            [disabled]="inputValueSearch.invalid"
+          >
+            Search
+          </button>
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            (click)="getEditorials()"
+            [disabled]="activated"
+          >
+            Listar editoriales
+          </button>
+          <table class="table table-striped mt-4" *ngIf="searchResult">
+            <thead>
+              <tr>
+                <td></td>
+                <th class="text-center">Editorial</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ed of editorialArray | paginate: { itemsPerPage: 7, currentPage: actualPage }; let i = index">
+                <input type="hidden" value="{{ ed.id_editorial }}" />
+                <td>{{ i + 1 }}</td>
+                <td class="text-center">
+                  {{ ed.name }}
+                  <div
+                    *ngIf="
+                      editing && editorialEdit.id_editorial == ed.id_editorial
+                    "
+                  >
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="editedName"
+                        [formControl]="editorialNameEdit"
+                        (blur)="cleanUnnecessaryWhiteSpaces(editorialNameEdit)"
+                        class="form-control capitalize"
+                        maxlength="50"
+                        placeholder="{{ ed.name }}"
+                      />
+                      <p
+                      *ngIf="
+                      editorialNameEdit.hasError('maxlength') && editorialNameEdit.dirty
+                      "
+                    >
+                      <small class="text-danger"
+                        >No ingrese mas de 30 caracteres.</small
+                      >
+                    </p>
+                    <p
+                      *ngIf="
+                      editorialNameEdit.hasError('minlength') && editorialNameEdit.dirty
+                      "
+                    >
+                      <small class="text-danger">Mínimo 4 caracteres.</small>
+                    </p>
+                      <button
+                        class="btn btn-outline-success mr-1"
+                        type="button"
+                        (click)="updateEditorial()"
+                        [disabled]="editorialNameEdit.invalid"
+                      >
+                        Update
+                      </button>
+                      <button
+                        class="btn btn-outline-warning mr-1"
+                        type="button"
+                        (click)="editing = false"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="editEditorial($event, ed.id_editorial)"
+                  >
+                    Editar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+           <!-- controles del pagination -->
+           <pagination-controls
+           (pageChange)="actualPage = $event"
+         ></pagination-controls>
+          <p *ngIf="!searchResult">
+            <small class="text-danger">No se encontraron resultados</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

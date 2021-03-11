@@ -1,0 +1,222 @@
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <div class="row box-fila">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <form #searchForm="ngForm" class="my-2 my-lg-0">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-check-inline">
+                        <input
+                          type="radio"
+                          id="a1"
+                          name="a"
+                          value="id"
+                          [(ngModel)]="radioValue"
+                        />
+                        <label for="a1">id libro</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-check-inline">
+                        <input
+                          type="radio"
+                          id="a2"
+                          name="a"
+                          [(ngModel)]="radioValue"
+                          value="name"
+                          checked
+                        />
+                        <label for="a2">Nombre de libro</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-check-inline">
+                        <input
+                          type="radio"
+                          id="a3"
+                          name="a"
+                          [(ngModel)]="radioValue"
+                          value="author"
+                        />
+                        <label for="a3">Autor</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-8">
+                  <div class="box-filter">
+                    <input
+                      type="text"
+                      class="form-control capitalize"
+                      name="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                      [(ngModel)]="inputValue"
+                      (keydown.enter)="filter()"
+                    />
+                    <button
+                      class="btn btn-outline-success mr-1"
+                      type="button"
+                      (click)="filter()"
+                    >
+                      Filtrar
+                    </button>
+                    <button
+                      [disabled]="btnDisabled"
+                      class="btn btn-outline-success"
+                      type="button"
+                      (click)="getBooksWithAuthorName()"
+                    >
+                      Todos
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="color: red" *ngIf="filterArray.length === 0">
+      <small>No se encontraron resultados</small>
+    </p>
+    <div *ngIf="filterArray.length > 0" class="card mt-3 mb-4">
+      <div *ngIf="filterArray as libros" class="card-body">
+        <div class="d-flex justify-content-between my-2">
+          <h5>Lista de libros total: {{ libros.length }}</h5>
+
+          <a mat-raised-button color="warn" [routerLink]="'/book/create-book'">
+            <mat-icon>add_circle</mat-icon>
+            Nuevo libro
+          </a>
+        </div>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="text-center">
+                <a (click)="getBooksWithAuthorName()"
+                  ><i class="fas fa-sync-alt"></i
+                ></a>
+              </th>
+              <th class="text-center">Image</th>
+              <th class="text-center">Nombre de libro</th>
+              <th class="text-center">Autor</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let b of libros
+                  | paginate: { itemsPerPage: 10, currentPage: actualPage };
+                let i = index
+              "
+            >
+              <td
+                class="text-center"
+                [ngClass]="{ paintYellow: b.state === false }"
+              >
+                {{ i + 1 }}
+              </td>
+              <td
+                class="text-center"
+                [ngClass]="{ paintYellow: b.state === false }"
+              >
+                <img [src]="linkImg(b.url_image)" />
+              </td>
+              <td
+                class="text-center"
+                [ngClass]="{ paintYellow: b.state === false }"
+              >
+                {{ b.name }}
+              </td>
+              <!-- en la query lado server tenes AS Autor, por eso aca pones b.autor -->
+              <td
+                class="text-center"
+                [ngClass]="{ paintYellow: b.state === false }"
+              >
+                {{ b.autor }}
+              </td>
+              <td
+                class="text-center"
+                [ngClass]="{ paintYellow: b.state === false }"
+              >
+                <button
+                  mat-raised-button
+                  color="celeste"
+                  class="mr-1"
+                  [routerLink]="['/book/edit-book/', b.id_book]"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  *ngIf="b.state === true"
+                  mat-raised-button
+                  color="warn"
+                  (click)="showModal(b)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button
+                  *ngIf="b.state === false"
+                  mat-raised-button
+                  color="primary"
+                  (click)="darDeAlta(b.id_book)"
+                >
+                  <!-- <mat-icon>delete</mat-icon> -->
+                  Alta
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- controles del pagination -->
+        <pagination-controls
+          (pageChange)="actualPage = $event"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+  <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+  <ngx-spinner></ngx-spinner>
+</div>
+
+<ng-template #templateModal let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title text-danger font-weight-bold">ADVERTENCIA</h3>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Recuerde que si <span class="text-danger">elimina</span> el producto, los
+      datos no se borrarán de la base de datos, pero
+      <span class="font-weight-bold"
+        >ya no estará disponible como venta para el usuario en el
+        e-commerce</span
+      >. El producto eliminado quedará resaltado con un fondo amarillo en la
+      lista de libros. De todas formas usted podrá dar de alta al producto
+      pulsando el botón Alta.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="closeModal()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-danger" (click)="darDeBaja()">
+      Eliminar
+    </button>
+  </div>
+</ng-template>
