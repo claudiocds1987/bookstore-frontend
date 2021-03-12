@@ -1,22 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Admin } from '../models/admin';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  private URL_API = 'http://localhost:4000/admins';
-  API = 'http://localhost:4000/admin/login';
+  SERVER = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+
+    if (!isDevMode()) {
+			this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+		}
+
+  }
 
   getAdmin(email:string, pass: string) {
     const state: boolean = true;
     // console.log(state, email, pass);
-    return this.http.post<Admin[]>(this.API, {email, pass, state});
+    return this.http.post<Admin[]>(`${this.SERVER}/admin/login`, {email, pass, state});
   }
 
 }
+

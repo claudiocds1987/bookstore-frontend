@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User} from '../models/user';
 
@@ -7,7 +7,7 @@ import { User} from '../models/user';
 })
 export class UserService {
   fecha = new Date();
-  URL_API = 'http://localhost:4000/users';
+ // URL_API = 'http://localhost:4000/users';
 
   // objeto vacio tipo User
   // selectedUser: User = {
@@ -20,38 +20,45 @@ export class UserService {
 
   userArray: User[]; // array de tipo User
 
-  constructor(private http: HttpClient) {}
+  SERVER = 'http://localhost:3000';
+
+  constructor(private http: HttpClient) {
+
+    if (!isDevMode()) {
+			this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+		}
+  }
 
   getUsers() {
-    return this.http.get<User[]>(this.URL_API);
+    return this.http.get<User[]>(this.SERVER);
   }
 
   existUsername(username: string){
     // devuelve true o false
-    return this.http.get('http://localhost:4000/users/exist/username/' + username);
+    return this.http.get(`${this.SERVER}/users/exist/username/` + username);
   }
 
   existUserEmail(email: string){
     // devuelve true o false
-    return this.http.get('http://localhost:4000/users/exist/email/' + email);
+    return this.http.get(`${this.SERVER}/users/exist/email/` + email);
   }
 
   getUserByUserName(username: string) {
     // const a = username;
-    return this.http.get<User[]>(`${this.URL_API}/${username}`);
+    return this.http.get<User[]>(`${this.SERVER}/${username}`);
   }
 
   createUser(user: User) {
     // creo usuario en postgresql con "post"
-    return this.http.post(this.URL_API, user);
+    return this.http.post(this.SERVER, user);
   }
 
   updateUser(user: User){
-    return this.http.put(`${this.URL_API}/${user.username}`, user);
+    return this.http.put(`${this.SERVER}/${user.username}`, user);
   }
 
   deleteUser(username: string) {
-    return this.http.delete(`${this.URL_API}/${username}`);
+    return this.http.delete(`${this.SERVER}/${username}`);
   }
 
 }

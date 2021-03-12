@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Admin } from '../models/admin';
-import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TokenService } from './../services/token.service';
 import { User } from '../models/user';
@@ -12,28 +11,36 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
 
-  private API = 'http://localhost:4000/admin/login';
-  private AUTH_USER = 'http://localhost:4000/api/auth/'; // para signup y login de user
+  SERVER = 'http://localhost:3000';
+
+  //private API = 'http://localhost:4000/admin/login';
+  //private AUTH_USER = 'http://localhost:4000/api/auth/'; // para signup y login de user
 
   public username = new BehaviorSubject<string>('');
   public username$ = this.username.asObservable();
 
-  constructor(private http: HttpClient, private tokenService:TokenService) { }
+  constructor(private http: HttpClient, private tokenService:TokenService) {
+
+    if (!isDevMode()) {
+			this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+		}
+
+  }
 
   getAdmin(email: string, pass: string) {
     const state: boolean = true;
     // console.log(state, email, pass);
-    return this.http.post<Admin[]>(this.API, {email, pass, state});
+    return this.http.post<Admin[]>(`${this.SERVER}/admin/login`, {email, pass, state});
   }
 
   // registro de usuario
   userSignup(user: User){
     //return this.http.post(`${this.AUTH_USER}${'signup/user'}`, user); 
-    return this.http.post('http://localhost:4000/api/auth/signup/user', user);
+    return this.http.post(`${this.SERVER}/api/auth/signup/user`, user);
   }
 
   loginUser(username: string, password){
-    return this.http.post(`${this.AUTH_USER}${'signin/user'}`, {username, password})
+    return this.http.post(`${this.SERVER}/signin/user`, {username, password})
     .pipe(
       tap((data: any) => {
         const token = data.token;
@@ -50,3 +57,4 @@ export class AuthService {
   }
 
 }
+
