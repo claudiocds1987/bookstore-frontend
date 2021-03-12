@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng build --prod",
+    "build": "ng build --prod",
     "heroku-postbuild": "ng build --configuration=production",
-    "build": "ng build",
+    "start": "node server.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -30,6 +30,7 @@
     "bootstrap": "^4.5.0",
     "bootswatch": "^4.5.2",
     "chart.js": "^2.9.4",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
     "ng2-charts": "^2.4.2",
     "ngx-mask": "^11.1.4",
