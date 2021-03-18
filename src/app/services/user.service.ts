@@ -23,7 +23,9 @@ export class UserService {
   SERVER = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {
-
+    // con esta linea Angular reconoce si la aplicacion se esta corriendo en local(desarrollo) o en produccion.
+    // si esta en local la aplicacion corre en 'http://localhost:3000
+    // si es produccion corre en https://bookstore-cds-server.herokuapp.com
     if (!isDevMode()) {
 			this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
 		}
@@ -48,17 +50,17 @@ export class UserService {
     return this.http.get<User[]>(`${this.SERVER}/users/${username}`);
   }
 
-  createUser(user: User) {
-    // creo usuario en postgresql con "post"
-    return this.http.post(this.SERVER, user);
-  }
+  // createUser(user: User) {
+  //   // el usuario lo creo en auth.service
+  //   return this.http.post(this.SERVER, user);
+  // }
 
   updateUser(user: User){
-    return this.http.put(`${this.SERVER}/${user.username}`, user);
+    return this.http.put(`${this.SERVER}/users/${user.username}`, user);
   }
 
   deleteUser(username: string) {
-    return this.http.delete(`${this.SERVER}/${username}`);
+    return this.http.delete(`${this.SERVER}/users/${username}`);
   }
 
 }
