@@ -80,8 +80,8 @@ export class HomeComponent implements OnInit {
     str = str.replace('\\', '');
     // invierto la barra en sentido a '/'
     str = str.replace('\\', '/');
-    // const URL = 'http://localhost:4000/';
-    const URL = `${this.SERVER}/`;
+    const URL = 'http://localhost:4000/';
+    //const URL = `${this.SERVER}/`;
     const link = URL + str;
     // console.log(link);
     return link;
