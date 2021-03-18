@@ -30,7 +30,7 @@ export class UserService {
   }
 
   getUsers() {
-    return this.http.get<User[]>(this.SERVER);
+    return this.http.get<User[]>(`${this.SERVER}/users`);
   }
 
   existUsername(username: string){
@@ -45,7 +45,7 @@ export class UserService {
 
   getUserByUserName(username: string) {
     // const a = username;
-    return this.http.get<User[]>(`${this.SERVER}/${username}`);
+    return this.http.get<User[]>(`${this.SERVER}/users/${username}`);
   }
 
   createUser(user: User) {
