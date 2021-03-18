@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   loginUser(username: string, password){
-    return this.http.post(`${this.SERVER}/api/signin/user`, {username, password})
+    return this.http.post(`${this.SERVER}/api/auth/signin/user`, {username, password})
     .pipe(
       tap((data: any) => {
         const token = data.token;
