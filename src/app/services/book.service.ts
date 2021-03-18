@@ -49,7 +49,7 @@ export class BookService {
   // trae todos los libros sin importar su estado state
   getBooksWithAuthorName() {
     // return this.http.get<Book[]>(this.URL_API + 'AuthorName');
-    return this.http.get<Book[]>(`${this.SERVER}/books/AuthorName`);
+    return this.http.get<Book[]>(`${this.SERVER}/booksAuthorName`);
   }
 
   // trae solo los libros que tiene state = true (aptos parta la venta)
