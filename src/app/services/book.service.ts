@@ -33,7 +33,7 @@ export class BookService {
 
   getBookById(id: string) {
    // return this.http.get<Book[]>(`${this.URL_API}/${id}`);
-    return this.http.get<Book[]>(`${this.SERVER}/${id}`);
+    return this.http.get<Book[]>(`${this.SERVER}/books/${id}`);
   }
 
   getImage() {

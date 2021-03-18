@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, isDevMode, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Book } from 'src/app/models/book';
@@ -14,6 +14,7 @@ import { AlertService } from '../../../services/alert.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  SERVER = 'http://localhost:3000';
   bookList$: Observable<Book[]>;
   inputValue = ''; // value del input search
   selectValue; // value de la opcion seleccionada en el select
@@ -32,7 +33,14 @@ export class HomeComponent implements OnInit {
     public cartService: CartService,
     public myValidationsService: MyValidationsService,
     public alertService: AlertService
-  ) {}
+  ) {
+    // con esta linea Angular reconoce si la aplicacion se esta corriendo en local(desarrollo) o en produccion.
+    // si esta en local la aplicacion corre en 'http://localhost:3000
+    // si es produccion corre en https://bookstore-cds-server.herokuapp.com
+    if (!isDevMode()) {
+      this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+    }
+  }
 
   ngOnInit(): void {
     // "boton listar todos" del filtrado esta oculto hasta que se haga click en boton buscar
@@ -72,8 +80,8 @@ export class HomeComponent implements OnInit {
     str = str.replace('\\', '');
     // invierto la barra en sentido a '/'
     str = str.replace('\\', '/');
-    // console.log(str);
-    const URL = 'http://localhost:4000/';
+    // const URL = 'http://localhost:4000/';
+    const URL = `${this.SERVER}/`;
     const link = URL + str;
     // console.log(link);
     return link;
