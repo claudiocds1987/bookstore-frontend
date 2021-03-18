@@ -37,9 +37,9 @@ export class HomeComponent implements OnInit {
     // con esta linea Angular reconoce si la aplicacion se esta corriendo en local(desarrollo) o en produccion.
     // si esta en local la aplicacion corre en 'http://localhost:3000
     // si es produccion corre en https://bookstore-cds-server.herokuapp.com
-    if (!isDevMode()) {
-      this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
-    }
+    // if (!isDevMode()) {
+    //   this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+    // }
   }
 
   ngOnInit(): void {
@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
     // invierto la barra en sentido a '/'
     str = str.replace('\\', '/');
     //const URL = 'http://localhost:4000/';
-    const URL = 'https://bookstore-cds-server.herokuapp.com/uploads/';
+    const URL = 'https://bookstore-cds-server.herokuapp.com/';
     const link = URL + str;
     // console.log(link);
     return link;
