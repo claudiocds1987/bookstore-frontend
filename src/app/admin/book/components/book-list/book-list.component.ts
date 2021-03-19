@@ -57,8 +57,8 @@ export class BookListComponent implements OnInit {
     str = str.replace('\\', '');
     // invierto la barra en sentido a '/'
     str = str.replace('\\', '/');
-    // console.log(str);
-    const URL = 'http://localhost:4000/';
+    // const URL = 'http://localhost:4000/';
+    const URL = 'https://bookstore-cds-server.herokuapp.com/';
     const link = URL + str;
     console.log(link);
     return link;
