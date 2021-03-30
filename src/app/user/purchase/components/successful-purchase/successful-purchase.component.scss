@@ -1,0 +1,19 @@
+.box-principal {
+    min-height: 100vh;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
+    #img-container{
+        display: flex;
+        justify-content: center;
+        img{
+            margin-top: 100px;
+        }
+    }    
+}
+
+.card {
+    //flex: auto; // para que funcione el max-width
+    //max-width: 500px;
+    top: 70px;
+}

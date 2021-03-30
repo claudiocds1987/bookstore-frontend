@@ -1,0 +1,267 @@
+<p>form-purchase works!</p>
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <div class="card">
+      <mat-horizontal-stepper class="box">
+        <mat-step>
+          <ng-template matStepLabel>Sus productos</ng-template>
+          <!-- creo variable temporal en memoria con as products (ver video clase 51) -->
+          <div class="box">
+            <h2 class="text-white">TOTAL:</h2>
+            <label class="text-white"
+              ><b>{{ total | currency }}</b></label
+            >
+          </div>
+
+          <div class="table-responsive" *ngIf="bookList as libros">
+            <table *ngIf="libros.length > 0" class="table table-sm table-striped">
+              <thead class="encabezado">
+                <tr class="text-white">
+                  <th scope="col" class="text-center"></th>
+                  <th scope="col" class="text-center">Producto</th>
+                  <th scope="col" class="text-center">Cantidad</th>
+                  <th scope="col" class="text-center"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-white text-muted"
+                  *ngFor="let b of libros; index as i"
+                >
+                  <td class="text-center align-middle">
+                    <img [src]="b.url_image" class="img-book" />
+                  </td>
+                  <!-- en la query lado server tenes AS Autor, por eso aca pones b.autor aunque salga en rojo -->
+                  <td class="text-center align-middle">
+                    <b>{{ b.name }}</b> <br />
+                    {{ b.autor }} <br />
+                    {{ b.price }}
+                  </td>
+
+                  <td class="text-center align-middle">
+                    <input
+                      type="number"
+                      [id]="b.id_book"
+                      [name]="b.id_book"
+                      [value]="b.quantity"
+                      min="1"
+                      max="5"
+                      (change)="updateItem($event, b.id_book, i)"
+                    />
+                  </td>
+
+                  <td class="text-center align-middle">
+                    <button
+                      mat-mini-fab
+                      color="warn"
+                      (click)="onDelete(b.id_book)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Realizar pago</ng-template>
+          <h3 class="text-white mt-2">Total: {{ total | currency }}</h3>
+          <div *ngIf="username != null || username != undefined else template_alerta">
+            <form
+              #formu
+              [formGroup]="form"
+              action="https://bookstore-cds-server.herokuapp.com/checkout"
+              method="post"
+            >
+              <div *ngFor="let data of bookList; index as i">
+                <input type="hidden" name="title" [value]="data.name" />
+                <input type="hidden" name="price" [value]="data.price" />
+                <input type="hidden" name="quantity" [value]="data.quantity" />
+              </div>
+
+              <input
+                type="hidden"
+                name="totalProducts"
+                [value]="bookList.length"
+              />
+
+              <mat-card id="card-inputs">
+                <img
+                  src="./../../../../assets/images/img-envios.png"
+                  class="img-envios"
+                />
+                <mat-card-content
+                  class="mt-4"
+                  style="-webkit-text-fill-color: #5eba7d"
+                >
+                  <div class="row row-input">
+                    <div class="col-xs box-input">
+                      <mat-form-field>
+                        <input
+                          [(ngModel)]="order.provincia"
+                          formControlName="provincia"
+                          type="text"
+                          matInput
+                          placeholder="Provincia"
+                        />
+                        <div
+                          *ngIf="provinciaField.errors && provinciaField.dirty"
+                        >
+                          <p *ngIf="provinciaField.hasError('required')">
+                            <small class="text-danger"
+                              >Complete este campo.</small
+                            >
+                          </p>
+                          <p *ngIf="provinciaField.hasError('pattern')">
+                            <small class="text-danger"
+                              >Ingrese solo letras.</small
+                            >
+                          </p>
+                          <p *ngIf="provinciaField.hasError('maxlength')">
+                            <small class="text-danger"
+                              >Maximo 30 caracteres</small
+                            >
+                          </p>
+                          <p *ngIf="provinciaField.hasError('minlength')">
+                            <small class="text-danger"
+                              >Minimo 4 caracteres</small
+                            >
+                          </p>
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row row-input">
+                    <div class="col-xs box-input">
+                      <mat-form-field>
+                        <input
+                          [(ngModel)]="order.localidad"
+                          formControlName="localidad"
+                          type="text"
+                          matInput
+                          placeholder="Localidad"
+                        />
+                        <div
+                          *ngIf="localidadField.errors && localidadField.dirty"
+                        >
+                          <p *ngIf="localidadField.hasError('required')">
+                            <small class="text-danger"
+                              >Complete este campo.</small
+                            >
+                          </p>
+                          <p *ngIf="localidadField.hasError('pattern')">
+                            <small class="text-danger"
+                              >Ingrese solo letras.</small
+                            >
+                          </p>
+                          <p *ngIf="localidadField.hasError('maxlength')">
+                            <small class="text-danger"
+                              >Maximo 30 caracteres</small
+                            >
+                          </p>
+                          <p *ngIf="localidadField.hasError('minlength')">
+                            <small class="text-danger"
+                              >Minimo 4 caracteres</small
+                            >
+                          </p>
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row row-input">
+                    <div class="col-xs box-input">
+                      <mat-form-field>
+                        <input
+                          [(ngModel)]="order.adress"
+                          formControlName="adress"
+                          type="text"
+                          matInput
+                          placeholder="Domicilio"
+                        />
+                        <div *ngIf="adressField.errors && adressField.dirty">
+                          <p *ngIf="adressField.hasError('required')">
+                            <small class="text-danger"
+                              >Complete este campo.</small
+                            >
+                          </p>
+                          <p *ngIf="adressField.hasError('maxlength')">
+                            <small class="text-danger"
+                              >Maximo 30 caracteres</small
+                            >
+                          </p>
+                          <p *ngIf="adressField.hasError('minlength')">
+                            <small class="text-danger"
+                              >Minimo 4 caracteres</small
+                            >
+                          </p>
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row row-input">
+                    <div class="col-xs box-input">
+                      <mat-form-field>
+                        <input
+                          [(ngModel)]="order.phone_number"
+                          formControlName="phoneNumber"
+                          type="tel"
+                          matInput
+                          placeholder="Teléfono"
+                          name="tel"
+                        />
+                        <div
+                          *ngIf="
+                            phoneNumberField.errors && phoneNumberField.dirty
+                          "
+                        >
+                          <p *ngIf="phoneNumberField.hasError('required')">
+                            <small class="text-danger"
+                              >Complete este campo.</small
+                            >
+                          </p>
+                          <p *ngIf="phoneNumberField.hasError('pattern')">
+                            <small class="text-danger"
+                              >Ingrese solo números sin espacios.</small
+                            >
+                          </p>
+                          <p *ngIf="phoneNumberField.hasError('minlength')">
+                            <small class="text-danger"
+                              >Ingrese un mínimo de 8 números.</small
+                            >
+                          </p>
+                          <p *ngIf="phoneNumberField.hasError('maxlength')">
+                            <small class="text-danger"
+                              >Hasta 12 números permitidos.</small
+                            >
+                          </p>
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <button
+                [disabled]="form.invalid"
+                type="submit"
+                class="btn btn-success"
+                (click)="formu.submit()"
+              >
+                mercado pago
+              </button>
+            </form>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+  <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+  <ngx-spinner></ngx-spinner>
+</div>
+
+<ng-template #template_alerta>
+  <h3 class="text-danger">Para comprar debe estar logeado</h3>
+</ng-template>

@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('./user/auth/auth.module').then(m => m.AuthModule)
       },
       {
+        path: 'purchase',
+        loadChildren: () => import('./user/purchase/purchase.module').then(m => m.PurchaseModule)
+      },
+      {
         path: 'order',
         loadChildren: () => import('./user/order/order.module').then(m => m.OrderModule)
       },

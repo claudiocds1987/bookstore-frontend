@@ -23,7 +23,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="text-white text-muted" *ngFor="let b of libros; index as i">
+                <tr
+                  class="text-white text-muted"
+                  *ngFor="let b of libros; index as i"
+                >
                   <td class="text-center align-middle">
                     <img [src]="b.url_image" class="img-book" />
                   </td>
@@ -69,10 +72,13 @@
                 src="./../../../../assets/images/img-envios.png"
                 class="img-envios"
               />
-              <mat-card-content class="mt-4" style="-webkit-text-fill-color: #5eba7d">
+              <mat-card-content
+                class="mt-4"
+                style="-webkit-text-fill-color: #5eba7d"
+              >
                 <div class="row row-input">
                   <div class="col-xs box-input">
-                    <mat-form-field>           
+                    <mat-form-field>
                       <input
                         [(ngModel)]="order.provincia"
                         formControlName="provincia"
@@ -222,19 +228,47 @@
                   <button
                     id="btn-pagar"
                     class="btn btn-dark"
-                    [disabled]="form.invalid || habilitarBtnPagar === false"        
+                    [disabled]="form.invalid || habilitarBtnPagar === false"
                     type="submit"
                   >
-                    Pagar {{ total | currency}}
+                    Pagar {{ total | currency }}
                   </button>
                 </div>
               </mat-card-content>
             </mat-card>
           </form>
         </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Mercado pago</ng-template>
+          <div>
+            <form #form action="http://localhost:3000/checkout" method="post">
+              <div *ngFor="let data of bookList; index as i">
+                <input type="hidden" name="title" [value]="data.name" />
+                <input type="hidden" name="price" [value]="data.price" />
+                <input type="hidden" name="quantity" [value]="data.quantity" />
+              </div>
+              <input type="hidden" name="totalProducts" [value]="bookList.length" />
+              <button
+                type="submit"
+                class="btn btn-success"
+                (click)="form.submit()"
+              >
+                mercado pago
+              </button>
+            </form>
+            <button
+                type="button"
+                class="btn btn-success"
+                (click)="sendData()"
+              >
+               caca
+              </button>
+          </div>
+        </mat-step>
       </mat-horizontal-stepper>
     </div>
   </div>
-   <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
-   <ngx-spinner></ngx-spinner>
+  <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+  <ngx-spinner></ngx-spinner>
 </div>

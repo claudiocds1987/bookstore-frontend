@@ -3,7 +3,6 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit,
   NgZone,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +12,6 @@ import { Router } from '@angular/router';
 import { CartService } from '../../../../services/cart.service';
 import { OrderService } from '../../../../services/order.service';
 import { OrderDetailService } from '../../../../services/order-detail.service';
-import { StripeService } from '../../../../services/stripe.service';
 import { SaleService } from '../../../../services/sale.service';
 import { SaleDetailService } from '../../../../services/sale-detail.service';
 import { UserService } from '../../../../services/user.service';
@@ -32,11 +30,12 @@ import { Compramp } from 'src/app/models/compramp';
 import { MatConfirmDialogComponent } from '../../../../mat-confirm-dialog/mat-confirm-dialog.component';
 
 @Component({
-  selector: 'app-create-order',
-  templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.scss'],
+  selector: 'app-form-purchase',
+  templateUrl: './form-purchase.component.html',
+  styleUrls: ['./form-purchase.component.scss']
 })
-export class CreateOrderComponent implements OnInit, AfterViewInit {
+export class FormPurchaseComponent implements OnInit {
+
   form: FormGroup;
   // variables para el api de pagos Stripe
   @ViewChild('cardInfo') cardInfo: ElementRef;
@@ -62,7 +61,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   dialogRef: MatDialogRef<MatConfirmDialogComponent>;
   maxQuantity: number[] = [];
   habilitarBtnPagar = false;
-
+  username;
   constructor(
     private formBuilder: FormBuilder,
     public cartService: CartService,
@@ -74,10 +73,9 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     public userService: UserService,
     public mercadopagoService: MercadopagoService,
     private ngZone: NgZone,
-    private stripeService: StripeService,
     private router: Router,
     private dialog: MatDialog
-  ) {
+  ) { 
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
     if (localStorage.getItem('shoppingCart') != null) {
@@ -89,6 +87,10 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
         this.maxQuantity.push(item.quantity); // quantity de la db para max limit en input
         item.quantity = 1; // seteo quantity = 1 de cada libro
       }
+
+       // aca localstorage para success-purchasess, cuando mercadopago informe compra exitosa
+       // va a hacer un redirect a successful-purchase y ahi voy a crear la orden de compra
+      localStorage.setItem('purchase', JSON.stringify(this.bookList));
 
       // calculo total de precio
       this.total = this.bookList
@@ -104,58 +106,14 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  sendData() {
-    // creo array de compra
-    const form = <HTMLFormElement>document.getElementById('myForm');
-    let compra: Compramp[] = [];
-    for (let book of this.bookList) {
-      compra.push({
-        title: book.name,
-        unit_price: book.price,
-        quantity: book.quantity
-      });    
-    }
-
-    for (let c of compra) {
-      console.log(c);
-    }
-
-    console.log('total: ' + this.total);
-    // aca servicio mercadopago
-    this.mercadopagoService.checkout(compra).subscribe(
-      res => {
-        console.log(res);
-      },
-      err => console.error('Error al recibir la data de compra en el servidor. ' + err)
-    );
-  }
-
-  // funcion que checkea si todos los inputs estan bien ?
-  // public findInvalidControls() {
-  //   const invalid = [];
-  //   const controls = this.AddCustomerForm.controls;
-  //   for (const name in controls) {
-  //       if (controls[name].invalid) {
-  //           invalid.push(name);
-  //       }
-  //   }
-  //   return invalid;
-  // }
-
   ngOnInit(): void {
+    // si no hay username, no esta logeado, no puede comprar.
     if (localStorage.getItem('username') != null) {
-      const username = localStorage.getItem('username');
-      this.getUserByUserName(username);
+      this.username = localStorage.getItem('username');
+      this.getUserByUserName(this.username);
     }
   }
-
-  ngAfterViewInit() {
-    // la variable "elements" esta definida en el archivo typings.d.ts
-    this.card = elements.create('card');
-    this.card.mount(this.cardInfo.nativeElement);
-    this.card.addEventListener('change', this.onChange.bind(this));
-  }
-
+ 
   getUserByUserName(username: string) {
     this.userService.getUserByUserName(username).subscribe(
       (res) => {
@@ -247,9 +205,10 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
         // actualizo la cantidad en bookList
         book.quantity = currentQuantity;
         break;
-      }   
+      }
     }
-   
+     // aca localstorage para success-purchasess
+    localStorage.setItem('purchase', JSON.stringify(this.bookList));
     this.calculateTotalPrice();
   }
 
@@ -272,186 +231,6 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
       this.ngZone.run(() => (this.cardError = null));
       // si no hay errores "habilito" el boton Pagar
       this.habilitarBtnPagar = true;
-    }
-  }
-
-  createOrder() {
-    // id_order no importa porque en la db es autonumerico
-    this.order.id_user = this.userArray[0].id_user;
-    this.order.order_date = this.currentDate;
-    this.order.total_price = this.total;
-    this.orderService.createOrder(this.order).subscribe(
-      (res) => {
-        console.log('La orden fue creada exitosamente');
-        this.createOrderDetail();
-      },
-      (err) => console.error('No se pudo crear la orden ' + err.error.message)
-    );
-  }
-
-  createOrderDetail() {
-    // antes de crear el detalle de la orden traigo el ultimo id_order de la tabla "orders" de la base de datos
-    let idOrder;
-    this.orderService.getLastIdOrder().subscribe(
-      (res) => {
-        idOrder = res;
-        // .lastIdOrder porque en la query esta como as "lastIdOrder"
-        console.log('Ultimo idOrder obtenido: ' + idOrder.lastIdOrder);
-        for (const item of this.bookList) {
-          this.orderDetail.id_order = idOrder.lastIdOrder;
-          this.orderDetail.id_product = item.id_book;
-          this.orderDetail.product_price = item.price;
-          // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant.
-          // desde el input number gracias a la funcion updateItem()
-          this.orderDetail.product_quantity = item.quantity;
-          // se crea el detalle de la orden de compra
-          this.orderDetailService.createOrderDetail(this.orderDetail).subscribe(
-            (resp) => {
-              console.log(
-                'El detalle de la orden fue creada exitosamente ' + resp
-              );
-            },
-            (err) =>
-              console.error(
-                'No se pudo crear el detalle de la orden ' + err.error.message
-              )
-          );
-        }
-      },
-      (err) =>
-        console.error(
-          'Error al intentar obtener el ultimo idOrder de la base de datos'
-        )
-    );
-  }
-
-  createSale() {
-    this.sale.id_user = this.userArray[0].id_user;
-    this.sale.total_price = this.total;
-    this.sale.date = this.currentDate;
-    this.saleServices.createSale(this.sale).subscribe(
-      (res) => {
-        console.log('La venta fue creada');
-        this.createSaleDetail();
-      },
-      (err) => console.error('No se pudo crear la venta ' + err.error.message)
-    );
-  }
-
-  createSaleDetail() {
-    let idSale;
-    // antes de crear el detalle de venta, necesito obtener el id de la venta creada
-    this.saleServices.getLastIdSale().subscribe(
-      (res) => {
-        idSale = res;
-        // .lastIdSale porque en la query esta como as "lastIdSale"
-        console.log('Ultimo idSale obtenido: ' + idSale.lastIdSale);
-        // se crea el detalle de la venta
-        for (const item of this.bookList) {
-          this.saleDetail.id_book = item.id_book;
-          this.saleDetail.id_sale = idSale.lastIdSale;
-          this.saleDetail.price = item.price;
-          // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant.
-          // desde el input number gracias a la funcion updateItem()
-          this.saleDetail.quantity = item.quantity;
-          // ¿ seria mejor un array de tipo saleDetail que guarde el obj en cada iteracion
-          // despues afuera uso un for y hago el createSaleDetail ??
-          this.saleDetailServices.createSaleDetail(this.saleDetail).subscribe(
-            (resp) => {
-              console.log('El detalle de venta fue creado ' + resp);
-            },
-            (err) =>
-              console.error(
-                'No se pudo crear el detalle de venta ' + err.error.message
-              )
-          );
-        }
-      },
-      (err) =>
-        console.error(
-          'No se pudo obtener el último id de venta ' + err.error.message
-        )
-    );
-  }
-
-  // payMercadoPago(event: Event){
-  //   if(localStorage.getItem('username') === null){
-  //     this.alertService.showError(
-  //       'Para poder comprar debe tener una cuenta de usuario.',
-  //       ''
-  //     );
-  //   }else{
-  //     event.preventDefault();
-  //     if(this.form.valid){
-  //       const btnPagar = document.getElementById('btn-pagar');
-  //       btnPagar.setAttribute('disabled', 'true');
-  //       // aca logica mercado pago
-
-  //     }
-  //   }
-
-  // }
-
-  // "async" porque devuelve una promesa
-  async pagar(event: Event) {
-    if (localStorage.getItem('username') === null) {
-      this.alertService.showError(
-        'Para poder comprar debe tener una cuenta de usuario.',
-        ''
-      );
-    } else {
-      event.preventDefault();
-      if (this.form.valid) {
-        // se habilita boton pagar
-        const btnPagar = document.getElementById('btn-pagar');
-        btnPagar.setAttribute('disabled', 'true');
-        //  EFECTUANDO EL PAGO STRIPE
-        const { token, error } = await stripe.createToken(this.card);
-        if (token) {
-          // console.log(token);
-          // el total a pagar esta seteado en 1 pr prueba, si quiero el valor real a pagar por parametro le paso la variable this.total
-          // es decir const response = await this.stripeService.charge(this.total, token.id);
-          await this.stripeService.charge(1, token.id).then(
-            (res) => {
-              console.log('el pago fue realizado');
-              // se crea la orden y el detalle de la orden que esta adentro de la funcion createOrder
-              this.createOrder();
-              // se crea la venta y el detalle de venta que esta adentro de la funcion createSale()
-              this.createSale();
-              // borro las local storage
-              localStorage.removeItem('books');
-              localStorage.removeItem('shoppingCart');
-              // seteo el carrito a 0 items en el boton del carrito del componente main-nav
-              this.cartService.cart.next([]);
-              // this.dialog.open(le paso por parametro el componente mat-confirm-dialog.component.html);
-              // es el componente que se va a mostrar en la ventana(modal) antes de eliminar el producto
-              this.dialogRef = this.dialog.open(MatConfirmDialogComponent, {
-                disableClose: false,
-              });
-              // enviando el mensaje a mostrar en la ventana (modal)
-              this.dialogRef.componentInstance.confirmMessage =
-                'Su compra fue realizada. ¿Desea ver sus compras?';
-              // me subscribo a lo que recibio el modal ("true" si confirmo, "false" si cancelo)
-              this.dialogRef.afterClosed().subscribe((result) => {
-                if (result) {
-                  // aca solucionar problema, no redirije a orders-list
-                  this.router.navigate(['order/orders-list']);
-                }
-                this.dialogRef = null;
-                /// si cancela va a home
-                this.router.navigate(['home']);
-              });
-            },
-            (err) => console.error('Falla al intentar pagar')
-          );
-        } else {
-          this.ngZone.run(() => (this.cardError = error.message));
-          this.alertService.showError(
-            'Los datos de la tarjeta no son correctos',
-            'ERROR DE PAGO'
-          );
-        }
-      }
     }
   }
 
@@ -483,12 +262,6 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     }
     // actualizo el precio total
     this.calculateTotalPrice();
-
-    // actualizo el precio total funciona mal
-    // this.total = this.bookList
-    //   .map((item) => Number(item.price))
-    //   .reduce((count, item) => count + item, 0);
-
     // elimino el id del producto en el array que contiene la data de la localStorage 'idBooks'
     for (let z = 0; z < this.idBooks.length; z++) {
       if (id === this.idBooks[z].id_book) {
@@ -511,4 +284,5 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
       this.cartService.cart.next(this.bookList);
     }
   }
+
 }

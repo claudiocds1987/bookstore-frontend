@@ -1,0 +1,114 @@
+@import "./../../../../sass/variables";
+
+.fondo{
+    //background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+    background: $colorFondo;
+}
+
+::ng-deep.mat-horizontal-content-container{
+   background: #00567e;
+}
+
+::ng-deep.mat-horizontal-stepper-header-container{
+    background: $colorNav;
+    color: white;
+    .mat-step-icon{
+        background: #00567e; 
+    }
+    .mat-step-icon-selected{
+        background: #5eba7d;
+    }
+}
+
+::ng-deep.mat-step-text-label{
+    color: white;
+}
+
+.box-principal{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .card{
+       width: 100%; 
+       margin-top: 30px !important; 
+       margin-bottom: 20px !important;
+       background: #00567e;
+       table{
+           td{
+               border: none;
+            }
+        .encabezado{
+            background: #00567e;
+            th{
+                border: none !important;
+            }
+        }
+       }      
+    }
+    .box{
+        margin-top: 20px !important;
+    }
+}
+
+.img-book{
+    //max-width: 100%;
+    max-width: 100px;
+    max-height: 120px;
+}
+
+.box-contenedor{
+    margin: 0 auto !important;
+}
+
+#card-inputs{
+    margin: 0px auto !important;
+    max-width: 350px !important;
+    background: #005278;
+}
+
+.img-envios{
+    width: 100%;
+    max-height: 80px !important;
+}
+
+// #btn-pagar{
+//     height: 36px !important;
+// }
+
+.box-input{
+    margin: 0 auto !important;
+}
+
+// .credit-card{
+//     margin: 20px auto !important;
+//     max-width: 350px;
+//     max-height: 50px;
+//     padding: 20px;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-evenly;
+//     .caca{
+//         color: white;
+//     }
+// }
+
+// #box2{
+//     margin-bottom: 15px !important;
+// }
+
+// boton pagar
+.mat-raised-button{
+   // background-color: #5eba7d !important;
+    color: green !important;
+}
+
+
+// ::ng-deep .mat-form-field{
+//     color: white;
+// }
+// color del placeholder de los input de .mat-form-field
+// ::ng-deep .mat-form-field-placeholder{
+//     color: #a8eb12 !important;
+//   }
+  
