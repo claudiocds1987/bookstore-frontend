@@ -98,105 +98,104 @@ export class SuccessfulPurchaseComponent implements OnInit {
     );
   }
 
-  // createOrder() {
-  //   // id_order no importa porque en la db es autonumerico
-  //   this.order.id_user = this.userArray[0].id_user; // obtengo el id_user
-  //   this.order.order_date = this.currentDate;
-  //   this.order.total_price = this.total;
-  //   // se crea la orden de compra
-  //   this.orderService.createOrder(this.order).subscribe(
-  //     (res) => {
-  //       console.log('La orden fue creada exitosamente');
-  //       // se crea el detalle de la orden de compra
-  //       this.createOrderDetail();
-  //     },
-  //     (err) => console.error('No se pudo crear la orden ' + err.error.message)
-  //   );
-  // }
+  createOrder() {
+    // id_order no importa porque en la db es autonumerico
+    this.order.id_user = this.userArray[0].id_user; // obtengo el id_user
+    this.order.order_date = this.currentDate;
+    this.order.total_price = this.total;
+    // se crea la orden de compra
+    this.orderService.createOrder(this.order).subscribe(
+      (res) => {
+        console.log('La orden fue creada exitosamente');
+        // se crea el detalle de la orden de compra
+        this.createOrderDetail();
+      },
+      (err) => console.error('No se pudo crear la orden ' + err.error.message)
+    );
+  }
 
-  // createOrderDetail() {
-  //   // antes de crear el detalle de la orden traigo el ultimo id_order de la tabla "orders" de la base de datos
-  //   let idOrder;
-  //   this.orderService.getLastIdOrder().subscribe(
-  //     (res) => {
-  //       idOrder = res;
-  //       // .lastIdOrder porque en la query esta como as "lastIdOrder"
-  //       console.log('Ultimo idOrder obtenido: ' + idOrder.lastIdOrder);
-  //       for (const item of this.bookList) {
-  //         this.orderDetail.id_order = idOrder.lastIdOrder;
-  //         this.orderDetail.id_product = item.id_book;
-  //         this.orderDetail.product_price = item.price;
-  //         // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant.
-  //         // desde el input number gracias a la funcion updateItem()
-  //         this.orderDetail.product_quantity = item.quantity;
-  //         // se crea el detalle de la orden de compra
-  //         this.orderDetailService.createOrderDetail(this.orderDetail).subscribe(
-  //           (resp) => {
-  //             console.log(
-  //               'El detalle de la orden fue creada exitosamente ' + resp
-  //             );
-  //           },
-  //           (err) =>
-  //             console.error(
-  //               'No se pudo crear el detalle de la orden ' + err.error.message
-  //             )
-  //         );
-  //       }
-  //     },
-  //     (err) =>
-  //       console.error(
-  //         'Error al intentar obtener el ultimo idOrder de la base de datos'
-  //       )
-  //   );
-  // }
+  createOrderDetail() {
+    // antes de crear el detalle de la orden traigo el ultimo id_order de la tabla "orders" de la base de datos
+    let idOrder;
+    this.orderService.getLastIdOrder().subscribe(
+      (res) => {
+        idOrder = res;
+        // .lastIdOrder porque en la query esta como as "lastIdOrder"
+        console.log('Ultimo idOrder obtenido: ' + idOrder.lastIdOrder);
+        for (const item of this.bookList) {
+          this.orderDetail.id_order = idOrder.lastIdOrder;
+          this.orderDetail.id_product = item.id_book;
+          this.orderDetail.product_price = item.price;
+          // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant.
+          // desde el input number gracias a la funcion updateItem()
+          this.orderDetail.product_quantity = item.quantity;
+          // se crea el detalle de la orden de compra
+          this.orderDetailService.createOrderDetail(this.orderDetail).subscribe(
+            (resp) => {
+              console.log(
+                'El detalle de la orden fue creada exitosamente ' + resp
+              );
+            },
+            (err) =>
+              console.error(
+                'No se pudo crear el detalle de la orden ' + err.error.message
+              )
+          );
+        }
+      },
+      (err) =>
+        console.error(
+          'Error al intentar obtener el ultimo idOrder de la base de datos'
+        )
+    );
+  }
 
-  // createSale() {
-  //   this.sale.id_user = this.userArray[0].id_user;
-  //   this.sale.total_price = this.total;
-  //   this.sale.date = this.currentDate;
-  //   // se crea la venta
-  //   this.saleServices.createSale(this.sale).subscribe(
-  //     (res) => {
-  //       console.log('La venta fue creada');
-  //       // se crea el detalle de venta
-  //       this.createSaleDetail();
-  //     },
-  //     (err) => console.error('No se pudo crear la venta ' + err.error.message)
-  //   );
-  // }
+  createSale() {
+    this.sale.id_user = this.userArray[0].id_user;
+    this.sale.total_price = this.total;
+    this.sale.date = this.currentDate;
+    // se crea la venta
+    this.saleServices.createSale(this.sale).subscribe(
+      (res) => {
+        console.log('La venta fue creada');
+        // se crea el detalle de venta
+        this.createSaleDetail();
+      },
+      (err) => console.error('No se pudo crear la venta ' + err.error.message)
+    );
+  }
 
-  // createSaleDetail() {
-  //   let idSale;
-  //   // antes de crear el detalle de venta, necesito obtener el id de la venta creada
-  //   this.saleServices.getLastIdSale().subscribe(
-  //     (res) => {
-  //       idSale = res;
-  //       // .lastIdSale porque en la query esta como as "lastIdSale"
-  //       console.log('Ultimo idSale obtenido: ' + idSale.lastIdSale);
+  createSaleDetail() {
+    let idSale;
+    // antes de crear el detalle de venta, necesito obtener el id de la venta creada
+    this.saleServices.getLastIdSale().subscribe(
+      (res) => {
+        idSale = res;
+        // .lastIdSale porque en la query esta como as "lastIdSale"
+        console.log('Ultimo idSale obtenido: ' + idSale.lastIdSale);
         
-  //       for (const item of this.bookList) {
-  //         this.saleDetail.id_book = item.id_book;
-  //         this.saleDetail.id_sale = idSale.lastIdSale;
-  //         this.saleDetail.price = item.price;
-  //         this.saleDetail.quantity = item.quantity;
-  //         // se crea el detalle de venta
-  //         this.saleDetailServices.createSaleDetail(this.saleDetail).subscribe(
-  //           (resp) => {
-  //             console.log('El detalle de venta fue creado ' + resp);
-  //           },
-  //           (err) =>
-  //             console.error(
-  //               'No se pudo crear el detalle de venta ' + err.error.message
-  //             )
-  //         );
-  //       }
-  //     },
-  //     (err) =>
-  //       console.error(
-  //         'No se pudo obtener el último id de venta ' + err.error.message
-  //       )
-  //   );
-  // }
-
+        for (const item of this.bookList) {
+          this.saleDetail.id_book = item.id_book;
+          this.saleDetail.id_sale = idSale.lastIdSale;
+          this.saleDetail.price = item.price;
+          this.saleDetail.quantity = item.quantity;
+          // se crea el detalle de venta
+          this.saleDetailServices.createSaleDetail(this.saleDetail).subscribe(
+            (resp) => {
+              console.log('El detalle de venta fue creado ' + resp);
+            },
+            (err) =>
+              console.error(
+                'No se pudo crear el detalle de venta ' + err.error.message
+              )
+          );
+        }
+      },
+      (err) =>
+        console.error(
+          'No se pudo obtener el último id de venta ' + err.error.message
+        )
+    );
+  }
 
 }
