@@ -66,7 +66,10 @@ export class SuccessfulPurchaseComponent implements OnInit {
       this.calculateTotalPrice();
       console.log(this.bookList);
       console.log('PRECIO TOTAL: ' + this.total);
-
+      // se crea la orden de compra y adentro de createOrder() se crea el detalle de compra
+      this.createOrder();
+       // se crea la venta y adentro de createSale() se crea el detalle de venta
+      this.createSale();
       // borrando las localstorage (menos la del username)
       localStorage.removeItem('books');
       localStorage.removeItem('shoppingCart');
