@@ -16,7 +16,11 @@
               id="input-username"
               class="form-control"
               formControlName="username"
-              [ngClass]="{ 'is-invalid': f.username.errors  && f.username.dirty || !usernameExist, 'is-valid': usernameExist && !f.username.errors }"
+              [ngClass]="{
+                'is-invalid':
+                  (f.username.errors && f.username.dirty) || !usernameExist,
+                'is-valid': usernameExist && !f.username.errors
+              }"
               placeholder="Nombre de usuario"
               maxlength="16"
             />
@@ -32,7 +36,10 @@
           >
             <small style="color: green">Usuario valido.</small>
           </p>
-          <p *ngIf="!usernameExist && form.get('username').dirty" class="text-center">
+          <p
+            *ngIf="!usernameExist && form.get('username').dirty"
+            class="text-center"
+          >
             <small class="text-danger">No existe el nombre de usuario</small>
           </p>
 
@@ -40,24 +47,12 @@
             *ngIf="form.get('username').errors && form.get('username').dirty"
             class="text-center"
           >
-            <!-- <p
-              class="text-center mt-1 text-danger"
-              *ngIf="form.get('username').hasError('required')"
-            >
-              <small>Este campo es obligatorio!</small>
-            </p> -->
             <p
               class="text-center mt-1 text-danger"
               *ngIf="form.get('username').hasError('maxlength')"
             >
               <small>El nombre de usuario es muy largo!</small>
             </p>
-            <!-- <p
-              class="text-center mt-1 text-danger"
-              *ngIf="form.get('username').hasError('minlength')"
-            >
-              <small>necesita un minimo 5 caracteres!</small>
-            </p> -->
           </div>
         </div>
 
@@ -96,7 +91,7 @@
           </div>
         </div>
 
-        <div class="text-center">
+        <div id="cont-btn-login" class="text-center">
           <button
             [disabled]="form.invalid || usernameExist === false"
             type="submit"

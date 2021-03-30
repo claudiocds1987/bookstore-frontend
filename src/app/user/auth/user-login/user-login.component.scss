@@ -21,11 +21,21 @@
     label {
       color: #777; // mismo color text-muted bootstrap
     }
+    h2{
+      color: white;
+    }
     .card-body {
+      #cont-btn-login{   
+        margin-top: 100px !important;
+        button{
+          color: white;
+        }
+      }
       .cont-flex {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 40px;
         .icon {
           //vertical-align: middle !important;
           margin-right: 5px !important;
@@ -53,4 +63,25 @@
   .col2 {
     background: #1b9ffd;
   }
+}
+
+
+@media (max-width: 414px) {
+  .card{
+    h2{
+      font-size: 30px;
+    }
+    .card-body{
+      input{
+        height: 50px;
+      }
+      #cont-btn-login{   
+        button{
+          height: 50px;
+          font-size: 20px;
+          color: white;
+        }
+      }
+    }
+  } 
 }

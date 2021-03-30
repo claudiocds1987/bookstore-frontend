@@ -11,7 +11,6 @@
         <div class="form-group mb-3">
           <div class="cont-flex">
             <mat-icon class="icon">email</mat-icon>
-            <!-- <label for="input-email">Email</label> -->
             <input
               type="email"
               id="input-email"
@@ -24,7 +23,6 @@
               }"
             />
           </div>
-
           <!-- important las 2 condiciones juntas ya que en la db busca por LIKE'%#%', apenas se escribe busca si contiene la letra/s del email en la db -->
           <div *ngIf="emailExist && !f.email.errors" class="text-center mb-3">
             <small class="text-danger">Este email ya fue tomado!</small>
@@ -32,9 +30,6 @@
           <div *ngIf="f.email.errors && f.email.dirty" class="text-center mb-3">
             <small class="text-danger">El formato de email no es válido!</small>
           </div>
-          <!-- <div *ngIf="!emailExist && f.email.valid && f.email.dirty" class="text-center mb-3">
-            <small class="text-success">Correo válido</small>
-          </div> -->
         </div>
         <div class="form-group mb-3">
           <div class="cont-flex">
@@ -124,7 +119,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group mb-3">
+        <div id="cont-btn-registrarse" class="form-group mb-3">
           <button
             type="submit"
             mat-raised-button
