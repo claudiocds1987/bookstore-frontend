@@ -89,19 +89,6 @@ p {
         .icon-shopping-cart {
           color: #c5fd43 !important;
         }
-        .box-btn-border {
-          margin-bottom: 10px;
-          .btn-border {
-            border-radius: 15px !important;
-          }
-          // boton para agregar a carrito
-          .mat-banner-color {
-            background: rgb(41, 50, 64);
-          }
-          .icon-shopping-cart {
-            color: #c5fd43 !important;
-          }
-        }
       }
     }
     .card:hover {
@@ -191,7 +178,28 @@ a:hover {
     .book-grid {
       .card {
         margin: 15px auto;
-        width: 200px;
+        width: 300px;
+        .crop-image{
+          height: 350px;
+        }
+        .box-description{
+          a{
+            font-size: 25px;
+          }
+        }
+        .box-btn-border{
+          .btn-border{
+            width: 90%;
+            height: 45px;
+            .icon-shopping-cart{
+              font-size: 25px;
+            }
+            
+          }
+          span{
+            font-size: 20px;
+          }
+        }
       }
     }
   }
