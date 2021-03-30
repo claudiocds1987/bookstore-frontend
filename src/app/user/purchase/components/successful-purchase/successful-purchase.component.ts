@@ -73,9 +73,8 @@ export class SuccessfulPurchaseComponent implements OnInit {
       localStorage.removeItem('purchase');
       // seteo el carrito a 0 items en el boton del carrito del componente main-nav
       this.cartService.cart.next([]);
-     
     }else{
-      console.log('NO SE CREO LOCALSTORAGE PURCHASE')
+      console.log('NO SE CREO LOCALSTORAGE PURCHASE');
     }
   }
 
@@ -173,7 +172,7 @@ export class SuccessfulPurchaseComponent implements OnInit {
         idSale = res;
         // .lastIdSale porque en la query esta como as "lastIdSale"
         console.log('Ultimo idSale obtenido: ' + idSale.lastIdSale);
-        
+
         for (const item of this.bookList) {
           this.saleDetail.id_book = item.id_book;
           this.saleDetail.id_sale = idSale.lastIdSale;
