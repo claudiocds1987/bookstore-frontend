@@ -19,6 +19,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 // componente a mostrar cuando se utilice Material Dialog para eliminar un producto
 import { MatConfirmDialogComponent } from '../../../../mat-confirm-dialog/mat-confirm-dialog.component';
+import { ThemeService } from 'ng2-charts';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-successful-purchase',
@@ -39,6 +41,7 @@ export class SuccessfulPurchaseComponent implements OnInit {
   // fecha local
   currentDate = new Date();
   total: number;
+  idUser: number;
 
   constructor(
     public cartService: CartService,
@@ -51,25 +54,24 @@ export class SuccessfulPurchaseComponent implements OnInit {
     public mercadopagoService: MercadopagoService,
     private dialog: MatDialog
   ) {
-    // la localstorage 'username' solo tiene el username, se crea en servicio auth.service funcion login()
-    if (localStorage.getItem('username') != null) {
-      // obtengo el username
-      const username = localStorage.getItem('username');
-      // obtengo los datos del usuario
-      this.getUserByUserName(username);
-    }
+
     // la localstorage purchase se crea en form-pruchase.component.ts
     if (localStorage.getItem('purchase') != null) {
       // aca la url_image viene limpia, no hay que pasarla por funcion linkImg()
       this.bookList = JSON.parse(localStorage.getItem('purchase'));
       // obtengo el precio total
       this.calculateTotalPrice();
-      console.log(this.bookList);
-      console.log('PRECIO TOTAL: ' + this.total);
-      // se crea la orden de compra y adentro de createOrder() se crea el detalle de compra
-      this.createOrder();
-       // se crea la venta y adentro de createSale() se crea el detalle de venta
-      this.createSale();
+
+      if (localStorage.getItem('username') != null) {
+        // obtengo el username
+        const username = localStorage.getItem('username');
+        // obtengo los datos del usuario
+        this.getUserByUserName(username);
+      }
+      else{
+        console.log('la LocalStorage username no existe, no se puede obtener al usuario');
+      }
+
       // borrando las localstorage (menos la del username)
       localStorage.removeItem('books');
       localStorage.removeItem('shoppingCart');
@@ -83,6 +85,7 @@ export class SuccessfulPurchaseComponent implements OnInit {
 
   ngOnInit(): void {}
 
+
   public calculateTotalPrice(): void {
     let newTotal = 0;
     for (const book of this.bookList) {
@@ -92,9 +95,23 @@ export class SuccessfulPurchaseComponent implements OnInit {
   }
 
   getUserByUserName(username: string) {
+    // Aca createOrder y createSale() porque para crear la orden y la venta necesito el id del usuario
+    // en node las funciones son asyncronas, esto significa que si tengo mas de 1 peticion a node
+    // desde por ej Angular, las respuestas de esas peticiones no van a llegar de forma ordenada.
+    // Ej: si en Angular tengo un 'servicio' A que le pide a node el id de un usuario y al mismo tiempo
+    // otro 'servicio B' que necesita de ese id para determinar la cantidad de compras que hizo este mismo usuario
+    // va a dar un error, porque ni bien se ejecuta el 'servicio A', se ejecuta el 'B' y 'B' todava no tiene la
+    // respuesta de 'A'. Para solucionar esto hago un encadenamiento de subscribe (no es lo conveniente), con esto
+    // entonces me subscribo al 'servicio A', si tengo respuesta invoco al 'servicio B'.
     this.userService.getUserByUserName(username).subscribe(
       (res) => {
         this.userArray = res;
+        this.idUser = res[0].id_user;
+        console.log('ACA EL ID: ' + this.idUser);
+        // se crea la orden de compra, dentro de createOrder() se crea el detalle de la orden de compra.
+        this.createOrder();
+        // se crea la venta, dentro de createSaler() se crea el detalle de la venta.
+        this.createSale();
       },
       (err) => console.error('Error al obtener el username en ngOnInit ' + err)
     );
@@ -102,7 +119,8 @@ export class SuccessfulPurchaseComponent implements OnInit {
 
   createOrder() {
     // id_order no importa porque en la db es autonumerico
-    this.order.id_user = this.userArray[0].id_user; // obtengo el id_user
+    this.order.id_user = this.idUser; // obtengo el id_user
+    console.log('ID DE USUARIO EN ORDEN: ' + this.order.id_user);
     this.order.order_date = this.currentDate;
     this.order.total_price = this.total;
     // se crea la orden de compra
@@ -153,7 +171,7 @@ export class SuccessfulPurchaseComponent implements OnInit {
   }
 
   createSale() {
-    this.sale.id_user = this.userArray[0].id_user;
+    this.sale.id_user = this.idUser;
     this.sale.total_price = this.total;
     this.sale.date = this.currentDate;
     // se crea la venta

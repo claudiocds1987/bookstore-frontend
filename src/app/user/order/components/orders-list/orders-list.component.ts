@@ -30,12 +30,12 @@ export class OrdersListComponent implements OnInit {
 
   ordersArray: Order[] = []; // ordersArray para hacer el .filter cuyo resultado se guarda en filterOrdersArray
   filterOrdersArray: Order[] = [];
-  userArray: User[] = []; 
+  userArray: User[] = [];
   date1: Date;
   date2: Date;
   btnDisabled: boolean = true;
-  message = 'No se encontraron resultados'; 
-  actualPage: number = 1 // para pagination
+  message = 'No se encontraron resultados';
+  actualPage: number = 1; // para pagination
 
   // ???????????????
   orderDetailArray: OrderDetail[] = [];
@@ -89,7 +89,7 @@ export class OrdersListComponent implements OnInit {
       this.filterOrdersArray = this.ordersArray.filter(a => {
         const date = new Date(a.order_date);
         return date >= startDate && date <= endDate;
-      })
+      });
     }
   }
 

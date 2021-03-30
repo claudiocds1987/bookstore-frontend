@@ -92,6 +92,13 @@ export class UserLoginComponent implements OnInit {
         localStorage.removeItem('token');
         console.log('localStorage con el token eliminada');
       }
+
+      // borrando al localstorage purchase
+      if (localStorage.getItem('purchase') != null) {
+        localStorage.removeItem('purchase');
+        console.log('localStorage purchase eiminada');
+      }
+
     }
 
   }

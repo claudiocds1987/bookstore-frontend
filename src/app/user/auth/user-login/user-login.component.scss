@@ -10,7 +10,7 @@
   justify-content: center; // (alinea al centro eje horizontal cualquier elemento que este en div .container)
   align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
   .card {
-    max-width: 300px !important;
+    width: 300px !important;
     position: absolute;
     z-index: 10;
     .icon-account-circle {
