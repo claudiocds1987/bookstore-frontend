@@ -7,6 +7,7 @@ import { CartService } from '../../../services/cart.service';
 import { MyValidationsService } from '../../../services/my-validations.service';
 // servicio Toastr para alerts
 import { AlertService } from '../../../services/alert.service';
+import { Order } from 'src/app/models/order';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   authorName;
   editorialName;
   categoryName;
+  order = {} as Order; // borrar prueba
 
   constructor(
     public bookService: BookService,
@@ -51,6 +53,7 @@ export class HomeComponent implements OnInit {
     if (localStorage.getItem('username') != null) {
       this.username = localStorage.getItem('username');
     }
+
   }
 
   getAvailableBooksWithAuthorName() {

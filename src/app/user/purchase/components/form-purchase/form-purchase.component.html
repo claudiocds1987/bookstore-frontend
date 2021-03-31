@@ -104,6 +104,7 @@
                           type="text"
                           matInput
                           placeholder="Provincia"
+                          (keyup)="orderData()"
                         />
                         <div
                           *ngIf="provinciaField.errors && provinciaField.dirty"
@@ -142,6 +143,7 @@
                           type="text"
                           matInput
                           placeholder="Localidad"
+                          (keyup)="orderData()"
                         />
                         <div
                           *ngIf="localidadField.errors && localidadField.dirty"
@@ -180,6 +182,7 @@
                           type="text"
                           matInput
                           placeholder="Domicilio"
+                          (keyup)="orderData()"
                         />
                         <div *ngIf="adressField.errors && adressField.dirty">
                           <p *ngIf="adressField.hasError('required')">
@@ -212,6 +215,7 @@
                           matInput
                           placeholder="Teléfono"
                           name="tel"
+                          (keyup)="orderData()"
                         />
                         <div
                           *ngIf="
@@ -258,6 +262,10 @@
       </mat-horizontal-stepper>
     </div>
   </div>
+  {{order.adress}}
+  {{order.provincia}}
+  {{order.phone_number}}
+  
   <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
   <ngx-spinner></ngx-spinner>
 </div>

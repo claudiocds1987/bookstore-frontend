@@ -49,7 +49,7 @@ export class FormPurchaseComponent implements OnInit {
   total: number;
   provincia = 'Buenos Aires';
   // array de tipo user
-  userArray: User[] = [];
+  // userArray: User[] = [];
   // objetos
   order = {} as Order;
   orderDetail = {} as OrderDetail;
@@ -62,6 +62,8 @@ export class FormPurchaseComponent implements OnInit {
   maxQuantity: number[] = [];
   habilitarBtnPagar = false;
   username;
+  // idUser: number;
+
   constructor(
     private formBuilder: FormBuilder,
     public cartService: CartService,
@@ -75,7 +77,7 @@ export class FormPurchaseComponent implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private dialog: MatDialog
-  ) { 
+  ) {
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
     if (localStorage.getItem('shoppingCart') != null) {
@@ -89,8 +91,9 @@ export class FormPurchaseComponent implements OnInit {
       }
 
        // aca localstorage para success-purchasess, cuando mercadopago informe compra exitosa
-       // va a hacer un redirect a successful-purchase y ahi voy a crear la orden de compra
+       // esta localStorage se llama en successful-purchase.component.ts
       localStorage.setItem('purchase', JSON.stringify(this.bookList));
+      // localStorage.setItem('orderData', JSON.stringify(this.order));
 
       // calculo total de precio
       this.total = this.bookList
@@ -110,14 +113,35 @@ export class FormPurchaseComponent implements OnInit {
     // si no hay username, no esta logeado, no puede comprar.
     if (localStorage.getItem('username') != null) {
       this.username = localStorage.getItem('username');
-      this.getUserByUserName(this.username);
+      // obtengo el id del usuario para el objeto order
+      this.getUserId(this.username);
     }
   }
- 
-  getUserByUserName(username: string) {
+
+
+  orderData(){
+    if (this.form.valid){
+      // el objeto order esta vinculado con un [(ngModel)] en los input
+      // El order.id_user se obtuvo en funcion getUserId()
+      this.order.order_date = this.currentDate;
+      this.order.total_price = this.total;
+      console.log('FECHA: ' + this.order.order_date);
+      console.log('ID USER: ' + this.order.id_user);
+      console.log('PROVINCIA: ' + this.order.provincia);
+      console.log('LCOALIDAD: ' + this.order.localidad);
+      console.log('DOMICILIO: ' + this.order.adress);
+      console.log('TELEFONO: ' + this.order.phone_number);
+      console.log('PRECIO TOTAL: ' + this.order.total_price);
+      // creo/piso la localStorage orderData para successful-purchase.component.ts
+      localStorage.setItem('orderData', JSON.stringify(this.order));
+    }
+  }
+
+  getUserId(username: string) {
     this.userService.getUserByUserName(username).subscribe(
       (res) => {
-        this.userArray = res;
+        // le paso el objeto order el id_user
+        this.order.id_user = res[0].id_user;
       },
       (err) => console.error('Error al obtener el username en ngOnInit ' + err)
     );

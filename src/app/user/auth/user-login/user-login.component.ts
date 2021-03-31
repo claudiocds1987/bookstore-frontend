@@ -66,9 +66,10 @@ export class UserLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // localStorage.clear(); // borra todas las localStorage
     // al entrar a login, si hay un usuario logeado, hago logout borrando la locastorage
     if (localStorage.getItem('username') != null) {
-      // borra el username de main-nav si no hay refresh la pagina  
+      // borra el username de main-nav si no hay refresh la pagina
       this.authService.username.next('');
       // borrando cantidad de items en el boton del carrito de main-nav si no hay refresh
       this.cartService.cart.next([]);
@@ -84,7 +85,7 @@ export class UserLoginComponent implements OnInit {
       // borrando la localStorage idBooks
       if (localStorage.getItem('idBooks') != null) {
         localStorage.removeItem('idBooks');
-        console.log('localStorage con array de idBooks eliminada')
+        console.log('localStorage con array de idBooks eliminada');
       }
 
       // borrando la localStorage token
@@ -96,7 +97,12 @@ export class UserLoginComponent implements OnInit {
       // borrando al localstorage purchase
       if (localStorage.getItem('purchase') != null) {
         localStorage.removeItem('purchase');
-        console.log('localStorage purchase eiminada');
+        console.log('localStorage purchase eliminada');
+      }
+
+      if (localStorage.getItem('orderData') != null) {
+        localStorage.removeItem('orderData');
+        console.log('localStorage orderData eliminada');
       }
 
     }

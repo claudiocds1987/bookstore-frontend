@@ -32,16 +32,16 @@ export class SuccessfulPurchaseComponent implements OnInit {
      si la declaro como bookList: book[]; en html cuando muestre book.autor va a marcar error.*/
   bookList: any[];
    // array de tipo user
-   userArray: User[] = [];
+  // userArray: User[] = [];
   // objetos
   order = {} as Order;
   orderDetail = {} as OrderDetail;
   sale = {} as Sale;
   saleDetail = {} as SaleDetail;
   // fecha local
-  currentDate = new Date();
-  total: number;
-  idUser: number;
+  // currentDate = new Date();
+  // total: number;
+  // idUser: number;
 
   constructor(
     public cartService: CartService,
@@ -56,73 +56,94 @@ export class SuccessfulPurchaseComponent implements OnInit {
   ) {
 
     // la localstorage purchase se crea en form-pruchase.component.ts
-    if (localStorage.getItem('purchase') != null) {
+    if (localStorage.getItem('purchase') != null && localStorage.getItem('orderData') != null) {
       // aca la url_image viene limpia, no hay que pasarla por funcion linkImg()
       this.bookList = JSON.parse(localStorage.getItem('purchase'));
+      // obtengo los datos de la orden de la localStorage 'orderData' creada en form-purchase.component.ts
+      this.order = JSON.parse(localStorage.getItem('orderData'));
       // obtengo el precio total
-      this.calculateTotalPrice();
+      // this.calculateTotalPrice();
 
-      if (localStorage.getItem('username') != null) {
-        // obtengo el username
-        const username = localStorage.getItem('username');
-        // obtengo los datos del usuario
-        this.getUserByUserName(username);
-      }
-      else{
-        console.log('la LocalStorage username no existe, no se puede obtener al usuario');
-      }
+      // YA TENGO TODO EN LOCALSTORAGE 'ORDERDATA'
+
+      // creo la orden de compra, dentro de createOrder() se crea el detalle de la compra
+      this.createOrder();
+       // creo la venta, dentro de createSaler() se crea el detalle de la venta
+      this.createSale(); // creo la venta
+
+      // if (localStorage.getItem('orderData') != null){
+      //   this.order = JSON.parse(localStorage.getItem('orderData'));
+      //   console.log('FECHA: ' + this.order.order_date);
+      //   console.log('ID USER: ' + this.order.id_user);
+      //   console.log('PROVINCIA: ' + this.order.provincia);
+      //   console.log('LCOALIDAD: ' + this.order.localidad);
+      //   console.log('DOMICILIO: ' + this.order.adress);
+      //   console.log('TELEFONO: ' + this.order.phone_number);
+      //   console.log('PRECIO TOTAL: ' + this.order.total_price);
+      // }
+
+      // if (localStorage.getItem('username') != null) {
+      //   // obtengo el username
+      //   const username = localStorage.getItem('username');
+      //   // obtengo los datos del usuario
+      //   this.getUserByUserName(username);
+      // }
+      // else{
+      //   console.log('la LocalStorage username no existe, no se puede obtener al usuario');
+      // }
 
       // borrando las localstorage (menos la del username)
       localStorage.removeItem('books');
       localStorage.removeItem('shoppingCart');
       localStorage.removeItem('purchase');
+      localStorage.removeItem('orderData');
       // seteo el carrito a 0 items en el boton del carrito del componente main-nav
       this.cartService.cart.next([]);
     }else{
-      console.log('NO SE CREO LOCALSTORAGE PURCHASE');
+      console.log('NO SE CREO LOCALSTORAGE PURCHASE O ORDERDATE');
     }
   }
 
   ngOnInit(): void {}
 
 
-  public calculateTotalPrice(): void {
-    let newTotal = 0;
-    for (const book of this.bookList) {
-      newTotal += book.quantity * book.price;
-    }
-    this.total = newTotal;
-  }
+  // public calculateTotalPrice(): void {
+  //   let newTotal = 0;
+  //   for (const book of this.bookList) {
+  //     newTotal += book.quantity * book.price;
+  //   }
+  //   this.total = newTotal;
+  // }
 
-  getUserByUserName(username: string) {
-    // Aca createOrder y createSale() porque para crear la orden y la venta necesito el id del usuario
-    // en node las funciones son asyncronas, esto significa que si tengo mas de 1 peticion a node
-    // desde por ej Angular, las respuestas de esas peticiones no van a llegar de forma ordenada.
-    // Ej: si en Angular tengo un 'servicio' A que le pide a node el id de un usuario y al mismo tiempo
-    // otro 'servicio B' que necesita de ese id para determinar la cantidad de compras que hizo este mismo usuario
-    // va a dar un error, porque ni bien se ejecuta el 'servicio A', se ejecuta el 'B' y 'B' todava no tiene la
-    // respuesta de 'A'. Para solucionar esto hago un encadenamiento de subscribe (no es lo conveniente), con esto
-    // entonces me subscribo al 'servicio A', si tengo respuesta invoco al 'servicio B'.
-    this.userService.getUserByUserName(username).subscribe(
-      (res) => {
-        this.userArray = res;
-        this.idUser = res[0].id_user;
-        console.log('ACA EL ID: ' + this.idUser);
-        // se crea la orden de compra, dentro de createOrder() se crea el detalle de la orden de compra.
-        this.createOrder();
-        // se crea la venta, dentro de createSaler() se crea el detalle de la venta.
-        this.createSale();
-      },
-      (err) => console.error('Error al obtener el username en ngOnInit ' + err)
-    );
-  }
+  // getUserByUserName(username: string) {
+  //   // Aca createOrder y createSale() porque para crear la orden y la venta necesito el id del usuario
+  //   // en node las funciones son asyncronas, esto significa que si tengo mas de 1 peticion a node
+  //   // desde por ej Angular, las respuestas de esas peticiones no van a llegar de forma ordenada.
+  //   // Ej: si en Angular tengo un 'servicio' A que le pide a node el id de un usuario y al mismo tiempo
+  //   // otro 'servicio B' que necesita de ese id para determinar la cantidad de compras que hizo este mismo usuario
+  //   // va a dar un error, porque ni bien se ejecuta el 'servicio A', se ejecuta el 'B' y 'B' todava no tiene la
+  //   // respuesta de 'A'. Para solucionar esto hago un encadenamiento de subscribe (no es lo conveniente), con esto
+  //   // entonces me subscribo al 'servicio A', si tengo respuesta invoco al 'servicio B'.
+  //   this.userService.getUserByUserName(username).subscribe(
+  //     (res) => {
+  //       //this.userArray = res;
+  //       this.idUser = res[0].id_user;
+  //       console.log('ACA EL ID: ' + this.idUser);
+  //       // se crea la orden de compra, dentro de createOrder() se crea el detalle de la orden de compra.
+  //       this.createOrder();
+  //       // se crea la venta, dentro de createSaler() se crea el detalle de la venta.
+  //       this.createSale();
+  //     },
+  //     (err) => console.error('Error al obtener el username en ngOnInit ' + err)
+  //   );
+  // }
 
   createOrder() {
     // id_order no importa porque en la db es autonumerico
-    this.order.id_user = this.idUser; // obtengo el id_user
-    console.log('ID DE USUARIO EN ORDEN: ' + this.order.id_user);
-    this.order.order_date = this.currentDate;
-    this.order.total_price = this.total;
+    // this.order.id_user = this.idUser; // obtengo el id_user
+    // console.log('ID DE USUARIO EN ORDEN: ' + this.order.id_user);
+    // this.order.order_date = this.currentDate;
+    // this.order.total_price = this.total;
     // se crea la orden de compra
     this.orderService.createOrder(this.order).subscribe(
       (res) => {
@@ -171,9 +192,9 @@ export class SuccessfulPurchaseComponent implements OnInit {
   }
 
   createSale() {
-    this.sale.id_user = this.idUser;
-    this.sale.total_price = this.total;
-    this.sale.date = this.currentDate;
+    this.sale.id_user = this.order.id_user;
+    this.sale.total_price = this.order.total_price;
+    this.sale.date = this.order.order_date;
     // se crea la venta
     this.saleServices.createSale(this.sale).subscribe(
       (res) => {
@@ -184,6 +205,20 @@ export class SuccessfulPurchaseComponent implements OnInit {
       (err) => console.error('No se pudo crear la venta ' + err.error.message)
     );
   }
+  // createSale() {
+  //   this.sale.id_user = this.idUser;
+  //   this.sale.total_price = this.total;
+  //   this.sale.date = this.currentDate;
+  //   // se crea la venta
+  //   this.saleServices.createSale(this.sale).subscribe(
+  //     (res) => {
+  //       console.log('La venta fue creada');
+  //       // se crea el detalle de venta
+  //       this.createSaleDetail();
+  //     },
+  //     (err) => console.error('No se pudo crear la venta ' + err.error.message)
+  //   );
+  // }
 
   createSaleDetail() {
     let idSale;
