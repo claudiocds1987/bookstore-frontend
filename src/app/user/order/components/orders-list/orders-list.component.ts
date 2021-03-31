@@ -68,6 +68,11 @@ export class OrdersListComponent implements OnInit {
         // cuyo resultado lo guardo en array filterOrdersArray
         this.ordersArray = res;
         this.filterOrdersArray = res;
+
+        for (let item of this.ordersArray){
+          console.log('FECHAS DE ORDEN: ' + item.order_date);
+        }
+
       },
         err => console.error('No se pudo obtener las ordenes de compra del usuario ' + err)
       );

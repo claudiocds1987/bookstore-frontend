@@ -79,8 +79,8 @@ export class FormPurchaseComponent implements OnInit {
     private dialog: MatDialog
   ) {
 
-    // sino com fecha figura un dia antes
-    this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset());
+    // si no hago setNinutes la fecha figura como un dia antes ??
+    this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()); // ??
 
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
