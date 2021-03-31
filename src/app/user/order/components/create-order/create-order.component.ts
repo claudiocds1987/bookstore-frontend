@@ -78,6 +78,10 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialog: MatDialog
   ) {
+
+    // sino com fecha figura un dia antes
+    this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset());
+
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
     if (localStorage.getItem('shoppingCart') != null) {

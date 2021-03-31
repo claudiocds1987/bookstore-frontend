@@ -186,7 +186,7 @@ export class SuccessfulPurchaseComponent implements OnInit {
       },
       (err) =>
         console.error(
-          'Error al intentar obtener el ultimo idOrder de la base de datos'
+          'Error al intentar obtener el ultimo idOrder de la base de datos: ' + err
         )
     );
   }
