@@ -50,3 +50,18 @@ label{
         justify-content: center;
     }
 }
+
+@media only screen and (max-width: 500px) {
+    // oculto columnas de tabla innecesarios
+    #th-indice, #th-total, #td-indice, #td-total{
+        display: none;
+    }
+
+    #btn-detail{
+        width: 80px;
+        mat-icon{
+            display: none;
+        }
+
+    }
+}

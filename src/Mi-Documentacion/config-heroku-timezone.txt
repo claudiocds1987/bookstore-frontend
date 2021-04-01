@@ -1,0 +1,17 @@
+Lo que pasaba es lo siguiente: 
+
+Guardaba la orden de compra en la tabla "orders" de postgresql, por ej con fecha 31/3/2021.
+Heroku tiene seteado su timezone como 'usa' entonces cuando mi proyecto esta corriendo en el servidor
+Heroku, al mostrar los datos de la orden de compra desde el frontend, la fecha aparece como 30/3/2021,
+es decir un dia antes. Para solucionar este conflicto de timezone hay que entrar al dashboard de Heroku
+y hacer la configuracion del timezone, entonces:
+
+1) "Login" en la pagina de Heroku.
+2) Voy a mi "app" (en mi caso mis 2 app, la de frontend y servidor).
+3) Click en "Settings".
+4) Click en boton "Reveal Config Vars". Ahí aparecen 2 inputs, uno para el "key" el otro para el "value":
+ a) En input "key" se pone: TZ 
+ b) En input "value" se pone: America/Argentina/Buenos_Aires
+ c) click en en boton Add.
+
+tutorial: https://dev.to/paulasantamaria/change-the-timezone-on-a-heroku-app-2b4

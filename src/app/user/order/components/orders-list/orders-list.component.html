@@ -55,11 +55,11 @@
           <table class="table table-hover table-striped">
             <thead class="thead-dark">
               <tr class="text-center">
-                <th scope="col">#</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Total</th>
-                <th scope="col">Entrega</th>
-                <th scope="col"></th>
+                <th id="th-indice" scope="col"><span class="text-muted">#</span></th>
+                <th id="th-date" scope="col"><span class="text-muted">Fecha</span></th>
+                <th id="th-total" scope="col"><span class="text-muted">Total</span></th>
+                <th id="th-adress"scope="col"><span class="text-muted">Entrega</span></th>
+                <th id="th-btn-detail" scope="col"></th>
               </tr>
             </thead>
             <p class="text-danger" *ngIf="filterOrdersArray.length <= 0">
@@ -74,14 +74,15 @@
                   let i = index
                 "
               >
-                <th scope="row">{{ i + 1 }}</th>
-                <td>{{ order.order_date | date: "dd/MM/yyyy" }}</td>
-                <td>{{ order.total_price | currency: "ARS ":"symbol" }}</td>
-                <td>{{ order.adress }} - {{ order.localidad }}</td>
+                <td id="td-indice" scope="row">{{ i + 1 }}</td>
+                <td id="td-date">{{ order.order_date | date: "dd/MM/yyyy" }}</td>
+                <td id="td-total">{{ order.total_price | currency: "ARS ":"symbol" }}</td>
+                <td id="td-adress">{{ order.adress }} - {{ order.localidad }}</td>
                 <td>
-                  <a
+                  <a id="btn-detail"
                     style="text-decoration: none"
                     mat-raised-button
+                    color="primary"
                     (click)="getDetalle(order.id_order)"
                   >
                     <mat-icon>details</mat-icon>

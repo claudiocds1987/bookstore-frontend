@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, isDevMode, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { User } from 'src/app/models/user';
 import { OrderService } from '../../../../services/order.service';
@@ -20,13 +20,24 @@ declare var $: any; // para que funcione jquery
 })
 export class OrdersListComponent implements OnInit {
 
+  SERVER = 'http://localhost:3000';
+
   constructor(
     public orderService: OrderService,
     public userService: UserService,
     public alertService: AlertService,
     public orderDetailService: OrderDetailService, // ????
     public bookService: BookService // ???
-  ) { }
+  ) {
+
+    // con esta linea Angular reconoce si la aplicacion se esta corriendo en local(desarrollo) o en produccion.
+    // si esta en local la aplicacion corre en 'http://localhost:3000
+    // si es produccion corre en https://bookstore-cds-server.herokuapp.com
+    if (!isDevMode()) {
+      this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+    }
+
+  }
 
   ordersArray: Order[] = []; // ordersArray para hacer el .filter cuyo resultado se guarda en filterOrdersArray
   filterOrdersArray: Order[] = [];
@@ -64,13 +75,14 @@ export class OrdersListComponent implements OnInit {
   getOrdersByUserId(idUser: number) {
     this.orderService.getOrdersByUserId(idUser)
       .subscribe(res => {
-        // res lo guardo en los 2 array porque si se hace filterOrdersByDate() necesito filtrar array ordersArray
+        // res lo guardo en los 2 array porque si se hace filterOrdersByDate()
+        // necesito filtrar array ordersArray
         // cuyo resultado lo guardo en array filterOrdersArray
         this.ordersArray = res;
         this.filterOrdersArray = res;
 
-        for (let item of this.ordersArray){
-          console.log('FECHAS DE ORDEN: ' + item.order_date);
+        for (let data of this.ordersArray){
+          console.log('FECHAS DE ORDEN: ' + data.order_date);
         }
 
       },
@@ -117,6 +129,7 @@ export class OrdersListComponent implements OnInit {
           // Obtengo el libro
           this.getBookById(idBook);
         });
+        // el modal esta en order-detail.component.html
         $('#myModal').modal('show');
       },
       err => console.error('error al obtener el order_detail ' + err)
@@ -142,7 +155,7 @@ export class OrdersListComponent implements OnInit {
     // invierto la barra en sentido a '/'
     str = str.replace('\\', '/');
     // console.log(str);
-    const URL = 'http://localhost:4000/';
+    const URL = this.SERVER + '/';
     const link = URL + str;
     // console.log(link);
     return link;

@@ -6,7 +6,6 @@ import { Book } from '../models/book';
   providedIn: 'root',
 })
 export class BookService {
- // URL_API = 'http://localhost:4000/books';
   SERVER = 'http://localhost:3000';
   // objeto vacio tipo Book
   book: Book = {

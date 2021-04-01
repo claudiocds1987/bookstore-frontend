@@ -48,21 +48,20 @@ export class FormPurchaseComponent implements OnInit {
   bookList: any[];
   total: number;
   provincia = 'Buenos Aires';
-  // array de tipo user
-  // userArray: User[] = [];
   // objetos
   order = {} as Order;
   orderDetail = {} as OrderDetail;
   sale = {} as Sale;
   saleDetail = {} as SaleDetail;
-  // fecha local
+  // fecha local en heroku hay que setear el timezone al de buenos aires Argentina sino a la fecha
+  // le resta 1 dia, ver en carpeta Mi-Documentacion archivo config-heroku-timezone.txt
   currentDate = new Date();
+  ///////////////////////////////////
   orderSuccess = false;
   dialogRef: MatDialogRef<MatConfirmDialogComponent>;
   maxQuantity: number[] = [];
   habilitarBtnPagar = false;
   username;
-  // idUser: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -80,7 +79,7 @@ export class FormPurchaseComponent implements OnInit {
   ) {
 
     // si no hago setNinutes la fecha figura como un dia antes ??
-    this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()); // ??
+    // this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()); // ??
 
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
