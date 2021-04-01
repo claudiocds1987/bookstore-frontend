@@ -1,7 +1,7 @@
 <div class="container-fluid fondo">
-  <div class="container box-principal">
+  <div class="box-principal">
     <div class="row box-fila">
-      <div class="col-md-12">
+      <div class="col-md-12 caca">
         <div class="card">
           <div class="card-body">
             <form #searchForm="ngForm" class="my-2 my-lg-0">
@@ -104,10 +104,10 @@
                   ><i class="fas fa-sync-alt"></i
                 ></a>
               </th>
-              <th class="text-center">Image</th>
-              <th class="text-center">Nombre de libro</th>
-              <th class="text-center">Autor</th>
-              <th class="text-center">Action</th>
+              <th id="th-image" class="text-center">Image</th>
+              <th id="th-book-name" class="text-center">Nombre de libro</th>
+              <th id="th-author" class="text-center">Autor</th>
+              <th id="th-action" class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -119,18 +119,21 @@
               "
             >
               <td
+                id="td-indice"
                 class="text-center"
                 [ngClass]="{ paintYellow: b.state === false }"
               >
                 {{ i + 1 }}
               </td>
               <td
+                id="td-image"
                 class="text-center"
                 [ngClass]="{ paintYellow: b.state === false }"
               >
                 <img [src]="linkImg(b.url_image)" />
               </td>
               <td
+                id="book-name"
                 class="text-center"
                 [ngClass]="{ paintYellow: b.state === false }"
               >
@@ -138,12 +141,14 @@
               </td>
               <!-- en la query lado server tenes AS Autor, por eso aca pones b.autor -->
               <td
+                id="td-author"
                 class="text-center"
                 [ngClass]="{ paintYellow: b.state === false }"
               >
                 {{ b.autor }}
               </td>
               <td
+                id="td-action"
                 class="text-center"
                 [ngClass]="{ paintYellow: b.state === false }"
               >

@@ -1,8 +1,11 @@
 @import "./../../../../sass/variables";
 
 .fondo {
+  margin: 0px;
+  padding: 0px;
   display: flex;
-  align-items: center;
+  //align-items: center;
+  justify-content: center;
   background: $colorFondo; // este color esta en carpeta sass/_variables.scss
 }
 
@@ -10,9 +13,9 @@
   min-height: 100vh;
 }
 
-.box-filter{
-  display:flex;
-  button{
+.box-filter {
+  display: flex;
+  button {
     border-radius: 0;
   }
 }
@@ -21,9 +24,9 @@
   margin-top: 80px;
 }
 
-table{
-  tr{
-    a{
+table {
+  tr {
+    a {
       cursor: pointer;
     }
   }
@@ -50,15 +53,33 @@ input[type="radio"] {
 }
 
 // si el book tiene como state = false se pinta de amarillo los <td> de tabla
-.paintYellow{
+.paintYellow {
   background-color: yellow;
 }
 
-.modal-header{
+.modal-header {
   background: $colorNav;
   color: white;
-  button{
+  button {
     color: white;
   }
 }
 
+@media (max-width: 700px) {
+  #th-author,
+  #td-author {
+    display: none;
+  }
+}
+
+// @media (min-width: 840px) {
+//   .box-principal {
+//     margin: auto;
+//   }
+// }
+
+@media (min-width: 1000px) {
+  .card {
+    width: 1000px;
+  }
+}
