@@ -59,23 +59,29 @@ p {
       margin: 15px;
       border-radius: 5px;
       display: block; // para que el ancho y alto sean dinamico respecto al elemento
-      .crop-image {
-        margin-top: 2px;
-        padding: 8px;
-        display: block; // fijate?
-        height: 250px;
-        width: 100%;
-        img {
-          object-fit: contain;
-          height: 100%;
+      .cont-img {
+        //margin-bottom: 5px !important;
+        .crop-image {
+          margin-top: 2px;
+          padding: 4px;
+          display: block; // fijate?
+          height: 250px;
           width: 100%;
-          object-position: center;
+          img {
+            object-fit: contain;
+            height: 100%;
+            width: 100%;
+            object-position: center;
+          }
         }
       }
+      
       .box-btn-border {
         margin-bottom: 10px;
+        //width: 90%;
         .btn-border {
-          border-radius: 15px !important;
+          //border-radius: 10px !important;
+          width: 95%;
         }
         // boton para agregar a carrito
         .mat-banner-color {
@@ -137,10 +143,6 @@ p {
   }
 }
 
-.box-description {
-  margin-bottom: 10px !important;
-}
-
 a {
   color: grey;
   text-decoration: none;
@@ -184,20 +186,23 @@ a:hover {
     .book-grid {
       .card {
         margin: 15px auto;
-        width: 300px;
-        .crop-image {
-          height: 350px;
-        }
-        .box-description {
-          margin-top: 10px;
+        //width: 300px;
+        width: 248px;
+        .cont-img {
+          //margin-top: 10px;
           a {
             font-size: 25px;
           }
-        }
+          .crop-image {
+            //width: 248px;
+            height: 337px;
+            // height: 380px;
+          }
+        }      
         .box-btn-border {
-          margin-top: 25px;
+          // margin-top: 25px;
           .btn-border {
-            width: 90%;
+            // width: 97%;
             height: 60px;
             .icon-shopping-cart {
               font-size: 25px;
