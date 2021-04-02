@@ -101,3 +101,14 @@ nav{
     }
   }
 }
+
+
+@media (max-width: 700px) {
+  .fila2, .fila3, .fila4{
+    .card{
+      margin: auto;
+      width: 92%;
+    }
+  }
+  
+}

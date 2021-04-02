@@ -88,24 +88,22 @@
     <div *ngIf="filterArray.length > 0" class="card mt-3 mb-4">
       <div *ngIf="filterArray as libros" class="card-body">
         <div class="d-flex justify-content-between my-2">
-          <h5>Lista de libros total: {{ libros.length }}</h5>
-
-          <a mat-raised-button color="warn" [routerLink]="'/book/create-book'">
-            <mat-icon>add_circle</mat-icon>
-            Nuevo libro
+          <h5>Total libros: {{ libros.length }}</h5>
+          <a id="btn-add-book" class="btn btn-success" [routerLink]="'/book/create-book'">
+            <i class="fas fa-plus-circle fa-lg"></i>
+            Agregar
           </a>
         </div>
 
         <table class="table table-striped">
           <thead>
             <tr>
-              <th class="text-center">
+              <th id="th-image" class="text-center">
                 <a (click)="getBooksWithAuthorName()"
                   ><i class="fas fa-sync-alt"></i
                 ></a>
               </th>
-              <th id="th-image" class="text-center">Image</th>
-              <th id="th-book-name" class="text-center">Nombre de libro</th>
+              <th id="th-book-name" class="text-center">Título</th>
               <th id="th-author" class="text-center">Autor</th>
               <th id="th-action" class="text-center">Action</th>
             </tr>
@@ -119,17 +117,11 @@
               "
             >
               <td
-                id="td-indice"
-                class="text-center"
-                [ngClass]="{ paintYellow: b.state === false }"
-              >
-                {{ i + 1 }}
-              </td>
-              <td
                 id="td-image"
                 class="text-center"
                 [ngClass]="{ paintYellow: b.state === false }"
               >
+                <!-- {{ i + 1 }} -->
                 <img [src]="linkImg(b.url_image)" />
               </td>
               <td
@@ -158,15 +150,18 @@
                   class="mr-1"
                   [routerLink]="['/book/edit-book/', b.id_book]"
                 >
-                  <mat-icon>edit</mat-icon>
+                  <i class="far fa-edit fa-lg"></i>
+                  <!-- <mat-icon>edit</mat-icon> -->
                 </button>
                 <button
+                  class="mr-1"
                   *ngIf="b.state === true"
                   mat-raised-button
                   color="warn"
                   (click)="showModal(b)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <i class="fas fa-trash fa-lg"></i>
+                  <!-- <mat-icon>delete</mat-icon> -->
                 </button>
                 <button
                   *ngIf="b.state === false"

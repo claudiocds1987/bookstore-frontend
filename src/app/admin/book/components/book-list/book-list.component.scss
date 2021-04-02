@@ -24,6 +24,10 @@
   margin-top: 80px;
 }
 
+#btn-add-book{
+  border-radius: 0px;
+}
+
 table {
   tr {
     a {
@@ -52,8 +56,8 @@ input[type="radio"] {
   margin-bottom: 5px !important;
 }
 
-// si el book tiene como state = false se pinta de amarillo los <td> de tabla
 .paintYellow {
+  // si el book tiene como state = false se pinta de amarillo los <td> de tabla
   background-color: yellow;
 }
 
@@ -66,17 +70,18 @@ input[type="radio"] {
 }
 
 @media (max-width: 700px) {
-  #th-author,
-  #td-author {
-    display: none;
+  // quito la columna y celda de autor de la tabla
+  table {
+    #th-author,
+    #td-author {
+      display: none;
+    }
+    button{
+      margin: auto;
+      width: 40px;
+    }
   }
 }
-
-// @media (min-width: 840px) {
-//   .box-principal {
-//     margin: auto;
-//   }
-// }
 
 @media (min-width: 1000px) {
   .card {

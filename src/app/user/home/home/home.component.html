@@ -70,9 +70,9 @@
             let book of books
               | paginate: { itemsPerPage: 15, currentPage: actualPage }
           "
-          class="card rounded shadow-sm border-0 fade-in"
+          class="card rounded shadow-sm border-0"
         >
-          <img [src]="book.url_image" [alt]="book.name" class="crop-image" />
+          <!-- <img [src]="book.url_image" [alt]="book.name" class="crop-image" /> -->
           <div class="text-center box-description">
             <a
               class="font-italic font-weight-light"
@@ -80,7 +80,9 @@
               data-target="#exampleModalCenter"
               (click)="getBookDetail(book.id_book)"
             >
-              {{ book.name }}
+            <img [src]="book.url_image" [alt]="book.name" class="crop-image" />
+            <!-- <i class="fas fa-info-circle"></i>
+              {{ book.name }} -->
             </a>
           </div>
           <div class="text-center box-btn-border">

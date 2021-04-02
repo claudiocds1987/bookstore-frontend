@@ -81,21 +81,25 @@ p {
         .mat-banner-color {
           background: rgb(41, 50, 64);
         }
-        .mat-banner-color:hover {
-          //background: rgb(86, 93, 104);
-          transition: all linear 0.25s;
-          opacity: 0.5;
-        }
         .icon-shopping-cart {
           color: #c5fd43 !important;
         }
       }
     }
     .card:hover {
-      transition: all linear 0.5s;
-      background: $colorNav;
+      -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      transform: scale(1.1);
+      transition: transform 0.4s;
+      // transition: all linear 0.5s;
+      // background: $colorNav;
     }
   }
+}
+
+.crop-image:hover {
+  transition: all linear 0.25s;
+  opacity: 0.5;
 }
 
 .modal {
@@ -146,19 +150,21 @@ a:hover {
   color: #298ccf;
 }
 
-.fade-in {
-  animation: fadeIn 3s;
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
 
-  to {
-    opacity: 1;
-  }
-}
+// .fade-in {
+//   animation: fadeIn 3s;
+// }
+
+// @keyframes fadeIn {
+//   from {
+//     opacity: 1;
+//   }
+
+//   to {
+//     opacity: 0.5;
+//   }
+// }
 
 @media (max-width: 760px) {
   .box-icons-social-media {
@@ -179,26 +185,25 @@ a:hover {
       .card {
         margin: 15px auto;
         width: 300px;
-        .crop-image{
+        .crop-image {
           height: 350px;
         }
-        .box-description{
+        .box-description {
           margin-top: 10px;
-          a{
+          a {
             font-size: 25px;
           }
         }
-        .box-btn-border{
+        .box-btn-border {
           margin-top: 25px;
-          .btn-border{
+          .btn-border {
             width: 90%;
             height: 60px;
-            .icon-shopping-cart{
+            .icon-shopping-cart {
               font-size: 25px;
             }
-            
           }
-          span{
+          span {
             font-size: 20px;
           }
         }

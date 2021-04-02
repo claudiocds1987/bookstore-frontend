@@ -7,9 +7,13 @@
 }
 
 .card {
-  width: 270px !important;
+  //width: 270px !important;
   position: absolute;
   z-index: 10;
+}
+
+#btn-login{
+  border-radius: 2px;
 }
 
 .icon-account-circle{
@@ -38,3 +42,16 @@
   background: #ff0226;
 }
 
+@media (max-width: 700px) {
+  .card{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 701px) {
+  .card{
+    width: 380px;
+    height: 500px;
+  }
+}
