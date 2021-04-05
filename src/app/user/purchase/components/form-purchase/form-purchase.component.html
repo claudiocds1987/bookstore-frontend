@@ -1,39 +1,38 @@
-<p>form-purchase works!</p>
 <div class="container-fluid fondo">
-  <div class="container box-principal">
+  <div class="box-principal">
     <div class="card">
       <mat-horizontal-stepper class="box">
-        <mat-step>
+        <mat-step id="caca">
           <ng-template matStepLabel>Sus productos</ng-template>
           <!-- creo variable temporal en memoria con as products (ver video clase 51) -->
           <div class="box">
-            <h2 class="text-white">TOTAL:</h2>
-            <label class="text-white"
+            <h4 class="text-white ml-2">TOTAL: {{ total | currency }}</h4>
+            <!-- <label class="text-white"
               ><b>{{ total | currency }}</b></label
-            >
+            > -->
           </div>
 
           <div class="table-responsive" *ngIf="bookList as libros">
-            <table *ngIf="libros.length > 0" class="table table-sm table-striped">
+            <table
+              *ngIf="libros.length > 0"
+              class="table table-sm table-striped"
+            >
               <thead class="encabezado">
                 <tr class="text-white">
-                  <th scope="col" class="text-center"></th>
-                  <th scope="col" class="text-center">Producto</th>
-                  <th scope="col" class="text-center">Cantidad</th>
-                  <th scope="col" class="text-center"></th>
+                  <td scope="col" class="text-center"></td>
+                  <td scope="col" class="text-center">Producto</td>
+                  <td scope="col" class="text-center">Cantidad</td>
+                  <td scope="col" class="text-center"></td>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  class="text-white text-muted"
-                  *ngFor="let b of libros; index as i"
-                >
+                <tr class="text-white" *ngFor="let b of libros; index as i">
                   <td class="text-center align-middle">
                     <img [src]="b.url_image" class="img-book" />
                   </td>
                   <!-- en la query lado server tenes AS Autor, por eso aca pones b.autor aunque salga en rojo -->
                   <td class="text-center align-middle">
-                    <b>{{ b.name }}</b> <br />
+                    {{ b.name }} <br />
                     {{ b.autor }} <br />
                     {{ b.price }}
                   </td>
@@ -67,7 +66,12 @@
         <mat-step>
           <ng-template matStepLabel>Realizar pago</ng-template>
           <h3 class="text-white mt-2">Total: {{ total | currency }}</h3>
-          <div *ngIf="username != null || username != undefined else template_alerta">
+          <div
+            *ngIf="
+              username != null || username != undefined;
+              else template_alerta
+            "
+          >
             <form
               #formu
               [formGroup]="form"
@@ -97,7 +101,19 @@
                 >
                   <div class="row row-input">
                     <div class="col-xs box-input">
+                      
                       <mat-form-field>
+                        <mat-label>Provincia</mat-label>
+                        <mat-select formControlName="provincia" (selectionChange)="captureValue($event)">
+                          <mat-option
+                            *ngFor="let provincia of provincias"
+                            [value]="provincia"
+                          >
+                            {{ provincia }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <!-- <mat-form-field>
                         <input
                           [(ngModel)]="order.provincia"
                           formControlName="provincia"
@@ -130,7 +146,7 @@
                             >
                           </p>
                         </div>
-                      </mat-form-field>
+                      </mat-form-field> -->
                     </div>
                   </div>
 
@@ -248,24 +264,22 @@
                   </div>
                 </mat-card-content>
               </mat-card>
-              <button
-                [disabled]="form.invalid"
-                type="submit"
-                class="btn btn-success"
-                (click)="formu.submit()"
-              >
-                mercado pago
-              </button>
+              <div class="text-center mt-2">
+                <button
+                  [disabled]="form.invalid"
+                  type="submit"
+                  class="btn btn-success"
+                  (click)="formu.submit()"
+                >
+                  mercado pago
+                </button>
+              </div>
             </form>
           </div>
         </mat-step>
       </mat-horizontal-stepper>
     </div>
   </div>
-  {{order.adress}}
-  {{order.provincia}}
-  {{order.phone_number}}
-  
   <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
   <ngx-spinner></ngx-spinner>
 </div>

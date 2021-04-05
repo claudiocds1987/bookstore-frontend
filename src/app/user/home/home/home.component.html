@@ -9,9 +9,10 @@
             class="form-control input-buscar"
             [(ngModel)]="inputValue"
             (keydown.enter)="filterBook()"
-            placeholder="Buscar libro"
+            placeholder="Buscar"
           />
           <select id="select" (change)="selectChangeHandler($event)" class="form-control">
+            <!-- <option selected value="">Opción</option>        -->
             <option selected value="all">Todos</option>
             <option value="title">Título</option>
             <option value="author">Autor</option>

@@ -15,9 +15,9 @@ import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
-    FormPurchaseComponent, 
-    SuccessfulPurchaseComponent, 
-    FailedPurchaseComponent, 
+    FormPurchaseComponent,
+    SuccessfulPurchaseComponent,
+    FailedPurchaseComponent,
     PendientPurchaseComponent
   ],
   imports: [

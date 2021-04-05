@@ -2,28 +2,9 @@
   <div class="contenedor">
     <a class="icon-bookstore"><mat-icon md-48>eco</mat-icon></a>
     <h1>Bookstore</h1>
-    <!-- ////////////// sub menu ////////////////////////////////////// -->
-    <div class="sub-menu" *ngIf="username">
-      <button mat-button [matMenuTriggerFor]="menu">
-        <mat-icon>account_circle</mat-icon>
-        {{ username }}
-      </button>
-      <mat-menu #menu="matMenu">
-        <a mat-menu-item [routerLink]="'/order/orders-list'">
-          <mat-icon>shopping_cart</mat-icon>
-          Mis compras
-        </a>
-        <a mat-menu-item [routerLink]="'/auth/login'">
-          <mat-icon>person_off</mat-icon>
-          Cerrar sesión
-        </a>
-      </mat-menu>
-    </div>
-    <!-- ////////////////////////////////////////////////////////////// -->
     <input type="checkbox" id="menu-bar" />
     <label class="icon-menu" for="menu-bar">
       <i class="fas fa-bars fa-lg"></i>
-      <!-- <mat-icon id="icono-menu">menu</mat-icon> -->
     </label>
     <nav class="menu">
       <!--  href="/order" porque stripe si no se refresca la pagina no muestra pago de tarjeta -->
@@ -32,10 +13,27 @@
           >shopping_cart</mat-icon
         >
       </a>
-      <!-- <a [href]="'/purchase/successful-purchase'"><i class="fa fa-home mr-2" aria-hidden="true"></i>exitosa</a> -->
+      <!-- <a [href]="'/purchase/successful-purchase'"><i class="fa fa-home mr-2" aria-hidden="true"></i>Prueba compra</a> -->
       <a [routerLink]="'/home'"><i class="fa fa-home mr-2" aria-hidden="true"></i>Home</a>
       <a [routerLink]="'/contact/contact'"><i class="fa fa-envelope mr-2" aria-hidden="true"></i>Contacto</a>
       <a [routerLink]="'auth/login'"><i class="fa fa-user mr-2" aria-hidden="true"></i>Login</a>
+
+      <div *ngIf="username" class="dropdown show" id="cont-menu-user">
+        <a class="dropdown-toggle" role="button" id="menu-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ username }}
+        </a>
+        <div id="cont-menu-options" class="dropdown-menu" aria-labelledby="menu-user">
+          <a class="dropdown-item" [routerLink]="'/order/orders-list'">
+            <i class="fas fa-shopping-cart mr-2"></i>
+            Mis compras
+          </a>
+          <a class="dropdown-item" [routerLink]="'/auth/login'">
+            <i class="fas fa-user-slash mr-2"></i>
+            Cerrar sesión
+          </a>
+        </div>
+      </div>
+
     </nav>
   </div>
 </header>

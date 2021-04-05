@@ -17,17 +17,20 @@ import { SaleDetailService } from '../../../../services/sale-detail.service';
 import { UserService } from '../../../../services/user.service';
 import { AlertService } from '../../../../services/alert.service';
 import { MercadopagoService } from '../../../../services/mercadopago.service';
+import { ProvinciaService } from '../../../../services/provincia.service';
 // models
 import { Order } from 'src/app/models/order';
 import { OrderDetail } from 'src/app/models/orderDetail';
 import { Sale } from 'src/app/models/sale';
 import { SaleDetail } from 'src/app/models/saleDetail';
-import { User } from 'src/app/models/user';
+// import { User } from 'src/app/models/user';
 import { Book } from 'src/app/models/book';
+import { Provincia } from 'src/app/models/provincia';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Compramp } from 'src/app/models/compramp';
 // componente a mostrar cuando se utilice Material Dialog para eliminar un producto
 import { MatConfirmDialogComponent } from '../../../../mat-confirm-dialog/mat-confirm-dialog.component';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-form-purchase',
@@ -46,8 +49,9 @@ export class FormPurchaseComponent implements OnInit {
   /* bookList: any[]; de tipo any porque en localStorage('shopingCart') trae un elemento "autor" que no existe en type Book
      si la declaro como bookList: book[]; en html cuando muestre book.autor va a marcar error.*/
   bookList: any[];
+  // provincias: Provincia[];
   total: number;
-  provincia = 'Buenos Aires';
+  // provincia = 'Buenos Aires';
   // objetos
   order = {} as Order;
   orderDetail = {} as OrderDetail;
@@ -63,6 +67,32 @@ export class FormPurchaseComponent implements OnInit {
   habilitarBtnPagar = false;
   username;
 
+  provincias = [
+    'Buenos Aires',
+    'Catamarca',
+    'Chaco',
+    'Chubut',
+    'Cordoba',
+    'Corrientes',
+    'Entre Rios',
+    'Formosa',
+    'Jujuy',
+    'La Pampa',
+    'La Rioja',
+    'Mendoza',
+    'Misiones',
+    'Nequen',
+    'Rio Negro',
+    'Salta',
+    'San Juan',
+    'San Luis',
+    'Santa Cruz',
+    'Santa Fe',
+    'Santiago del Estero',
+    'Tierra del Fuego',
+    'Tucuman'
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     public cartService: CartService,
@@ -73,6 +103,7 @@ export class FormPurchaseComponent implements OnInit {
     public alertService: AlertService,
     public userService: UserService,
     public mercadopagoService: MercadopagoService,
+    public provinciaService: ProvinciaService,
     private ngZone: NgZone,
     private router: Router,
     private dialog: MatDialog
@@ -118,9 +149,26 @@ export class FormPurchaseComponent implements OnInit {
       this.username = localStorage.getItem('username');
       // obtengo el id del usuario para el objeto order
       this.getUserId(this.username);
+      // get de provincias
+      // this.getProvincias();
     }
   }
 
+  // getProvincias(){
+  //   this.provinciaService.getProvincias().subscribe(
+  //     res => {
+  //       this.provincias = res;
+  //     },
+  //     err => console.error('No se pudo obtener todas las provincias. ' + err)
+  //   );
+  // }
+
+   // captura el value del <select> provincia
+   captureValue(event: MatSelectChange) {
+    // console.log(event.value);
+    this.order.provincia = event.value;
+    this.orderData();
+  }
 
   orderData(){
     if (this.form.valid){

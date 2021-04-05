@@ -76,30 +76,27 @@ export class UserLoginComponent implements OnInit {
       // borrando las localStorage
       localStorage.removeItem('username');
       this.alertService.showInfo('Sesión cerrada', '');
-      // borrando localStorage shoppingCart
+      // borrando localStorage "shoppingCart"
       if (localStorage.getItem('shoppingCart') != null) {
         localStorage.removeItem('shoppingCart');
         console.log('localStorage del shopping cart eliminada')
       }
-
-      // borrando la localStorage idBooks
+      // borrando la localStorage "idBooks"
       if (localStorage.getItem('idBooks') != null) {
         localStorage.removeItem('idBooks');
         console.log('localStorage con array de idBooks eliminada');
       }
-
-      // borrando la localStorage token
+      // borrando la localStorage "token"
       if (localStorage.getItem('token') != null) {
         localStorage.removeItem('token');
         console.log('localStorage con el token eliminada');
       }
-
-      // borrando al localstorage purchase
+      // borrando al localstorage "purchase"
       if (localStorage.getItem('purchase') != null) {
         localStorage.removeItem('purchase');
         console.log('localStorage purchase eliminada');
       }
-
+       // borrando localstorage "orderData" creada en form-purchase.component.ts
       if (localStorage.getItem('orderData') != null) {
         localStorage.removeItem('orderData');
         console.log('localStorage orderData eliminada');
@@ -117,7 +114,7 @@ export class UserLoginComponent implements OnInit {
 
   }
 
-  // convenienza getter para facil acceso a lo campos del formulario 
+  // convenienza getter para facil acceso a lo campos del formulario
   get f() {
     return this.form.controls;
   }
