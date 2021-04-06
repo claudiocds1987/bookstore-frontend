@@ -4,19 +4,12 @@
 }
 
 .box {
-  // display: flex;
-  // flex-direction: column;
-  // min-height: 100vh;
-  // justify-content: center; // (alinea al centro eje horizontal cualquier elemento que este en div .container)
-  // align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
   .card {
-    // el width se lo doy en la media query abajo de todo
     position: absolute;
     z-index: 10;
     top: 50px;
     width: 100%;
-    // height: 94%;
-    height: 700px;
+    border: none;
     h2{
       font-size: 30px;
     }
@@ -56,7 +49,6 @@
         align-items: center;
         margin-top: 40px;
         .icon {
-          //vertical-align: middle !important;
           margin-right: 5px !important;
           color: #777; // mismo color text-muted bootstrap
         }
@@ -80,32 +72,9 @@
   }
 
   .col2 {
-    background: #1b9ffd;
+    background: #ffff;
   }
 }
-
-
-// @media (max-width: 414px) {
-//   .card{
-//     width: 100% !important;
-//     // height: 100% !important;
-//     // h2{
-//     //   font-size: 30px;
-//     // }
-//     // .card-body{
-//     //   input{
-//     //     height: 50px;
-//     //   }
-//     //   #cont-btn-login{   
-//     //     button{
-//     //       height: 50px;
-//     //       font-size: 20px;
-//     //       color: white;
-//     //     }
-//     //   }
-//     // }
-//   } 
-// }
 
 @media (min-width: 500px) {
   .box{
@@ -119,5 +88,8 @@
       top: 100px;
       height: fit-content;
     } 
+    .col2 {
+      background: #1b9ffd;
+    }
   }
 }

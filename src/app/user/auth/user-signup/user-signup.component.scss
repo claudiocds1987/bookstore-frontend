@@ -1,17 +1,10 @@
-.box {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  justify-content: center; // (alinea al centro eje horizontal cualquier elemento que este en div .container)
-  align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
-}
-
 .card {
   // max-width no funciona por estar dentro de un div con display flex
-  // el width se lo doy en la media query abajo de todo
   position: absolute;
   z-index: 10;
-  margin-top: 60px !important;
+  top: 50px;
+  width: 100%;
+  border: none;
   h2{
     font-size: 30px;
   }
@@ -30,16 +23,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      //margin-top: 40px;
       .icon {
-        //vertical-align: middle !important;
         margin-bottom: 15px;
         margin-right: 5px !important;
         color: #777; // mismo color text-muted bootstrap
       }
     }
     #cont-btn-registrarse {
-      //padding-top: 25px;
       button {
         height: 50px;
         font-size: 20px;
@@ -76,7 +66,7 @@
 }
 
 .col2 {
-  background: #1b9ffd;
+  background: #ffff;
 }
 
 // ************** fin ***************** //
@@ -97,16 +87,20 @@
   float: left !important;
 }
 
-@media (max-width: 414px) {
-  .card {
-    margin-top: 20px !important;
-    width: 100% !important;
-  }
-}
-
-@media (min-width: 415px) {
-  .card {
-    margin-top: 20px !important;
-    width: 380px !important;
+@media (min-width: 500px) {
+  .box{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center; // (alinea al centro eje horizontal cualquier elemento que este en div .container)
+    align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
+    .card{
+      width: 380px !important;
+      top: 62px;
+      height: fit-content;
+    } 
+    .col2 {
+      background: #1b9ffd;
+    }
   }
 }
