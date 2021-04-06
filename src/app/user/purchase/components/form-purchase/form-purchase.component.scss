@@ -35,15 +35,17 @@
         }
       }
       #card-inputs {
-        //margin: 0px auto !important;
-        //max-width: 350px !important;
-        background: #005278;
+        // background: #005278;
+        background: $colorNav;
         .img-envios {
           width: 100%;
           max-height: 80px !important;
         }
         .box-input {
-          margin: 0 auto !important;
+          //margin: 0 auto !important;
+          width: 100%;
+          padding-left: 15px;
+          padding-right: 15px;
         }
       }
     }
@@ -55,6 +57,14 @@
 
 // ::ng-deep es para modificar las propiedades de las clases de angular material que vienen por defecto.
 // porque las clases de angular material no se pueden modificar desde CSS/SCSS.
+
+::ng-deep.mat-form-field{
+  width: 100%;
+  -webkit-text-fill-color:white;
+  p{
+    -webkit-text-fill-color:red;
+  }
+}
 
 ::ng-deep.mat-horizontal-content-container {
   background: #00567e;
@@ -76,9 +86,9 @@
   color: white;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 500px) {
   #card-inputs{
-    max-width: 350px;
+    max-width: 380px;
     margin: 0px auto !important;
   }
 }

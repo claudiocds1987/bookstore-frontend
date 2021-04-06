@@ -165,22 +165,22 @@
                           *ngIf="localidadField.errors && localidadField.dirty"
                         >
                           <p *ngIf="localidadField.hasError('required')">
-                            <small class="text-danger"
+                            <small
                               >Complete este campo.</small
                             >
                           </p>
                           <p *ngIf="localidadField.hasError('pattern')">
-                            <small class="text-danger"
+                            <small
                               >Ingrese solo letras.</small
                             >
                           </p>
                           <p *ngIf="localidadField.hasError('maxlength')">
-                            <small class="text-danger"
+                            <small
                               >Maximo 30 caracteres</small
                             >
                           </p>
                           <p *ngIf="localidadField.hasError('minlength')">
-                            <small class="text-danger"
+                            <small
                               >Minimo 4 caracteres</small
                             >
                           </p>
@@ -202,17 +202,17 @@
                         />
                         <div *ngIf="adressField.errors && adressField.dirty">
                           <p *ngIf="adressField.hasError('required')">
-                            <small class="text-danger"
+                            <small
                               >Complete este campo.</small
                             >
                           </p>
                           <p *ngIf="adressField.hasError('maxlength')">
-                            <small class="text-danger"
+                            <small
                               >Maximo 30 caracteres</small
                             >
                           </p>
                           <p *ngIf="adressField.hasError('minlength')">
-                            <small class="text-danger"
+                            <small
                               >Minimo 4 caracteres</small
                             >
                           </p>
@@ -239,22 +239,22 @@
                           "
                         >
                           <p *ngIf="phoneNumberField.hasError('required')">
-                            <small class="text-danger"
+                            <small
                               >Complete este campo.</small
                             >
                           </p>
                           <p *ngIf="phoneNumberField.hasError('pattern')">
-                            <small class="text-danger"
+                            <small
                               >Ingrese solo números sin espacios.</small
                             >
                           </p>
                           <p *ngIf="phoneNumberField.hasError('minlength')">
-                            <small class="text-danger"
+                            <small
                               >Ingrese un mínimo de 8 números.</small
                             >
                           </p>
                           <p *ngIf="phoneNumberField.hasError('maxlength')">
-                            <small class="text-danger"
+                            <small
                               >Hasta 12 números permitidos.</small
                             >
                           </p>
@@ -263,8 +263,16 @@
                     </div>
                   </div>
                 </mat-card-content>
+                <button
+                  [disabled]="form.invalid"
+                  type="submit"
+                  class="btn btn-success btn-block"
+                  (click)="formu.submit()"
+                >
+                  mercado pago
+                </button>
               </mat-card>
-              <div class="text-center mt-2">
+              <!-- <div class="text-center mt-2">
                 <button
                   [disabled]="form.invalid"
                   type="submit"
@@ -273,7 +281,7 @@
                 >
                   mercado pago
                 </button>
-              </div>
+              </div> -->
             </form>
           </div>
         </mat-step>
