@@ -11,14 +11,17 @@ import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
 // imports para el funcionamiento del spinner/loader para peticiones http
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxMaskModule } from 'ngx-mask';
-
+import { PurchaseOrdersComponent } from './components/purchase-orders/purchase-orders.component';
+import { PurchaseOrderDetailComponent } from './components/purchase-order-detail/purchase-order-detail.component';
 
 @NgModule({
   declarations: [
     FormPurchaseComponent,
     SuccessfulPurchaseComponent,
     FailedPurchaseComponent,
-    PendientPurchaseComponent
+    PendientPurchaseComponent,
+    PurchaseOrdersComponent,
+    PurchaseOrderDetailComponent
   ],
   imports: [
     CommonModule,

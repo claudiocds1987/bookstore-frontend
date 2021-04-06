@@ -14,11 +14,11 @@ import { Book } from 'src/app/models/book';
 declare var $: any; // para que funcione jquery
 
 @Component({
-  selector: 'app-orders-list',
-  templateUrl: './orders-list.component.html',
-  styleUrls: ['./orders-list.component.scss']
+  selector: 'app-purchase-orders',
+  templateUrl: './purchase-orders.component.html',
+  styleUrls: ['./purchase-orders.component.scss']
 })
-export class OrdersListComponent implements OnInit {
+export class PurchaseOrdersComponent implements OnInit {
 
   SERVER = 'http://localhost:3000';
 
@@ -116,8 +116,7 @@ export class OrdersListComponent implements OnInit {
     this.date2 = undefined;
     this.getOrdersByUserId(this.userArray[0].id_user);
   }
-
-
+  
   getDetalle(id_order: number){
     this.orderDetailArray = [];
     this.orderDetailService.getOrderDetail(id_order).subscribe(
@@ -129,7 +128,7 @@ export class OrdersListComponent implements OnInit {
           // Obtengo el libro
           this.getBookById(idBook);
         });
-        // el modal esta en order-detail.component.html
+        // el modal esta en order-purchase-detail.component.html
         $('#myModal').modal('show');
       },
       err => console.error('error al obtener el order_detail ' + err)
@@ -160,5 +159,5 @@ export class OrdersListComponent implements OnInit {
     // console.log(link);
     return link;
   }
-}
 
+}

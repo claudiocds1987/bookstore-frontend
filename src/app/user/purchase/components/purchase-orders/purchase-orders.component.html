@@ -1,0 +1,114 @@
+<div class="container box-principal">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <!-- si ordersArray tiene contenido muestro tabla -->
+        <div class="card">
+          <div class="card-body">
+            <img src="./../../../../assets/images/my-purchases.svg" />
+            <div class="row" id="row-filter">
+              <div class="col-md-4 box">
+                <label>Desde:</label>
+                <mat-form-field>
+                  <mat-label>Fecha 1</mat-label>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="date1" />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 box">
+                <label>Hasta:</label>
+                <mat-form-field>
+                  <mat-label>Fecha 2</mat-label>
+                  <input matInput [matDatepicker]="picker2" [(ngModel)]="date2" />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <div class="box-buttons text-right">
+                  <button
+                    id="btn-filtrar"
+                    mat-raised-button
+                    color="celeste"
+                    (click)="filterOrdersByDate()"
+                  >
+                    Filtrar
+                  </button>
+                  <button
+                    [disabled]="btnDisabled"
+                    mat-raised-button
+                    color="warn"
+                    (click)="listAllOrders()"
+                  >
+                    Listar todas
+                  </button>
+                </div>
+              </div>
+            </div>
+            <table class="table table-hover table-striped">
+              <thead class="thead-dark">
+                <tr class="text-center">
+                  <th id="th-indice" scope="col"><span class="text-muted">#</span></th>
+                  <th id="th-date" scope="col"><span class="text-muted">Fecha</span></th>
+                  <th id="th-total" scope="col"><span class="text-muted">Total</span></th>
+                  <th id="th-adress"scope="col"><span class="text-muted">Entrega</span></th>
+                  <th id="th-btn-detail" scope="col"></th>
+                </tr>
+              </thead>
+              <p class="text-danger" *ngIf="filterOrdersArray.length <= 0">
+                <small>{{ message }}</small>
+              </p>
+              <tbody *ngIf="filterOrdersArray.length > 0">
+                <tr
+                  class="text-center"
+                  *ngFor="
+                    let order of filterOrdersArray
+                      | paginate: { itemsPerPage: 7, currentPage: actualPage };
+                    let i = index
+                  "
+                >
+                  <td id="td-indice" scope="row">{{ i + 1 }}</td>
+                  <td id="td-date">{{ order.order_date | date: "dd/MM/yyyy" }}</td>
+                  <td id="td-total">{{ order.total_price | currency: "ARS ":"symbol" }}</td>
+                  <td id="td-adress">{{ order.adress }} - {{ order.localidad }}</td>
+                  <td>
+                    <a id="btn-detail"
+                      style="text-decoration: none"
+                      mat-raised-button
+                      color="primary"
+                      (click)="getDetalle(order.id_order)"
+                    >
+                      <mat-icon>details</mat-icon>
+                      Detalle
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- controles del pagination -->
+            <pagination-controls
+              (pageChange)="actualPage = $event"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+  
+  <div *ngIf="orderDetailArray.length > 0">
+    <!-- pasando los array por [inputs] declarados en purchase-orders-detail.component.ts -->
+    <app-purchase-order-detail
+      [orderDetail]="orderDetailArray"
+      [books]="bookArray"
+    ></app-purchase-order-detail>
+  </div>
+  
+  

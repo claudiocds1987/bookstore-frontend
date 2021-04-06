@@ -5,8 +5,8 @@ import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
 import { Book } from '../../models/book';
 import { Router } from '@angular/router';
-import { style } from '@angular/animations';
-import { transform } from 'typescript';
+// import { style } from '@angular/animations';
+// import { transform } from 'typescript';
 
 @Component({
   selector: 'app-main-nav',
@@ -14,11 +14,8 @@ import { transform } from 'typescript';
   styleUrls: ['./main-nav.component.scss'],
 })
 export class MainNavComponent implements OnInit {
-  // isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  //   .pipe(
-  //     map(result => result.matches),
-  //     shareReplay()
-  //   );
+ 
+  // navStyle = 'transition: all 0.5s; transform: translateX(-100%);';
 
   total$: Observable<number>;
   total = 0;
@@ -42,6 +39,20 @@ export class MainNavComponent implements OnInit {
       this.username = username;
     });
   }
+
+  // hideMenu(name:string){
+  //   console.log(name);
+  //   const element = document.getElementById("menu");
+  //   element.classList.add("navStyle");
+
+  //   if(name === 'home'){
+  //     this.router.navigate(['/home']);
+  //   }
+
+  //   if(name === 'login'){
+  //     this.router.navigate(['/auth/login']);
+  //   }
+  // }
 
   ngOnInit(): void {
     // si se refresque la pagina, cargo los datos del localStorage para determinar el total de items del carrito

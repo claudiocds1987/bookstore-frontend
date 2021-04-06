@@ -4,6 +4,8 @@ import { FormPurchaseComponent } from './components/form-purchase/form-purchase.
 import { SuccessfulPurchaseComponent } from './components/successful-purchase/successful-purchase.component';
 import { FailedPurchaseComponent } from './components/failed-purchase/failed-purchase.component';
 import { PendientPurchaseComponent } from './components/pendient-purchase/pendient-purchase.component';
+import { PurchaseOrdersComponent } from './components/purchase-orders/purchase-orders.component';
+import { PurchaseOrderDetailComponent } from './components/purchase-order-detail/purchase-order-detail.component';
 
 const routes: Routes = [
   {
@@ -21,7 +23,16 @@ const routes: Routes = [
   {
     path: 'pendient-purchase',
     component: PendientPurchaseComponent
-  }
+  },
+  {
+    path: 'purchase-orders',
+    component: PurchaseOrdersComponent
+  },
+  {
+    path: 'purchase-order-detail',
+    component: PurchaseOrderDetailComponent
+  },
+ 
 ];
 
 @NgModule({

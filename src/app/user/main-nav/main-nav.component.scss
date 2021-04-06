@@ -1,7 +1,16 @@
+@import "./../../sass/variables";
+
+// .hideMenu{
+//   .menu{
+//     transition: all 0.5s;
+//     transform: translateX(-100%);
+//   }
+// }
+
 header{
   width: 100%;
   height: 50px;
-  background: #293240;
+  background: rgb(44, 62, 80);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   color: #fff;
   position: fixed;
@@ -14,13 +23,11 @@ h1{
   color: white;
   margin-top: 8px;
   float: left;
-  //letter-spacing: 0.1em;
   letter-spacing: 1px;
 }
 
 .icon-bookstore{
   float:left;
-  //color: rgb(10, 110, 189);
   color: #c5fd43;
   margin-top:8px;
 }
@@ -34,10 +41,6 @@ h1{
 
 .icon-menu{
   margin: 0 auto;
-  // #icono-menu{
-  //   font-size: 46px;
-  //   margin-right: 25px;
-  // }
 }
 
 .icon-shopping-cart{
@@ -64,10 +67,6 @@ header label{
   cursor: pointer;
 }
 
-// h1 {
-//   float: left;
-// }
-
 header .contenedor{
   display: table; // para limpia los floats
 }
@@ -78,7 +77,8 @@ header .contenedor{
   left: 0;
   width: 100%;
   height: 100vh;
-  background: rgb(41, 50, 64, 0.8);
+  // background: rgb(41, 50, 64, 0.8); // original
+  background: rgb(44, 62, 80, 0.8);
   transition: all 0.5s;
   transform: translateX(-100%);
   a{
@@ -87,7 +87,6 @@ header .contenedor{
     height: 50px;
     text-decoration: none;
     padding: 15px;
-    //border-bottom: 1px solid rgb(255, 255, 255,0.5);
     border-bottom: 1px solid rgb(41, 50, 64);
   }
   #cont-menu-user{
@@ -115,7 +114,8 @@ header .contenedor{
 
 .menu a:hover{
   border-bottom:rgb(255, 255, 255,0.3);
-  background: rgb(41, 50, 64);
+  // background: rgb(41, 50, 64); //original
+  background: $colorNav;
   color: #c5fd43;
 }
 

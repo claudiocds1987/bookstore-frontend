@@ -31,10 +31,10 @@ const routes: Routes = [
         path: 'purchase',
         loadChildren: () => import('./user/purchase/purchase.module').then(m => m.PurchaseModule)
       },
-      {
-        path: 'order',
-        loadChildren: () => import('./user/order/order.module').then(m => m.OrderModule)
-      },
+      // {
+      //   path: 'order',
+      //   loadChildren: () => import('./user/order/order.module').then(m => m.OrderModule)
+      // },
       {
         path: 'contact',
         loadChildren: () => import('./user/contact/contact.module').then(m => m.ContactModule)
@@ -64,11 +64,6 @@ const routes: Routes = [
         canActivate: [AdminGuard],
         component: AdminPrincipalComponent
       },
-      // {
-      //   path: 'dashboard',
-      //   canActivate: [AdminGuard],
-      //   component: DashboardComponent
-      // },
       {
         path: 'customer',
         canActivate: [AdminGuard],

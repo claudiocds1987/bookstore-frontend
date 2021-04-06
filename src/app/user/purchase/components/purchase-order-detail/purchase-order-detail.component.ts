@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {  Component, Input, OnInit } from '@angular/core';
 import { OrderDetail } from '../../../../models/orderDetail';
 import { Book } from '../../../../models/book';
 declare var $: any; // para que funcione jquery
 
 @Component({
-  selector: 'app-order-detail',
-  templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.scss'],
+  selector: 'app-purchase-order-detail',
+  templateUrl: './purchase-order-detail.component.html',
+  styleUrls: ['./purchase-order-detail.component.scss']
 })
-export class OrderDetailComponent implements OnInit {
+export class PurchaseOrderDetailComponent implements OnInit {
+
   @Input() orderDetail: OrderDetail[] = [];
   @Input() books: Book[] = [];
-
 
   constructor() {}
 

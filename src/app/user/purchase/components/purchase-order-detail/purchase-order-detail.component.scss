@@ -1,0 +1,19 @@
+@import "./../../../../sass/variables";
+
+.modal-dialog{
+  width: 100%;
+  .modal-content{
+    background: #0b3544;
+      .modal-body{
+        background: #ffffff;
+      }
+  }
+  .modal-header, .modal-footer{
+    background: $colorDos;
+    color: white;
+  }
+  img{
+    width:70px;
+    height: 90px;
+  }
+}
