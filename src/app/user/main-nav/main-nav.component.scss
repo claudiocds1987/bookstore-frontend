@@ -10,7 +10,7 @@
 
 header{
   width: 100%;
-  height: 50px;
+  height: 70px; // ori
   background: rgb(44, 62, 80);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   color: #fff;
@@ -18,12 +18,13 @@ header{
   top: 0;
   left: 0;
   z-index: 100;
-  // padding: 16px;
+  padding: 10px;
 }
 
 h1{
   color: white;
-  margin-top: 8px;
+  // margin-top: 8px; //ori
+  margin-top: 7px;
   float: left;
   letter-spacing: 1px;
 }
@@ -37,7 +38,7 @@ h1{
 .sub-menu{
   position: absolute;
   margin-left: 200px;
-  margin-top: 5px;
+  //margin-top: 5px; //ori
 
 }
 
@@ -75,7 +76,8 @@ header .contenedor{
 
 .menu{
   position: absolute;
-  top: 50px;
+  // top: 50px;// ori
+  top: 70px;
   left: 0;
   width: 100%;
   height: 100vh;
@@ -86,7 +88,7 @@ header .contenedor{
   a{
     display: block;
     color: #fff;
-    height: 50px;
+    height: 50px; //ori
     text-decoration: none;
     padding: 15px;
     border-bottom: 1px solid rgb(41, 50, 64);

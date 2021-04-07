@@ -17,7 +17,7 @@ export class MainNavComponent implements OnInit {
   // para ocultar/mostrar el menu leer mi documentacion
   hide: boolean = false;
   show: boolean = false;
- // ----------------------------------------------------
+  // ----------------------------------------------------
   total$: Observable<number>;
   total = 0;
   bookArray: Book[] = [];
@@ -58,6 +58,7 @@ export class MainNavComponent implements OnInit {
 
   hideMenu(name: string) {
     console.log(name);
+    // cuando es click en el toogle
     if (name === 'menu-bar') {
       if (this.show === false) {
         // se muestra el menu
@@ -69,27 +70,25 @@ export class MainNavComponent implements OnInit {
         this.show = false;
       }
     } else {
-      // if (this.hide === false) {
-        // se oculta el menu al darle clic en item del menu
-        this.hide = true;
-        this.show = false;
-        // console.log('hide: ' + this.hide);
-        if (name === 'home') {
-          console.log('deberia ir a home');
-          this.router.navigate(['/home']);
-        }
-        if (name === 'contact') {
-          console.log('deberia ir a contact');
-          this.router.navigate(['/contact/contact']);
-        }
-        if (name === 'login') {
-          console.log('deberia ir a login');
-          this.router.navigate(['/auth/login']);
-        }
-        if (name === 'carrito') {
-          this.router.navigate(['/purchase/form-purchase']);
-        }
-      // }
+      // cuando hay click en item del menu
+      this.hide = true;
+      this.show = false;
+
+      if (name === 'home') {
+        console.log('deberia ir a home');
+        this.router.navigate(['/home']);
+      }
+      if (name === 'contact') {
+        console.log('deberia ir a contact');
+        this.router.navigate(['/contact/contact']);
+      }
+      if (name === 'login') {
+        console.log('deberia ir a login');
+        this.router.navigate(['/auth/login']);
+      }
+      if (name === 'carrito') {
+        this.router.navigate(['/purchase/form-purchase']);
+      }
     }
   }
 

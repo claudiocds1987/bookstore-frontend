@@ -2,7 +2,7 @@
   <div class="box-principal">
     <div class="card">
       <mat-horizontal-stepper class="box">
-        <mat-step id="caca">
+        <mat-step>
           <ng-template matStepLabel>Sus productos</ng-template>
           <!-- creo variable temporal en memoria con as products (ver video clase 51) -->
           <div class="box">
@@ -18,15 +18,15 @@
               class="table table-sm table-striped"
             >
               <thead class="encabezado">
-                <tr class="text-white">
+                <tr>
                   <td scope="col" class="text-center"></td>
-                  <td scope="col" class="text-center">Producto</td>
-                  <td scope="col" class="text-center">Cantidad</td>
+                  <th scope="col" class="text-center text-muted">Producto</th>
+                  <th scope="col" class="text-center text-muted">Cantidad</th>
                   <td scope="col" class="text-center"></td>
                 </tr>
               </thead>
               <tbody>
-                <tr class="text-white" *ngFor="let b of libros; index as i">
+                <tr *ngFor="let b of libros; index as i">
                   <td class="text-center align-middle">
                     <img [src]="b.url_image" class="img-book" />
                   </td>
@@ -34,7 +34,7 @@
                   <td class="text-center align-middle">
                     {{ b.name }} <br />
                     {{ b.autor }} <br />
-                    {{ b.price }}
+                    ${{ b.price }}
                   </td>
 
                   <td class="text-center align-middle">
@@ -266,10 +266,10 @@
                 <button
                   [disabled]="form.invalid"
                   type="submit"
-                  class="btn btn-success btn-block"
+                  class="btn btn-success btn-lg btn-block"
                   (click)="formu.submit()"
                 >
-                  mercado pago
+                  COMPRAR
                 </button>
               </mat-card>
               <!-- <div class="text-center mt-2">
