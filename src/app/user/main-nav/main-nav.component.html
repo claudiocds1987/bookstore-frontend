@@ -2,23 +2,24 @@
   <div class="contenedor">
     <a class="icon-bookstore"><mat-icon md-48>eco</mat-icon></a>
     <h1>Bookstore</h1>
-    <input type="checkbox" id="menu-bar" />
+    <input type="checkbox" id="menu-bar" (click)="hideMenu('menu-bar')"/>
     <label class="icon-menu" for="menu-bar">
       <i class="fas fa-bars fa-lg"></i>
     </label>
-    <nav id="menu" class="menu">
-      <!--  href="/order" porque stripe si no se refresca la pagina no muestra pago de tarjeta -->
+    <nav id="menu" class="menu" [ngClass]="{'hideMenu': hide, 'showMenu': show && !hide}">
+    <!-- <nav id="menu" class="menu">      -->
       <a id="a-shopping-cart" (click)="checkItems()">
         <mat-icon [matBadge]="total" matBadgeColor="warn"
           >shopping_cart</mat-icon
         >
       </a>
       <!-- <a [href]="'/purchase/successful-purchase'"><i class="fa fa-home mr-2" aria-hidden="true"></i>Prueba compra</a> -->
-      <a [routerLink]="'/home'"><i class="fa fa-home mr-2" aria-hidden="true"></i>Home</a>
+      <!-- <a [routerLink]="'/home'"><i class="fa fa-home mr-2" aria-hidden="true"></i>Home</a>
       <a [routerLink]="'/contact/contact'"><i class="fa fa-envelope mr-2" aria-hidden="true"></i>Contacto</a>
-      <a [routerLink]="'auth/login'"><i class="fa fa-user mr-2" aria-hidden="true"></i>Login</a>
-      <!-- <a (click)="hideMenu('login')"><i class="fa fa-home mr-2" aria-hidden="true"></i>logearse</a>
-      <a (click)="hideMenu('home')"><i class="fa fa-home mr-2" aria-hidden="true"></i>casa</a> -->
+      <a [routerLink]="'auth/login'"><i class="fa fa-user mr-2" aria-hidden="true"></i>Login</a> -->
+      <a (click)="hideMenu('home')"><i class="fa fa-home mr-2" aria-hidden="true"></i>Home</a>
+      <a (click)="hideMenu('login')"><i class="fa fa-user mr-2" aria-hidden="true"></i>Login</a>
+      <a (click)="hideMenu('contact')"><i class="fa fa-envelope mr-2" aria-hidden="true"></i>Contacto</a>
       <div *ngIf="username" class="dropdown show" id="cont-menu-user">
         <a class="dropdown-toggle" role="button" id="menu-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ username }}

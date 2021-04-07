@@ -14,16 +14,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-nav.component.scss'],
 })
 export class MainNavComponent implements OnInit {
- 
-  // navStyle = 'transition: all 0.5s; transform: translateX(-100%);';
-
+  // para ocultar/mostrar el menu leer mi documentacion
+  hide: boolean = false;
+  show: boolean = false;
+ // ----------------------------------------------------
   total$: Observable<number>;
   total = 0;
   bookArray: Book[] = [];
   username: string;
 
   constructor(
-    //private breakpointObserver: BreakpointObserver,
+    // private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private cartService: CartService,
     public alertService: AlertService,
@@ -40,20 +41,6 @@ export class MainNavComponent implements OnInit {
     });
   }
 
-  // hideMenu(name:string){
-  //   console.log(name);
-  //   const element = document.getElementById("menu");
-  //   element.classList.add("navStyle");
-
-  //   if(name === 'home'){
-  //     this.router.navigate(['/home']);
-  //   }
-
-  //   if(name === 'login'){
-  //     this.router.navigate(['/auth/login']);
-  //   }
-  // }
-
   ngOnInit(): void {
     // si se refresque la pagina, cargo los datos del localStorage para determinar el total de items del carrito
     // esta localStorage fue creada en cart.service.ts
@@ -69,16 +56,46 @@ export class MainNavComponent implements OnInit {
     }
   }
 
+  hideMenu(name: string) {
+    console.log(name);
+    if (name === 'menu-bar') {
+      if (this.show == false) {
+        // se muestra el menu
+        this.hide = false;
+        this.show = true;
+      } else {
+        // se oculta el menu
+        this.hide = true;
+        this.show = false;
+      }
+    } else {
+      if (this.hide == false) {
+        // se oculta el menu al darle clic en item del menu
+        this.hide = true;
+        this.show = false;
+        // console.log('hide: ' + this.hide);
+        if (name === 'home') {
+          this.router.navigate(['/home']);
+        }
+        if (name === 'contact') {
+          this.router.navigate(['/contact/contact']);
+        }
+        if (name === 'login') {
+          this.router.navigate(['/auth/login']);
+        }
+        if (name === 'carrito') {
+          this.router.navigate(['/purchase/form-purchase']);
+        }
+      }
+    }
+  }
+
   checkItems() {
     if (localStorage.getItem('shoppingCart') === null) {
       this.alertService.showError('El carrito esta vacio', '');
     } else {
-      // "href" para que haga "refresh" cada vez que entra en "view order.html" sino "stripe" muestra el pago
-      // tarjeta una vez sola(al entrar por 1ra vez a order), si salgo de order y vuelvo a entrar desaparece,
-      // "stripe" necesita hacer un refresh para no tener problema.
-      // window.location.href = '/order/create-order';
-      
-      window.location.href = '/purchase/form-purchase';
+      // explicar por que aca la funcion hideMenu
+      this.hideMenu('carrito');
     }
   }
 }

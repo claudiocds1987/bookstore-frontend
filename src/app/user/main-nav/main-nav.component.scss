@@ -1,11 +1,12 @@
 @import "./../../sass/variables";
 
-// .hideMenu{
-//   .menu{
-//     transition: all 0.5s;
-//     transform: translateX(-100%);
-//   }
-// }
+.hideMenu{
+  transform: translateX(-100%) !important;
+}
+
+.showMenu{
+  transform: translateX(0%) !important;
+}
 
 header{
   width: 100%;
@@ -17,6 +18,7 @@ header{
   top: 0;
   left: 0;
   z-index: 100;
+  // padding: 16px;
 }
 
 h1{
@@ -117,6 +119,7 @@ header .contenedor{
   // background: rgb(41, 50, 64); //original
   background: $colorNav;
   color: #c5fd43;
+  cursor: pointer;
 }
 
 #a-shopping-cart:hover{
@@ -131,12 +134,12 @@ header .contenedor{
 
 @media (min-width:900px){
   .menu{
-    position: static;
-    width: auto;
-    height: auto;
-    transform: translateX(0%);
-    float: right;
-    display: flex;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    transform: translateX(0%) !important;
+    float: right !important;
+    display: flex !important;
   }
 
   .menu a{
