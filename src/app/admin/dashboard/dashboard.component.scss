@@ -15,6 +15,9 @@ nav{
   background: #f2f2f2;
   //background: $colorNav;
   margin: 0px !important;
+  footer{
+    background: $colorNav;
+  }
 }
 
 #box-sections{
@@ -86,8 +89,7 @@ nav{
         display: flex;
         justify-content: center;
         align-items: center;
-        .img-container {
-          
+        .img-container {      
           img {
             //max-width: 100%;
             //max-height: 100%;
@@ -104,6 +106,12 @@ nav{
 
 
 @media (max-width: 700px) {
+
+  section{
+    display:flex;
+    justify-content: center;
+  }
+
   .fila2, .fila3, .fila4{
     .card{
       margin: auto;
