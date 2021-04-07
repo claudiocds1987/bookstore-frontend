@@ -59,7 +59,7 @@ export class MainNavComponent implements OnInit {
   hideMenu(name: string) {
     console.log(name);
     if (name === 'menu-bar') {
-      if (this.show == false) {
+      if (this.show === false) {
         // se muestra el menu
         this.hide = false;
         this.show = true;
@@ -69,24 +69,27 @@ export class MainNavComponent implements OnInit {
         this.show = false;
       }
     } else {
-      if (this.hide == false) {
+      // if (this.hide === false) {
         // se oculta el menu al darle clic en item del menu
         this.hide = true;
         this.show = false;
         // console.log('hide: ' + this.hide);
         if (name === 'home') {
+          console.log('deberia ir a home');
           this.router.navigate(['/home']);
         }
         if (name === 'contact') {
+          console.log('deberia ir a contact');
           this.router.navigate(['/contact/contact']);
         }
         if (name === 'login') {
+          console.log('deberia ir a login');
           this.router.navigate(['/auth/login']);
         }
         if (name === 'carrito') {
           this.router.navigate(['/purchase/form-purchase']);
         }
-      }
+      // }
     }
   }
 
