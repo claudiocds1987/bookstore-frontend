@@ -58,38 +58,76 @@ export class MainNavComponent implements OnInit {
 
   hideMenu(name: string) {
     console.log(name);
-    // cuando es click en el toogle
-    if (name === 'menu-bar') {
-      if (this.show === false) {
-        // se muestra el menu
-        this.hide = false;
-        this.show = true;
-      } else {
-        // se oculta el menu
+    switch (name) {
+      // cuando es click en el toogle
+      case 'menu-bar':
+        if (this.show === false) {
+          // se muestra el menu
+          this.hide = false;
+          this.show = true;
+        } else {
+          // se oculta el menu
+          this.hide = true;
+          this.show = false;
+        }
+        break;
+      // cuando hay click en item del menu
+      case 'home':
         this.hide = true;
         this.show = false;
-      }
-    } else {
-      // cuando hay click en item del menu
-      this.hide = true;
-      this.show = false;
-
-      if (name === 'home') {
-        console.log('deberia ir a home');
         this.router.navigate(['/home']);
-      }
-      if (name === 'contact') {
-        console.log('deberia ir a contact');
+        break;
+      case 'contact':
+        this.hide = true;
+        this.show = false;
         this.router.navigate(['/contact/contact']);
-      }
-      if (name === 'login') {
-        console.log('deberia ir a login');
+        break;
+      case 'login':
+        this.hide = true;
+        this.show = false;
         this.router.navigate(['/auth/login']);
-      }
-      if (name === 'carrito') {
+        break;
+      case 'carrito':
+        this.hide = true;
+        this.show = false;
         this.router.navigate(['/purchase/form-purchase']);
-      }
+        break;
+      default:
+      // code block
     }
+
+    // // cuando es click en el toogle
+    // if (name === 'menu-bar') {
+    //   if (this.show === false) {
+    //     // se muestra el menu
+    //     this.hide = false;
+    //     this.show = true;
+    //   } else {
+    //     // se oculta el menu
+    //     this.hide = true;
+    //     this.show = false;
+    //   }
+    // } else {
+    //   // cuando hay click en item del menu
+    //   this.hide = true;
+    //   this.show = false;
+
+    //   if (name === 'home') {
+    //     console.log('deberia ir a home');
+    //     this.router.navigate(['/home']);
+    //   }
+    //   if (name === 'contact') {
+    //     console.log('deberia ir a contact');
+    //     this.router.navigate(['/contact/contact']);
+    //   }
+    //   if (name === 'login') {
+    //     console.log('deberia ir a login');
+    //     this.router.navigate(['/auth/login']);
+    //   }
+    //   if (name === 'carrito') {
+    //     this.router.navigate(['/purchase/form-purchase']);
+    //   }
+    // }
   }
 
   checkItems() {

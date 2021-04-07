@@ -34,34 +34,29 @@ export class BookService {
   }
 
   getBookById(id: string) {
-   // return this.http.get<Book[]>(`${this.URL_API}/${id}`);
     return this.http.get<Book[]>(`${this.SERVER}/books/${id}`);
   }
 
   getImage() {
     return this.http.get<any>(
-      //'http://localhost:4000/1f2d312a-a1ef-48c5-a79f-c2a27c48320c.jpg'
       'https://bookstore-cds-server.herokuapp.com/1f2d312a-a1ef-48c5-a79f-c2a27c48320c.jpg'
     );
   }
 
   // trae todos los libros sin importar su estado state
   getBooksWithAuthorName() {
-    // return this.http.get<Book[]>(this.URL_API + 'AuthorName');
     return this.http.get<Book[]>(`${this.SERVER}/booksAuthorName`);
   }
 
   // trae solo los libros que tiene state = true (aptos parta la venta)
   getAvailableBooksWithAuthorName() {
     return this.http.get<Book[]>(
-      //'http://localhost:4000/AvailableBooksWithAuthorName'
       `${this.SERVER}/AvailableBooksWithAuthorName`
     );
   }
 
   getOneBookWithAuthorName(id: string) {
     return this.http.get<Book[]>(
-      // `${'http://localhost:4000/bookAuthorName'}/${id}`
       `${this.SERVER}/bookAuthorName/${id}`
     );
   }
@@ -77,13 +72,15 @@ export class BookService {
   }
 
   getBooks() {
-    // return this.http.get<Book[]>(this.URL_API);
     return this.http.get<Book[]>(`${this.SERVER}/books`);
+  }
+
+  getTotalBooks() {
+    return this.http.get<Book[]>(`${this.SERVER}/books/total`);
   }
 
   existBook(bookName: string, idAuthor: number) {
     return this.http.get(
-      //'http://localhost:4000/books/exist/' + bookName + '/' + idAuthor
       `${this.SERVER}/books/exist/` + bookName + '/' + idAuthor
     );
   }
