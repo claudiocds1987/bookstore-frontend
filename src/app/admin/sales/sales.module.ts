@@ -12,6 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ChartsModule } from 'ng2-charts';
 import { AnnualSalesComponent } from './components/annual-sales/annual-sales.component';
 import { AnnualAverageSalesComponent } from './components/annual-average-sales/annual-average-sales.component';
+import { ProvinciasTopSalesComponent } from './components/provincias-top-sales/provincias-top-sales.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AnnualAverageSalesComponent } from './components/annual-average-sales/a
     TopSalesComponent,
     AnnualSalesComponent,
     AnnualAverageSalesComponent,
+    ProvinciasTopSalesComponent,
   ],
   imports: [
     CommonModule,

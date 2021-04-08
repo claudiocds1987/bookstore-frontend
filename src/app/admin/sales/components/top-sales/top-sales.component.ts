@@ -84,6 +84,7 @@ export class TopSalesComponent implements OnInit {
     for (const item of this.topSales) {
       // barChartData[0].data porque puedo tener varios data en el array this.barChartData en mi caso
       // solo tengo un data sobre el eje y que es la cantidad.
+      // item.vendidos porque la query en nodejs tiene un as "vendidos"
       this.barChartData[0].data = [...this.barChartData[0].data, item.vendidos];
     }
   }

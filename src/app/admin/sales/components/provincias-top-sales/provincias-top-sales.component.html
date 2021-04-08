@@ -1,0 +1,44 @@
+<div class="container-fluid fondo">
+  <div class="container box-principal">
+    <h1>Recaudación por provincia</h1>
+
+    <div>
+      <div>
+        <div class="chart">
+          <canvas
+            baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            [colors]="pieChartColors"
+            [legend]="pieChartLegend"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="text-center my-4">
+      <button
+        mat-button
+        mat-raised-button
+        color="primary"
+        (click)="pieChartLegend = !pieChartLegend"
+        class="mr-2 mb-1"
+      >
+        Quitar leyenda
+      </button>
+      <!-- <button mat-button mat-raised-button color="primary" (click)="changeLabels()">Change Labels</button> -->
+      <!-- <button mat-button mat-raised-button color="primary" (click)="addSlice()">Add Slice</button>
+        <button mat-button mat-raised-button color="primary" (click)="removeSlice()">Remove Slice</button> -->
+      <button
+        mat-button
+        mat-raised-button
+        color="primary"
+        (click)="changeLegendPosition()"
+      >
+        Cambiar posición de leyenda
+      </button>
+    </div>
+  </div>
+</div>

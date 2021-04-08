@@ -57,6 +57,11 @@ export class SaleService {
     return this.http.get<any[]>(`${this.SERVER}/sales/bookTopSales`);
   }
 
+  // devuelve la recaudacion total de hasta 5 provincias (de la tabla orders)
+  getProvinciasTopSales(){
+    return this.http.get<any[]>(`${this.SERVER}/sales/provinciasTopSales`);
+  }
+
   // devuelve el monto total de ventas de cada mes de un año particular
   getAnnualSales(year: number){
     // return this.http.get<any[]>(`http://localhost:4000/sales/annualSales/${year}`);

@@ -4,6 +4,7 @@ import { DashboardSalesComponent } from './components/dashboard-sales/dashboard-
 import { TopSalesComponent } from './components/top-sales/top-sales.component';
 import { AnnualSalesComponent } from './components/annual-sales/annual-sales.component';
 import { AnnualAverageSalesComponent } from './components/annual-average-sales/annual-average-sales.component';
+import { ProvinciasTopSalesComponent } from './components/provincias-top-sales/provincias-top-sales.component';
 // Guardianes
 import { AdminGuard } from 'src/app/admin.guard';
 
@@ -27,6 +28,11 @@ const routes: Routes = [
     path: 'annual-average-sales',
     canActivate: [AdminGuard],
     component: AnnualAverageSalesComponent
+  },
+  {
+    path: 'provincias-top-sales',
+    canActivate: [AdminGuard],
+    component: ProvinciasTopSalesComponent
   }
 ];
 
