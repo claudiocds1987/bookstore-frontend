@@ -1,9 +1,10 @@
 .box {
+  margin: 0; // ?
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   justify-content: center; // (alinea al centro eje horizontal cualquier elemento que este en div .container)
-  align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
+  // align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
 }
 
 .card {
@@ -52,8 +53,12 @@
 // }
 
 @media (min-width: 500px) {
-  .card{
-    width: 380px;
-    height: 500px;
+  .box{
+    align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
+    .card{
+      width: 380px;
+      height: 500px;
+    }
   }
+ 
 }
