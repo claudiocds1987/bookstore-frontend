@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, isDevMode, OnInit} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Book } from 'src/app/models/book';
@@ -21,7 +21,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./edit-book.component.scss']
 })
 export class EditBookComponent implements OnInit {
-
+  SERVER = 'http://localhost:3000';
   form: FormGroup;
   idBook_url: string;
   selectedIdAut: string = '';
@@ -58,6 +58,12 @@ export class EditBookComponent implements OnInit {
     private activeRoute: ActivatedRoute
   ) {
     this.buildForm(); // function buildForm
+    // con esta linea Angular reconoce si la aplicacion se esta corriendo en local(desarrollo) o en produccion.
+    // si esta en local la aplicacion corre en 'http://localhost:3000
+    // si es produccion corre en https://bookstore-cds-server.herokuapp.com
+    if (!isDevMode()) {
+      this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+    }
   }
 
   ngOnInit(): void {
@@ -176,7 +182,7 @@ export class EditBookComponent implements OnInit {
     str = str.replace('\\', '/');
     // console.log(str);
     // const URL = 'http://localhost:4000/';
-    const URL = 'https://bookstore-cds-server.herokuapp.com/';
+    const URL = `${this.SERVER}/`;
     const link = URL + str;
     console.log(link);
     return link;
@@ -239,7 +245,8 @@ export class EditBookComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.imageSelected);
     // subo la imagen a nodejs
-    this.http.post<any>('http://localhost:4000/file', formData).subscribe(
+    // this.http.post<any>('http://localhost:3000/file', formData)
+    this.http.post<any>(`${this.SERVER}/file`, formData).subscribe(
       (res) => {
         this.book.url_image = res.path; // guardo el path de la img
         this.endUpdateBook(); // envío el formualario al servidor nodejs y espero respuesta

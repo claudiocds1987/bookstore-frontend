@@ -86,7 +86,6 @@ export class BookService {
   }
 
   createBook(book: Book) {
-    // return this.http.post(this.URL_API, book);
     return this.http.post(`${this.SERVER}/books`, book);
   }
 
@@ -115,6 +114,14 @@ export class BookService {
       `${this.SERVER}/filterAvailableBooksByAuthor/` + name
     );
   }
+
+  ///////////////////////////////////////////////////////////////
+  filterAvailableBooks(data: any) {
+    return this.http.post<Book[]>(
+      `${this.SERVER}/books/filterAvailableBooks`, data
+    );
+  }
+  //////////////////////////////////////////////////////////////
 
   filterBooksByAuthor(name: string) {
     return this.http.get<Book[]>(

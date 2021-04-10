@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, isDevMode, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BookService } from './../../../../services/book.service';
 import { MyValidationsService } from './../../../../services/my-validations.service';
 import { AuthorService } from './../../../../services/author.service';
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
+  SERVER = 'http://localhost:3000';
   inputValue;
   // declaro como "any" porque bookService.getOneBookWithAuthorName() devuelve un campo autors.name as "Autor"
   // entonces si desde el html quiero mostrar esa propiedad si es de tipo Book no la va a reconocer
@@ -35,7 +36,14 @@ export class BookListComponent implements OnInit {
     public modal: NgbModal,
     public authorService: AuthorService,
     public router: Router
-  ) {}
+  ) {
+    // con esta linea Angular reconoce si la aplicacion se esta corriendo en local(desarrollo) o en produccion.
+    // si esta en local la aplicacion corre en 'http://localhost:3000
+    // si es produccion corre en https://bookstore-cds-server.herokuapp.com
+    if (!isDevMode()) {
+      this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+    }
+  }
 
   ngOnInit(): void {
     this.getBooksWithAuthorName();
@@ -58,7 +66,7 @@ export class BookListComponent implements OnInit {
     // invierto la barra en sentido a '/'
     str = str.replace('\\', '/');
     // const URL = 'http://localhost:4000/';
-    const URL = 'https://bookstore-cds-server.herokuapp.com/';
+    const URL = `${this.SERVER}/`;
     const link = URL + str;
     console.log(link);
     return link;

@@ -7,7 +7,7 @@ import { CartService } from '../../../services/cart.service';
 import { MyValidationsService } from '../../../services/my-validations.service';
 // servicio Toastr para alerts
 import { AlertService } from '../../../services/alert.service';
-import { Order } from 'src/app/models/order';
+// import { Order } from 'src/app/models/order';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   bookList$: Observable<Book[]>;
   inputValue = ''; // value del input search
   selectValue; // value de la opcion seleccionada en el select
-  hideButton = false;
+  // hideButton = false;
   username: string;
   ocultar = false;
   actualPage: number = 1;
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   authorName;
   editorialName;
   categoryName;
-  order = {} as Order; // borrar prueba
+  // order = {} as Order; // borrar prueba
 
   constructor(
     public bookService: BookService,
@@ -53,7 +53,6 @@ export class HomeComponent implements OnInit {
     if (localStorage.getItem('username') != null) {
       this.username = localStorage.getItem('username');
     }
-
   }
 
   getAvailableBooksWithAuthorName() {
@@ -73,7 +72,7 @@ export class HomeComponent implements OnInit {
     );
 
     // si estaba en false cambia a true o viceversa
-    this.hideButton = !this.hideButton;
+    //this.hideButton = !this.hideButton;
   }
 
   linkImg(urlImage) {
@@ -89,68 +88,25 @@ export class HomeComponent implements OnInit {
     return link;
   }
 
-  selectChangeHandler(event: any){
+  selectChangeHandler(event: any) {
     // tomo la opcion elegida del <select>
-   this.selectValue = event.target.value;
+    this.selectValue = event.target.value;
   }
 
-  filterBook(){
-    if (this.selectValue === 'all' || this.selectValue === undefined){
-        this.inputValue = '';
-        this.getAvailableBooksWithAuthorName();
-    }
-    else{
-      if (this.inputValue === ''){
-        this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
-      }
-      else{
-        if (this.selectValue === 'title'){
-          this.filterBookByName();
-        }
-        else if (this.selectValue === 'author'){
-          this.filterBooksByAuthor();
-        }
-        else {
-         alert('elegiste editortial');
-        }
-      }
-    }
-  }
+  filterBook() {
+    // -------------------------------------------------------------------------------------------------------
+    const filter = {
+      column: '',
+      value: '',
+    };
 
-  filterBooksByAuthor() {
-    this.bookList$ = this.bookService.filterAvailableBooksByAuthor(this.inputValue).pipe(
-      // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
-      // y "mapealo (accede a sus elementos)" con la "variable book"
-      map((books: Book[]) =>
-        books.map((book) => {
-          return {
-            // devuelve el objeto book con la url_image limpia para verla en html
-            ...book,
-            url_image: this.linkImg(book.url_image),
-          };
-        })
-      )
-    );
-    this.bookList$.subscribe((res) => {
-      if (res.length === 0) {
-        this.alertService.showError(
-          'No se encontraron resultados',
-          'NO HAY MATCH'
-        );
-        // this.inputValue = '';
-        this.hideButton = !this.hideButton; // si estaba en false cambia a true o viceversa
-      }
-    });
-  }
-
-  filterBookByName() {
     if (this.inputValue === '') {
       this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
     } else {
-      // aparece el btn listar todos
-      // document.getElementById('btn-listar-todos').style.display = 'inline';
-      // this.btnDisabled = false; // se hablita el btn listar todos
-      this.bookList$ = this.bookService.filterAvailableBooksByName(this.inputValue).pipe(
+      filter.column = this.selectValue;
+      filter.value = this.inputValue;
+
+      this.bookList$ = this.bookService.filterAvailableBooks(filter).pipe(
         /* explicacion: al resultado de lo que trae el servicio lo voy a modificar por eso "pipe"
         ya que necesito modificar la prop. url_image, seguido con 1er "map" creo funcion que va a guardar
         en array books: Book[] cada registro de tipo Book con la url modificada. Para esto el 2do map accede
@@ -181,12 +137,107 @@ export class HomeComponent implements OnInit {
             'No se encontraron resultados',
             'NO HAY MATCH'
           );
-         // this.inputValue = '';
-          this.hideButton = !this.hideButton; // si estaba en false cambia a true o viceversa
+          this.inputValue = '';
+          // this.hideButton = !this.hideButton; // si estaba en false cambia a true o viceversa
         }
       });
+
+      if (this.selectValue === 'all'){
+        this.inputValue = '';
+      }
     }
+
+    // ------------------------------------------------------------------------------------------------------
+
+    // if (this.selectValue === 'all' || this.selectValue === undefined) {
+    //   this.inputValue = '';
+    //   this.getAvailableBooksWithAuthorName();
+    // } else {
+    //   if (this.inputValue === '') {
+    //     this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
+    //   } else {
+    //     if (this.selectValue === 'title') {
+    //       this.filterBookByName();
+    //     } else if (this.selectValue === 'author') {
+    //       this.filterBooksByAuthor();
+    //     } else {
+    //       alert('elegiste editortial');
+    //     }
+    //   }
+    // }
   }
+
+  // filterBooksByAuthor() {
+  //   this.bookList$ = this.bookService
+  //     .filterAvailableBooksByAuthor(this.inputValue)
+  //     .pipe(
+  //       // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
+  //       // y "mapealo (accede a sus elementos)" con la "variable book"
+  //       map((books: Book[]) =>
+  //         books.map((book) => {
+  //           return {
+  //             // devuelve el objeto book con la url_image limpia para verla en html
+  //             ...book,
+  //             url_image: this.linkImg(book.url_image),
+  //           };
+  //         })
+  //       )
+  //     );
+  //   this.bookList$.subscribe((res) => {
+  //     if (res.length === 0) {
+  //       this.alertService.showError(
+  //         'No se encontraron resultados',
+  //         'NO HAY MATCH'
+  //       );
+  //       // this.inputValue = '';
+  //       // this.hideButton = !this.hideButton; // si estaba en false cambia a true o viceversa
+  //     }
+  //   });
+  // }
+
+  // filterBookByName() {
+  //   if (this.inputValue === '') {
+  //     this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
+  //   } else {
+  //     this.bookList$ = this.bookService
+  //       .filterAvailableBooksByName(this.inputValue)
+  //       .pipe(
+  //         /* explicacion: al resultado de lo que trae el servicio lo voy a modificar por eso "pipe"
+  //       ya que necesito modificar la prop. url_image, seguido con 1er "map" creo funcion que va a guardar
+  //       en array books: Book[] cada registro de tipo Book con la url modificada. Para esto el 2do map accede
+  //       a cada elemento de lo que trajo el servicio y a la prop.url_image le asigna la funcion linkImg()
+  //       para modificarla y hace un return del objeto de tipo Book para guardarse en array books y
+  //       por ultimo guardarse el array books completo en bookList$*/
+  //         map((books: Book[]) =>
+  //           books.map((book) => {
+  //             return {
+  //               // devuelve el objeto book con la url_image limpia para verla en html
+  //               ...book,
+  //               url_image: this.linkImg(book.url_image),
+  //             };
+  //           })
+  //         )
+  //       );
+  //     // .pipe(
+  //     //   catchError(error => {
+  //     //     // manejo de error
+  //     //     console.log('Hay un error en el servicio o en la base de datos ' + error);
+  //     //     return of([]);
+  //     //   })
+  //     // );
+
+  //     this.bookList$.subscribe((res) => {
+  //       if (res.length === 0) {
+  //         this.alertService.showError(
+  //           'No se encontraron resultados',
+  //           'NO HAY MATCH'
+  //         );
+  //         // this.inputValue = '';
+  //         // this.hideButton = !this.hideButton; // si estaba en false cambia a true o viceversa
+  //       }
+  //     });
+  //   }
+  // }
 
   listBooks() {
     this.inputValue = '';

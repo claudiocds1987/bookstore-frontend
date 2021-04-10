@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, isDevMode, OnInit } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { formatCurrency } from '@angular/common'; // ??
 import { BookService } from '../../../../services/book.service';
@@ -22,7 +22,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./create-book.component.scss']
 })
 export class CreateBookComponent implements OnInit {
-
+  SERVER = 'http://localhost:3000';
   form: FormGroup;
   selectedIdAut: string = '';
   selectedIdCat: string = '';
@@ -61,13 +61,12 @@ export class CreateBookComponent implements OnInit {
   ) {
     this.buildForm(); // function buildForm
 
-    // ---------------------SE PEUDE BORRAR -------------------------------
-    // this.form.get('price').valueChanges.subscribe(value => {
-    //   let decimal_formatted = this._decimalPipe.transform(value, "1.2-2");
-    //   //this.form.get('price').setValue(decimal_formatted);
-    //   console.log('Y Q ONDA: ' + decimal_formatted);
-    //   })
-    // -------------------------------------------------------------------
+    // con esta linea Angular reconoce si la aplicacion se esta corriendo en local(desarrollo) o en produccion.
+    // si esta en local la aplicacion corre en 'http://localhost:3000
+    // si es produccion corre en https://bookstore-cds-server.herokuapp.com
+    if (!isDevMode()) {
+      this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
+    }
 
     // cuando escribe el precio NO BORRAR POR LAS DUDAS
     // this.form.valueChanges.subscribe(formulario => {
@@ -134,7 +133,7 @@ export class CreateBookComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.imageSelected);
     // subo la imagen a nodejs
-    this.http.post<any>('http://localhost:4000/file', formData).subscribe(
+    this.http.post<any>(`${this.SERVER}/file`, formData).subscribe(
       (res) => {
         this.book.url_image = res.path; // guardo el path de la img
         this.endCreateBook(); // envío el formualario al servidor nodejs y espero respuesta
