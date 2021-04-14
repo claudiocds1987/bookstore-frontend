@@ -8,13 +8,9 @@
           <div class="card-header">
             <div class="d-flex justify-content-between">
               <h2>Ventas</h2>
-              <a class="close"
-                [routerLink]="'/customer/customer-list'"
-               
-                >
+              <a class="close" [routerLink]="'/customer/customer-list'">
                 <i class="fa fa-times-circle mr-2" aria-hidden="true"></i>
-                </a
-              >
+              </a>
             </div>
           </div>
           <div class="card-body">
@@ -130,7 +126,7 @@
                   />
                 </td>
                 <td>{{ this.bookArray[i].name }}</td>
-                <td>{{ detail.price  | currency: "ARS ":"symbol" }}</td>
+                <td>{{ detail.price | currency: "ARS ":"symbol" }}</td>
                 <td>{{ detail.quantity }}</td>
               </tr>
             </tbody>

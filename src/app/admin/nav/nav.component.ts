@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Admin } from 'src/app/models/admin';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -10,12 +11,19 @@ export class NavComponent implements OnInit {
 
   adminEmail: string = '';
   admin = {} as Admin; // declaro un objeto Admin
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    // esta sessionStorage se creó en la funcion login de admin-login.component.ts
+    // esta localStorage se creó en la funcion login de admin-login.component.ts
     // tengo que utilizar JSON.parse para guardar la data de la sessionStorage en el objeto admin
-    this.admin = JSON.parse(sessionStorage.getItem('adminData'));
+    if (localStorage.getItem('adminData') !== null){
+      this.admin = JSON.parse(localStorage.getItem('adminData'));
+    }
+  }
+
+  logout(){
+    localStorage.removeItem('adminData');
+    this.router.navigateByUrl('admin-login');
   }
 
 }

@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     /* esta sessionStorage se crea en admin-login.component.ts, cuando el email y password
       son correctos*/
-      if (sessionStorage.getItem('adminData') === null){
+      if (localStorage.getItem('adminData') === null){
         return false;
       }
       else{

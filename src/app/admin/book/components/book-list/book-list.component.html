@@ -151,7 +151,6 @@
                   [routerLink]="['/book/edit-book/', b.id_book]"
                 >
                   <i class="far fa-edit fa-lg"></i>
-                  <!-- <mat-icon>edit</mat-icon> -->
                 </button>
                 <button
                   class="mr-1"
@@ -161,7 +160,6 @@
                   (click)="showModal(b)"
                 >
                   <i class="fas fa-trash fa-lg"></i>
-                  <!-- <mat-icon>delete</mat-icon> -->
                 </button>
                 <button
                   *ngIf="b.state === false"

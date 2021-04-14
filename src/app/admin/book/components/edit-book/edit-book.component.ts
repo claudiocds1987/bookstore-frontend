@@ -1,6 +1,6 @@
-import { Component, isDevMode, OnInit} from '@angular/core';
+import { Component, isDevMode, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Book } from 'src/app/models/book';
 import { Author } from 'src/app/models/author';
 import { Category } from 'src/app/models/category';
@@ -13,12 +13,12 @@ import { EditorialService } from './../../../../services/editorial.service';
 import { MyValidationsService } from './../../../../services/my-validations.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-
+import { Admin } from 'src/app/models/admin';
 
 @Component({
   selector: 'app-edit-book',
   templateUrl: './edit-book.component.html',
-  styleUrls: ['./edit-book.component.scss']
+  styleUrls: ['./edit-book.component.scss'],
 })
 export class EditBookComponent implements OnInit {
   SERVER = 'http://localhost:3000';
@@ -45,6 +45,7 @@ export class EditBookComponent implements OnInit {
   public arrayToIterate = new Set([]);
   mostrar = true;
   imageDefault;
+  admin = {} as Admin;
 
   constructor(
     public bookService: BookService,
@@ -64,14 +65,17 @@ export class EditBookComponent implements OnInit {
     if (!isDevMode()) {
       this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
     }
+    // para chequear en updateBook() si el admin esta como "invitado"
+    if (localStorage.getItem('adminData') !== null) {
+      this.admin = JSON.parse(localStorage.getItem('adminData'));
+    }
   }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params: Params) => {
-      this.idBook_url = params.id;  // obteniendo el id que viene en la url
+      this.idBook_url = params.id; // obteniendo el id que viene en la url
       // console.log('el id de book recibido es: ' + this.idBook_url);
-      this.bookService.getBookById(this.idBook_url)
-      .subscribe(book => {
+      this.bookService.getBookById(this.idBook_url).subscribe((book) => {
         console.log('los valores del libro son: ' + book[0].id_author);
         // para mostrar los valores del book a editar en el formulario
         this.book.description = book[0].description;
@@ -88,38 +92,41 @@ export class EditBookComponent implements OnInit {
         // this.gg = this.gg + this.defaultUrlImage;
         this.book.year = book[0].year;
         // get nombre de autor para mostrar en select como opcion default
-        this.authorService.getAuthorById(book[0].id_author.toString())
-        .subscribe(
-          res => {
-            this.autor.id_author = res.id_author;
-            this.autor.name = res.name;
-            this.selectedIdAut = res.id_author.toString();
-            // console.log('id autor: ' + this.autor.id_author, ' nombre: ' + this.autor.name);
-          },
-          err => console.error(err)
-        );
+        this.authorService
+          .getAuthorById(book[0].id_author.toString())
+          .subscribe(
+            (res) => {
+              this.autor.id_author = res.id_author;
+              this.autor.name = res.name;
+              this.selectedIdAut = res.id_author.toString();
+              // console.log('id autor: ' + this.autor.id_author, ' nombre: ' + this.autor.name);
+            },
+            (err) => console.error(err)
+          );
         // get nombre de categoria para mostrar en select como opcion default
-        this.categoryService.getCategoryById(book[0].id_category.toString())
-        .subscribe(
-          res => {
-            this.categoria.id_category = res.id_category;
-            this.categoria.name = res.name;
-            this.selectedIdCat = res.id_category.toString();
-            // console.log('id categoria: ' + this.autor.id_author, ' nombre: ' + this.categoria.name);
-          },
-          err => console.error(err)
-        );
+        this.categoryService
+          .getCategoryById(book[0].id_category.toString())
+          .subscribe(
+            (res) => {
+              this.categoria.id_category = res.id_category;
+              this.categoria.name = res.name;
+              this.selectedIdCat = res.id_category.toString();
+              // console.log('id categoria: ' + this.autor.id_author, ' nombre: ' + this.categoria.name);
+            },
+            (err) => console.error(err)
+          );
         // get nombre de editorial para mostrar en select como opcion default
-        this.editorialService.getEditorialById(book[0].id_editorial.toString())
-        .subscribe(
-          res => {
-            this.editorial.id_editorial = res.id_editorial;
-            this.editorial.name = res.name;
-            this.selectedIdEdi = res.id_editorial.toString();
-            // console.log('id editorial: ' + this.editorial.id_editorial, ' nombre: ' + this.editorial.name);
-          },
-          err => console.error(err)
-        );
+        this.editorialService
+          .getEditorialById(book[0].id_editorial.toString())
+          .subscribe(
+            (res) => {
+              this.editorial.id_editorial = res.id_editorial;
+              this.editorial.name = res.name;
+              this.selectedIdEdi = res.id_editorial.toString();
+              // console.log('id editorial: ' + this.editorial.id_editorial, ' nombre: ' + this.editorial.name);
+            },
+            (err) => console.error(err)
+          );
         this.form.patchValue(book[0]);
       });
     });
@@ -128,31 +135,35 @@ export class EditBookComponent implements OnInit {
     // maps, take hay muchos operadores que se pueden utilizar para modificar
     // los datos antes de llegar a su destino final
     this.authorList$ = this.authorService.getAuthors().pipe(
-      map(authorList => {
+      map((authorList) => {
         // 1) se crea un array de los puros id_author dentro de una clase Set
         // que no permite valores repetidos (eliminando los ids repetidos)
-        return Array.from(new Set(authorList.map(a => a.id_author)))
-        // 2) el segundo map itera los ids del Set y los busca en el array principal "authorList"
-          .map(id => {
-              return authorList.find(a => a.id_author === id);
-         });
+        return (
+          Array.from(new Set(authorList.map((a) => a.id_author)))
+            // 2) el segundo map itera los ids del Set y los busca en el array principal "authorList"
+            .map((id) => {
+              return authorList.find((a) => a.id_author === id);
+            })
+        );
       })
-  );
-  // para evitar que en el select aparezca al categoria dos veces repetida
+    );
+    // para evitar que en el select aparezca al categoria dos veces repetida
     this.categoryList$ = this.categoryService.getCategories().pipe(
-      map(categoryList => {
-        return Array.from(new Set(categoryList.map(c => c.id_category)))
-        .map(id => {
-          return categoryList.find(c => c.id_category === id);
-        });
+      map((categoryList) => {
+        return Array.from(new Set(categoryList.map((c) => c.id_category))).map(
+          (id) => {
+            return categoryList.find((c) => c.id_category === id);
+          }
+        );
       })
     );
     // para evitar que en el select aparezca la editorial dos veces repetida
     this.editorialList$ = this.editorialService.getEditorials().pipe(
-      map(editorialList => {
-        return Array.from(new Set(editorialList.map(e => e.id_editorial)))
-        .map(id => {
-          return editorialList.find(e => e.id_editorial === id);
+      map((editorialList) => {
+        return Array.from(
+          new Set(editorialList.map((e) => e.id_editorial))
+        ).map((id) => {
+          return editorialList.find((e) => e.id_editorial === id);
         });
       })
     );
@@ -169,7 +180,7 @@ export class EditBookComponent implements OnInit {
       quantity: [1, [Validators.required]],
       price: [1, [Validators.required]],
       image: ['1'],
-      state: [true]
+      state: [true],
     });
   }
 
@@ -189,38 +200,38 @@ export class EditBookComponent implements OnInit {
   }
 
   // captura el value del <select> autor
-  captureIdAutor (event: any) {
+  captureIdAutor(event: any) {
     this.selectedIdAut = event.target.value;
     this.form.get('author').setValue(this.book.id_author, {
-           onlySelf: true
+      onlySelf: true,
     });
     console.log(this.selectedIdAut);
   }
 
   // captura el value del <select> categoria
-  captureIdCategory (event: any) {
+  captureIdCategory(event: any) {
     this.selectedIdCat = event.target.value;
     this.form.get('category').setValue(this.book.id_category, {
-      onlySelf: true
-   });
+      onlySelf: true,
+    });
   }
 
   // captura el value del <select> editorial
-  captureIdEditorial (event: any) {
+  captureIdEditorial(event: any) {
     this.selectedIdEdi = event.target.value;
     this.form.get('editorial').setValue(this.book.id_editorial, {
-      onlySelf: true
-   });
+      onlySelf: true,
+    });
   }
 
-  resetForm(){
+  resetForm() {
     this.form.reset();
     console.log(this.book);
     this.book = {} as Book;
     console.log('book esta vacio' + this.book);
   }
 
-  cleanUnnecessaryWhiteSpaces(cadena: string){
+  cleanUnnecessaryWhiteSpaces(cadena: string) {
     const a = this.myValidationsService.cleanUnnecessaryWhiteSpaces(cadena);
     return a;
   }
@@ -234,7 +245,7 @@ export class EditBookComponent implements OnInit {
       // preview de la img
       const reader = new FileReader();
       // leo el archivo seleccionado
-      reader.onload = e => this.imgPreview = reader.result;
+      reader.onload = (e) => (this.imgPreview = reader.result);
       reader.readAsDataURL(file);
     }
   }
@@ -257,46 +268,50 @@ export class EditBookComponent implements OnInit {
     this.mostrar = false; // oculto la img que estaba por default
   }
 
-    // borro la img seleccionada en el input file
-    cleanImgPreview() {
-      this.imgPreview = null;
-      this.form.get('image').setValue('');
-      this.imageSelected = null;
-      // muestro imagen default
-      this.mostrar = true;
-    }
+  // borro la img seleccionada en el input file
+  cleanImgPreview() {
+    this.imgPreview = null;
+    this.form.get('image').setValue('');
+    this.imageSelected = null;
+    // muestro imagen default
+    this.mostrar = true;
+  }
 
-  updateBook(event: Event){
-    event.preventDefault();
-    if (this.form.valid) {
-      if (confirm('¿Esta seguro/a que desea actualizar los datos?')) {
-        // obtengo todos los valores del formulario
-        this.book = this.form.value;
-        // le paso el id de book de la url al objeto book
-        this.book.id_book = parseInt(this.idBook_url);
-        this.book.id_author = parseInt(this.selectedIdAut);
-        this.book.id_editorial = parseInt(this.selectedIdEdi);
-        this.book.id_category = parseInt(this.selectedIdCat);
+  updateBook(event: Event) {
+    if (this.admin.email === 'invitado') {
+      alert('Como invitado no puede realizar esta acción');
+    } else {
+      event.preventDefault();
+      if (this.form.valid) {
+        if (confirm('¿Esta seguro/a que desea actualizar los datos?')) {
+          // obtengo todos los valores del formulario
+          this.book = this.form.value;
+          // le paso el id de book de la url al objeto book
+          this.book.id_book = parseInt(this.idBook_url);
+          this.book.id_author = parseInt(this.selectedIdAut);
+          this.book.id_editorial = parseInt(this.selectedIdEdi);
+          this.book.id_category = parseInt(this.selectedIdCat);
 
-        if (this.imageSelected != null) {
-          // SUBO IMAGEN
-          this.uploadImage(); // Si tiene imagen la carga
-        } else {
-          // aca asignale el valor por defecto de imagen si no eligió una
-          this.book.url_image = this.defaultUrlImage;
-          this.endUpdateBook(); // Si no manda el formulario como va
+          if (this.imageSelected != null) {
+            // SUBO IMAGEN
+            this.uploadImage(); // Si tiene imagen la carga
+          } else {
+            // aca asignale el valor por defecto de imagen si no eligió una
+            this.book.url_image = this.defaultUrlImage;
+            this.endUpdateBook(); // Si no manda el formulario como va
+          }
         }
       }
     }
   }
 
-  endUpdateBook(){
+  endUpdateBook() {
     this.book.name = this.cleanUnnecessaryWhiteSpaces(this.book.name);
     // convierto solo la 1er letra de cada palabra a mayuscula (capitalize)
     this.book.name = this.myValidationsService.textCapitalize(this.book.name);
     // actualizo los datos
     this.bookService.updateBook(this.book).subscribe(
-      res => {
+      (res) => {
         console.log(res);
         alert('Los datos se actualizaron extosamente');
         this.selectedIdAut = '';
@@ -306,8 +321,7 @@ export class EditBookComponent implements OnInit {
         this.resetForm();
         this.router.navigateByUrl('book/book-list');
       },
-      err => alert('No se pudo actualizar')
+      (err) => alert('No se pudo actualizar')
     );
   }
-
 }

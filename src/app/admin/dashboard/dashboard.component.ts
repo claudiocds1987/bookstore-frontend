@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SaleService } from './../../services/sale.service';
+import { Admin } from 'src/app/models/admin';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +9,7 @@ import { SaleService } from './../../services/sale.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
+  admin = {} as Admin;
   // fecha local actual
   currentDate = new Date();
   currentYear: number = this.currentDate.getFullYear(); // año actual
@@ -17,13 +19,25 @@ export class DashboardComponent implements OnInit {
   currentMonthRevenue;
   currentYearRevenue;
 
-  constructor(public saleService: SaleService) { }
+  constructor(
+    public saleService: SaleService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.countSalesFromCurrentMonth(this.currentYear, this.currentMonth);
     this.thisMonthRevenue(this.currentYear, this.currentMonth);
     this.countSalesFromCurrentYear(this.currentYear);
     this.thisYearRevenue(this.currentYear);
+
+    if (localStorage.getItem('adminData') !== null){
+      this.admin = JSON.parse(localStorage.getItem('adminData'));
+    }
+  }
+
+  logout(){
+    localStorage.removeItem('adminData');
+    this.router.navigateByUrl('admin-login');
   }
 
   refreshData(){

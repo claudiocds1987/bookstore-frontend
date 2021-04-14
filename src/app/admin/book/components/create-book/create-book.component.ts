@@ -15,11 +15,12 @@ import { Category } from 'src/app/models/category';
 import { Editorial } from 'src/app/models/editoral';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Admin } from 'src/app/models/admin';
 
 @Component({
   selector: 'app-create-book',
   templateUrl: './create-book.component.html',
-  styleUrls: ['./create-book.component.scss']
+  styleUrls: ['./create-book.component.scss'],
 })
 export class CreateBookComponent implements OnInit {
   SERVER = 'http://localhost:3000';
@@ -43,9 +44,8 @@ export class CreateBookComponent implements OnInit {
   editing: boolean = false;
   // para hacer un preview de la img seleccionada
   imgPreview: string | ArrayBuffer;
-
   newId: number;
-  // public numeroConFormato;
+  admin = {} as Admin;
 
   constructor(
     // private _decimalPipe: DecimalPipe, //???
@@ -68,6 +68,11 @@ export class CreateBookComponent implements OnInit {
       this.SERVER = 'https://bookstore-cds-server.herokuapp.com';
     }
 
+    // para chequear si el admin esta como "invitado"
+    if (localStorage.getItem('adminData') !== null) {
+      this.admin = JSON.parse(localStorage.getItem('adminData'));
+    }
+
     // cuando escribe el precio NO BORRAR POR LAS DUDAS
     // this.form.valueChanges.subscribe(formulario => {
     //   if (formulario.price){
@@ -76,7 +81,6 @@ export class CreateBookComponent implements OnInit {
     //     }, {emitEvent: false});
     //   }
     // });
-
   }
 
   ngOnInit(): void {
@@ -88,40 +92,46 @@ export class CreateBookComponent implements OnInit {
   buildForm() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
-      year: ['', [Validators.required, Validators.min(1500),Validators.max(this.year)]],
+      year: [
+        '',
+        [Validators.required, Validators.min(1500), Validators.max(this.year)],
+      ],
       author: ['', [Validators.required]],
       category: ['', [Validators.required]],
       editorial: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(2500)]],
       quantity: ['', [Validators.required]],
-      //!!price: [0, [Validators.required]],
       price: ['', [Validators.required]],
       image: [''],
-      state: [true]
+      state: [true],
     });
   }
 
   // Función que valida el formulario, y el confirm
   // LLena el objeto book, y valida si tiene imagen para cargar.
   createBook(event: Event) {
-    event.preventDefault();
-    if (this.form.valid) {
-      if (confirm('¿Esta seguro/a que desea agregar un nuevo libro?')) {
-        // obtengo todos los valores del formulario
-        this.book = this.form.value;
-        // const precio = this.form.get('price').value;
-        // this.book.price = parseInt(precio);
-        // console.log('CACA ' + this.book.price);
-        this.book.id_author = parseInt(this.selectedIdAut);
-        this.book.id_editorial = parseInt(this.selectedIdEdi);
-        this.book.id_category = parseInt(this.selectedIdCat);
-        this.book.url_image = '';
+    if (this.admin.email === 'invitado') {
+      alert('Como invitado no puede realizar esta acción.');
+    } else {
+      event.preventDefault();
+      if (this.form.valid) {
+        if (confirm('¿Esta seguro/a que desea agregar un nuevo libro?')) {
+          // obtengo todos los valores del formulario
+          this.book = this.form.value;
+          // const precio = this.form.get('price').value;
+          // this.book.price = parseInt(precio);
+          // console.log('CACA ' + this.book.price);
+          this.book.id_author = parseInt(this.selectedIdAut);
+          this.book.id_editorial = parseInt(this.selectedIdEdi);
+          this.book.id_category = parseInt(this.selectedIdCat);
+          this.book.url_image = '';
 
-        if (this.imageSelected != null) {
-          // SUBO IMAGEN ////
-          this.uploadImage(); // Si tiene imagen la carga
-        } else {
-          this.endCreateBook(); // Si no manda el formulario como va
+          if (this.imageSelected != null) {
+            // SUBO IMAGEN ////
+            this.uploadImage(); // Si tiene imagen la carga
+          } else {
+            this.endCreateBook(); // Si no manda el formulario como va
+          }
         }
       }
     }
@@ -148,29 +158,37 @@ export class CreateBookComponent implements OnInit {
     this.book.name = this.cleanUnnecessaryWhiteSpaces(this.book.name);
     // convierte solo la 1er letra de la palabra a mayúscula (capitalize)
     this.book.name = this.myValidationsService.textCapitalize(this.book.name);
-    console.log('nombre de libro: ' + this.book.name + ' id autor: ' + this.book.id_author);
+    console.log(
+      'nombre de libro: ' + this.book.name + ' id autor: ' + this.book.id_author
+    );
     // verifico si el libro a guardar ya existe en la db
     this.bookService.existBook(this.book.name, this.book.id_author).subscribe(
-      res => {
+      (res) => {
         if (res === true) {
-          alert('Ya existe un libro con el mismo nombre y mismo autor en la base de datos');
-        }
-        else {
+          alert(
+            'Ya existe un libro con el mismo nombre y mismo autor en la base de datos'
+          );
+        } else {
           // guardo los datos
           this.bookService.createBook(this.book).subscribe(
-            resp => {
-              this.alertService.showSuccess('El libro se ha guardado exitosamente!','');
+            (resp) => {
+              this.alertService.showSuccess(
+                'El libro se ha guardado exitosamente!',
+                ''
+              );
               // vuelvo a a traer los libros
               this.bookList$ = this.bookService.getBooksWithAuthorName();
               this.resetForm();
               this.book = {} as Book; // vuelvo a declarar objeto para ponerlo en vacio
               // this.toastr.success('Operación exitosa', 'Producto agregado!');
             },
-            err => console.error('Error en db, no se pudo guardar el libro ' + err)
+            (err) =>
+              console.error('Error en db, no se pudo guardar el libro ' + err)
           );
         }
       },
-      err => alert('error de db, no se pudo comprobar la existencia del libro')
+      (err) =>
+        alert('error de db, no se pudo comprobar la existencia del libro')
     );
   }
 
@@ -192,7 +210,7 @@ export class CreateBookComponent implements OnInit {
       // preview de la img
       const reader = new FileReader();
       // leo el archivo seleccionado
-      reader.onload = e => this.imgPreview = reader.result;
+      reader.onload = (e) => (this.imgPreview = reader.result);
       reader.readAsDataURL(file);
     }
   }
@@ -213,7 +231,7 @@ export class CreateBookComponent implements OnInit {
   captureIdAutor(event: any) {
     this.selectedIdAut = event.target.value;
     this.form.get('author').setValue(this.book.id_author, {
-      onlySelf: true
+      onlySelf: true,
     });
   }
 
@@ -221,7 +239,7 @@ export class CreateBookComponent implements OnInit {
   captureIdCategory(event: any) {
     this.selectedIdCat = event.target.value;
     this.form.get('category').setValue(this.book.id_category, {
-      onlySelf: true
+      onlySelf: true,
     });
   }
 
@@ -229,8 +247,7 @@ export class CreateBookComponent implements OnInit {
   captureIdEditorial(event: any) {
     this.selectedIdEdi = event.target.value;
     this.form.get('editorial').setValue(this.book.id_editorial, {
-      onlySelf: true
+      onlySelf: true,
     });
   }
-
 }

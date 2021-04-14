@@ -4,6 +4,7 @@ import { AuthorService } from '../../../../services/author.service';
 import { Author } from '../../../../models/author';
 import { MyValidationsService } from '../../../../services/my-validations.service';
 import { FormControl, Validators } from '@angular/forms';
+import { Admin } from 'src/app/models/admin';
 
 @Component({
   selector: 'app-author-panel',
@@ -22,11 +23,17 @@ export class AuthorPanelComponent implements OnInit {
   editing = false;
   activated: boolean = true;
   actualPage: number = 1; // para el pagination
+  admin = {} as Admin;
 
   constructor(
     public authorService: AuthorService,
     public myValidationsService: MyValidationsService
   ) {
+    // para chequear si el admin esta como "invitado"
+    if (localStorage.getItem('adminData') !== null) {
+      this.admin = JSON.parse(localStorage.getItem('adminData'));
+    }
+
     this.authorName = new FormControl('', [
       Validators.required,
       Validators.pattern(/^[a-zA-Z ]+$/),
@@ -53,21 +60,24 @@ export class AuthorPanelComponent implements OnInit {
   }
 
   createAuthor() {
-    if (this.authorName.valid) {
-      if (
-        confirm(
-          '¿Esta seguro/a que desea agregar el autor ' + this.authorName.value
-        )
-      ) {
-        this.author.name = this.authorName.value;
-        this.author.name = this.myValidationsService.textCapitalize(
-          this.author.name
-        );
-        console.log('nombre de autor: ' + this.author.name);
-        // validando si ya existe el autor
-        this.authorService.existAuthorByName(this.author.name).subscribe(
-          (resp) => {
-            if (resp === false) {
+    if (this.admin.email === 'invitado') {
+      alert('Como invitado no puede realizar esta acción.');
+    } else {
+      if (this.authorName.valid) {
+        if (
+          confirm(
+            '¿Esta seguro/a que desea agregar el autor ' + this.authorName.value
+          )
+        ) {
+          this.author.name = this.authorName.value;
+          this.author.name = this.myValidationsService.textCapitalize(
+            this.author.name
+          );
+          console.log('nombre de autor: ' + this.author.name);
+          // validando si ya existe el autor
+          this.authorService.existAuthorByName(this.author.name).subscribe(
+            (resp) => {
+              if (resp === false) {
                 this.authorService.createAuthor(this.author).subscribe(
                   (res) => {
                     alert('el autor fue guardado exitosamente');
@@ -78,19 +88,20 @@ export class AuthorPanelComponent implements OnInit {
                   },
                   (err) => console.error('el autor no se pudo guardar ' + err)
                 );
-            } else {
+              } else {
+                alert(
+                  'Ya existe un autor con el mismo nombre en la base de datos'
+                );
+                // para poner el input vacio
+                this.author.name = '';
+              }
+            },
+            (err) =>
               alert(
-                'Ya existe un autor con el mismo nombre en la base de datos'
-              );
-              // para poner el input vacio
-              this.author.name = '';
-            }
-          },
-          (err) =>
-            alert(
-              'Error, no se pudo comprobar si el author ya existe en la base de datos'
-            )
-        );
+                'Error, no se pudo comprobar si el author ya existe en la base de datos'
+              )
+          );
+        }
       }
     }
   }
@@ -107,7 +118,7 @@ export class AuthorPanelComponent implements OnInit {
   }
 
   getAuthorByName() {
-    if(this.inputValueSearch.valid){
+    if (this.inputValueSearch.valid) {
       this.activated = false; // habilita boton listar Todos
       const name = this.myValidationsService.textCapitalize(
         this.inputValueSearch.value
@@ -119,7 +130,7 @@ export class AuthorPanelComponent implements OnInit {
         },
         (err) => console.error('No se pudo obtener el autor: ' + err) // si hay error, mostralo en consola
       );
-    }   
+    }
   }
 
   editAuthor(event, id) {
@@ -129,23 +140,26 @@ export class AuthorPanelComponent implements OnInit {
   }
 
   updateAuthor() {
-    if(this.authorNameEdit.valid){
-      if(confirm('¿Esta seguro/a que desea actualizar al autor?')){
-        this.authorEdit.name = this.myValidationsService.textCapitalize(
-          this.authorNameEdit.value // get value del formControl authorNameEdit
-        );
-        this.authorService.updateAuthor(this.authorEdit).subscribe(
-          (res) => {
-            this.getAuthors(); // listar todos los autores
-            this.authorEdit = {} as Author; // limpio el objeto
-            this.editing = false;
-          },
-          (err) => console.error('No se pudo actualizar el author ' + err)
-        );
-        alert('Autor actualizado!');
+    if (this.admin.email === 'invitado') {
+      alert('Como invitado no puede realizar esta acción');
+    } else {
+      if (this.authorNameEdit.valid) {
+        if (confirm('¿Esta seguro/a que desea actualizar al autor?')) {
+          this.authorEdit.name = this.myValidationsService.textCapitalize(
+            this.authorNameEdit.value // get value del formControl authorNameEdit
+          );
+          this.authorService.updateAuthor(this.authorEdit).subscribe(
+            (res) => {
+              this.getAuthors(); // listar todos los autores
+              this.authorEdit = {} as Author; // limpio el objeto
+              this.editing = false;
+            },
+            (err) => console.error('No se pudo actualizar el author ' + err)
+          );
+          alert('Autor actualizado!');
+        }
       }
     }
-
   }
 
   cleanUnnecessaryWhiteSpaces(control: FormControl) {
@@ -153,6 +167,4 @@ export class AuthorPanelComponent implements OnInit {
     value = this.myValidationsService.cleanUnnecessaryWhiteSpaces(value);
     control.setValue(value);
   }
-
-
 }

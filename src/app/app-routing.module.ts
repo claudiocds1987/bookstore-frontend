@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { AdminPrincipalComponent } from './admin/admin-principal/admin-principal.component';
+// import { AdminPrincipalComponent } from './admin/admin-principal/admin-principal.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
@@ -54,16 +54,16 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutComponent,
     children: [
-      {
-        path: '',
-        redirectTo: 'admin-principal',
-        pathMatch: 'full',
-      },
-      {
-        path: 'admin-principal',
-        canActivate: [AdminGuard],
-        component: AdminPrincipalComponent
-      },
+      // {
+      //   path: '',
+      //   redirectTo: 'admin-principal',
+      //   pathMatch: 'full',
+      // },
+      // {
+      //   path: 'admin-principal',
+      //   canActivate: [AdminGuard],
+      //   component: AdminPrincipalComponent
+      // },
       {
         path: 'customer',
         canActivate: [AdminGuard],

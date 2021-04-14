@@ -10,6 +10,7 @@ import { BookService } from './../../../../services/book.service';
 import { Sale } from './../../../../models/sale';
 import { SaleDetail } from './../../../../models/saleDetail';
 import { Book } from './../../../../models/book';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-customer-sales',
@@ -22,6 +23,7 @@ export class CustomerSalesComponent implements OnInit {
   customerSaleDetail: SaleDetail[] = [];
   bookArray: Book[] = [];
   actualPage: number = 1; // para el pagination
+  // customerSales$: Observable<Sale[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,15 +44,17 @@ export class CustomerSalesComponent implements OnInit {
   }
 
   getSales() {
+    // obtengo el id de la url
     this.route.params.subscribe((params: Params) => {
       console.log('id customer ' + params.idUser);
+      // this.customerSales$ = this.saleService.getSalesByCustomerId(params.idUser);
       this.saleService.getSalesByCustomerId(params.idUser).subscribe(
         (res) => {
           this.customerSales = res;
         },
         (err) =>
           console.error(
-            'Error al intentar obtener lla sventas del cliente ' + err
+            'Error al intentar obtener las ventas del cliente ' + err
           )
       );
     });

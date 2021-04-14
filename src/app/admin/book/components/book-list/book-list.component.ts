@@ -1,4 +1,10 @@
-import { Component, isDevMode, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  isDevMode,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { BookService } from './../../../../services/book.service';
 import { MyValidationsService } from './../../../../services/my-validations.service';
 import { AuthorService } from './../../../../services/author.service';
@@ -7,6 +13,7 @@ import { Book } from 'src/app/models/book';
 declare var $: any; // para que funcione jquery
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { Admin } from 'src/app/models/admin';
 
 @Component({
   selector: 'app-book-list',
@@ -14,6 +21,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
+  admin = {} as Admin;
   SERVER = 'http://localhost:3000';
   inputValue;
   // declaro como "any" porque bookService.getOneBookWithAuthorName() devuelve un campo autors.name as "Autor"
@@ -47,6 +55,9 @@ export class BookListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBooksWithAuthorName();
+    if (localStorage.getItem('adminData') !== null) {
+      this.admin = JSON.parse(localStorage.getItem('adminData'));
+    }
   }
 
   getBooksWithAuthorName() {
@@ -138,12 +149,16 @@ export class BookListComponent implements OnInit {
   }
 
   showModal(book: Book) {
-    this.modal.open(this.modalRef);
-    // obtengo el id para utilizarlo en function darDeBaja()
-    this.bookitoId = book.id_book;
+    if (this.admin.email === 'invitado') {
+      alert('Como invitado no puede realizar esta acción');
+    } else {
+      this.modal.open(this.modalRef);
+      // obtengo el id para utilizarlo en function darDeBaja()
+      this.bookitoId = book.id_book;
+    }
   }
 
-  closeModal(){
+  closeModal() {
     this.modal.dismissAll(this.modalRef);
   }
 
@@ -158,7 +173,7 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  bajaBook(id: number, changes: Partial<Book>){
+  bajaBook(id: number, changes: Partial<Book>) {
     this.bookService.bajaBook(id, changes).subscribe(
       (res) => {
         if (res) {

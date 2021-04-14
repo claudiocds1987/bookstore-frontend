@@ -58,9 +58,12 @@ export class AdminLoginComponent implements OnInit {
             admi = element;
           });
           // Guardo el objeto admi en la sessionStorage
-          // sessionStorage solo permite guardar un string, como yo quiero guardar un objeto de tipo Admin
+          // session/localStorage solo permiten guardar un string, como yo quiero guardar un objeto de tipo Admin
           // tengo que usar JSON.stringify(admi)
-          sessionStorage.setItem('adminData', JSON.stringify(admi));
+          localStorage.setItem('adminData', JSON.stringify(admi));
+          // si por alguna razon la localStorage no se crea, la view dashboard al
+          // estar protegida por un guardian no la va a mostrar. Ver en archivo admin.guards.ts
+          // y ver en app-routing.module.ts en el path: 'dashboard' esta el guardian.
           this.router.navigateByUrl('dashboard');
         }
     });
