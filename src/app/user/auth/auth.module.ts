@@ -5,6 +5,9 @@ import { MaterialModule } from './../../material/material.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
+// imports para el funcionamiento del spinner/loader para peticiones http
+import { NgxSpinnerModule } from 'ngx-spinner';
+// import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,7 @@ import { UserSignupComponent } from './user-signup/user-signup.component';
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
     MaterialModule
   ]
 })
