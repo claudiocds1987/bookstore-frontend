@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { NavComponent } from './admin/nav/nav.component';
-import { AdminPrincipalComponent } from './admin/admin-principal/admin-principal.component';
+// import { AdminPrincipalComponent } from './admin/admin-principal/admin-principal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './admin/footer/footer.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
@@ -46,7 +46,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppComponent,
     AdminLoginComponent,
     NavComponent,
-    AdminPrincipalComponent,
+    // AdminPrincipalComponent,
     FooterComponent,
     AdminLayoutComponent,
     UserLayoutComponent,

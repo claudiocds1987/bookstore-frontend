@@ -147,9 +147,10 @@ export class EditBookComponent implements OnInit {
         );
       })
     );
-    // para evitar que en el select aparezca al categoria dos veces repetida
+    // para evitar que en el select aparezca la categoria dos veces repetida
     this.categoryList$ = this.categoryService.getCategories().pipe(
       map((categoryList) => {
+        // la clase Set elimina valores repetidos(eliminando los ids repetidos)
         return Array.from(new Set(categoryList.map((c) => c.id_category))).map(
           (id) => {
             return categoryList.find((c) => c.id_category === id);
@@ -161,6 +162,7 @@ export class EditBookComponent implements OnInit {
     this.editorialList$ = this.editorialService.getEditorials().pipe(
       map((editorialList) => {
         return Array.from(
+          // la clase Set elimina valores repetidos(eliminando los ids repetidos)
           new Set(editorialList.map((e) => e.id_editorial))
         ).map((id) => {
           return editorialList.find((e) => e.id_editorial === id);

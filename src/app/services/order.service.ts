@@ -18,20 +18,15 @@ export class OrderService {
   }
 
   createOrder(order: Order) {
-    // return this.http.post('http://localhost:4000/orders/create', order);
     return this.http.post(`${this.SERVER}/orders/create`, order);
   }
 
   getLastIdOrder() {
-    // return this.http.get<number>('http://localhost:4000/orders/lastIdOrder');
     return this.http.get<number>(`${this.SERVER}/orders/lastIdOrder`);
   }
 
   // devuelve todas las ordenes de compra de un usuario especifico
   getOrdersByUserId(idUser: number) {
-    // return this.http.get<Order[]>(
-    //   'http://localhost:4000/orders/getOrdersByUserId/' + idUser
-    // );
     return this.http.get<Order[]>(
       `${this.SERVER}/orders/getOrdersByUserId/` + idUser
     );

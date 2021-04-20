@@ -1,64 +1,45 @@
 .box {
+  background: #1488cc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2b32b2,
+    #1488cc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2b32b2,
+    #1488cc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   margin: 0; // ?
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   justify-content: center; // (alinea al centro eje horizontal cualquier elemento que este en div .container)
   // align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
 }
 
 .card {
-  position: absolute;
-  z-index: 10;
   width: 100%;
   height: 100%;
   border: none;
 }
 
-#btn-login{
+#btn-login {
   border-radius: 5px;
 }
 
-.icon-account-circle{
-    font-size: 50px !important;
-    color: white !important;
-    float: left !important;
+.icon-account-circle {
+  font-size: 50px !important;
+  color: white !important;
+  float: left !important;
 }
-
-.col1,
-.col2 {
-  width: 100%;
-  display: flex;
-  //align-items: center; // alineo en centro vertical todo lo que haya en aside y main
-  //justify-content: center;
-  min-height: 50vh;
-  span {
-    opacity: 0;
-  }
-}
-
-.col1 {
-  background: rgb(41, 50, 64);
-}
-
-.col2 {
-  background: #ff0226;
-}
-
-// @media (max-width: 700px) {
-//   .card{
-//     width: 100%;
-//     height: 100%;
-//   }
-// }
 
 @media (min-width: 500px) {
-  .box{
+  .box {
+    display: flex;
+    min-height: 100vh;
     align-items: center; // (alinea al centro eje vertical qcualquier elemento que este en div container)
-    .card{
+    .card {
       width: 380px;
       height: 500px;
     }
   }
- 
 }
