@@ -94,13 +94,12 @@ export class HomeComponent implements OnInit {
   }
 
   filterBook() {
-    // -------------------------------------------------------------------------------------------------------
     const filter = {
       column: '',
       value: '',
     };
-
-    if (this.inputValue === '') {
+    // "inputValue" es lo se escribe en el input - "selectValue" es la opcion elegida (todos, titulo, autor,editorial)
+    if (this.inputValue === '' && this.selectValue != 'all') {
       this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
     } else {
       filter.column = this.selectValue;
@@ -147,24 +146,6 @@ export class HomeComponent implements OnInit {
       }
     }
 
-    // ------------------------------------------------------------------------------------------------------
-
-    // if (this.selectValue === 'all' || this.selectValue === undefined) {
-    //   this.inputValue = '';
-    //   this.getAvailableBooksWithAuthorName();
-    // } else {
-    //   if (this.inputValue === '') {
-    //     this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
-    //   } else {
-    //     if (this.selectValue === 'title') {
-    //       this.filterBookByName();
-    //     } else if (this.selectValue === 'author') {
-    //       this.filterBooksByAuthor();
-    //     } else {
-    //       alert('elegiste editortial');
-    //     }
-    //   }
-    // }
   }
 
   // filterBooksByAuthor() {
