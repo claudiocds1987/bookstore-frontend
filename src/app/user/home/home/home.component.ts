@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit {
       value: '',
     };
     // "inputValue" es lo se escribe en el input - "selectValue" es la opcion elegida (todos, titulo, autor,editorial)
-    if (this.inputValue === '' && this.selectValue != 'all') {
+    if (this.inputValue === '' && this.selectValue !== 'all') {
       this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
     } else {
       filter.column = this.selectValue;

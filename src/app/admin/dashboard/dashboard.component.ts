@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SaleService } from './../../services/sale.service';
 import { Admin } from 'src/app/models/admin';
 import { Router } from '@angular/router';
+// services
+import { SaleService } from './../../services/sale.service';
+import { BookService } from './../../services/book.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,9 +20,11 @@ export class DashboardComponent implements OnInit {
   quantityCurrentYearSales;
   currentMonthRevenue;
   currentYearRevenue;
+  totalBooks = 0;
 
   constructor(
     public saleService: SaleService,
+    public bookService: BookService,
     private router: Router
     ) { }
 
@@ -29,6 +33,7 @@ export class DashboardComponent implements OnInit {
     this.thisMonthRevenue(this.currentYear, this.currentMonth);
     this.countSalesFromCurrentYear(this.currentYear);
     this.thisYearRevenue(this.currentYear);
+    this.countBooks();
 
     if (localStorage.getItem('adminData') !== null){
       this.admin = JSON.parse(localStorage.getItem('adminData'));
@@ -45,6 +50,18 @@ export class DashboardComponent implements OnInit {
     this.thisMonthRevenue(this.currentYear, this.currentMonth);
     this.countSalesFromCurrentYear(this.currentYear);
     this.thisYearRevenue(this.currentYear);
+  }
+
+  countBooks(){
+    this.bookService.getAvailableBooksWithAuthorName()
+      .subscribe(res => {
+        const books = res;
+        for(let i = 0; i < books.length; i++){
+          this.totalBooks ++;
+        }
+      },
+      err => console.error('Error al intentar obtener el total libros ' + err)
+    );
   }
 
  countSalesFromCurrentMonth(year: number, month: number){

@@ -75,6 +75,7 @@ export class BookService {
     return this.http.get<Book[]>(`${this.SERVER}/books`);
   }
 
+  // not working
   getTotalBooks() {
     return this.http.get<Book[]>(`${this.SERVER}/books/total`);
   }
