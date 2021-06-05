@@ -75,9 +75,9 @@ export class BookService {
     return this.http.get<Book[]>(`${this.SERVER}/books`);
   }
 
-  // not working
+  // get cantidad de libros totales(con state=true y state=false)
   getTotalBooks() {
-    return this.http.get<Book[]>(`${this.SERVER}/books/total`);
+    return this.http.get<any[]>(`${this.SERVER}/books/get/total`);
   }
 
   existBook(bookName: string, idAuthor: number) {

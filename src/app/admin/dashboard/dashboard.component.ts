@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   quantityCurrentYearSales;
   currentMonthRevenue;
   currentYearRevenue;
-  totalBooks = 0;
+  totalBooks;
 
   constructor(
     public saleService: SaleService,
@@ -52,15 +52,14 @@ export class DashboardComponent implements OnInit {
     this.thisYearRevenue(this.currentYear);
   }
 
+  // total de libros con state = true aptos para venta
   countBooks(){
-    this.bookService.getAvailableBooksWithAuthorName()
+    this.bookService.getTotalBooks()
       .subscribe(res => {
-        const books = res;
-        for(let i = 0; i < books.length; i++){
-          this.totalBooks ++;
-        }
+        // res[0].total porque en la query es 'select count(id_book) as "total"
+        this.totalBooks = res[0].total;
       },
-      err => console.error('Error al intentar obtener el total libros ' + err)
+      err => console.error('Error al intentar obtener el total de libros ' + err)
     );
   }
 
