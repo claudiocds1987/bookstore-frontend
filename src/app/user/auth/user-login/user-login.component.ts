@@ -19,7 +19,6 @@ import { UserService } from '../../../services/user.service';
 })
 export class UserLoginComponent implements OnInit {
 
-  //password: string;
   form: FormGroup;
   message: string;
   usernameExist: boolean = true;
@@ -44,21 +43,13 @@ export class UserLoginComponent implements OnInit {
       console.log(value);
       this.userService.existUsername(value)
       .subscribe(res => {
-        if(res){
+        if (res){
           // username valido porque existe en la db
           this.usernameExist = true;
-          // add clase is-valid al input
-          // let element = document.getElementById("input-username");
-          // element.classList.remove('is-invalid');
-          // element.classList.add('is-valid');        
         }else{
            // username no valido, no existe en la db
-          this.usernameExist = false; 
-          // add clase is-invalid al input
-          // let element = document.getElementById("input-username");
-          // element.classList.remove('is-valid');
-          // element.classList.add('is-invalid');      
-        }     
+          this.usernameExist = false;
+        }
       }),
       err => console.error('Error en la db al verificar el username ' + err);
     });
@@ -134,8 +125,6 @@ export class UserLoginComponent implements OnInit {
           res => {
             console.log('Autorizado: ' + JSON.stringify(res.username));
             this.message = null;
-            // const username = JSON.stringify(res.username);
-            // console.log(username);
             this.alertService.showSuccess(`Bienvenido ${res.username}`, 'Login exitoso!');
             this.router.navigate(['home']);
           },
