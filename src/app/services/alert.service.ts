@@ -26,9 +26,9 @@ export class AlertService {
     this.toastr.warning(texto, titulo, {
       timeOut: 2500, // duracion del alerta
       progressBar: true, // barra que indica la duracion del alerta
-      //progressAnimation: 'increasing', // la barra aumenta de forma creciente hasta desaparecer el alert
-      //positionClass: 'toast-top-left' // position del alerta, por default aparece a al derecha
-    }); 
+      // progressAnimation: 'increasing', // la barra aumenta de forma creciente hasta desaparecer el alert
+      // positionClass: 'toast-top-left' // position del alerta, por default aparece a al derecha
+    });
   }
 
   showInfo(texto, titulo) {
@@ -37,7 +37,5 @@ export class AlertService {
       progressBar: true, // barra que indica la duracion del alerta
     });
   }
-
-  
 
 }

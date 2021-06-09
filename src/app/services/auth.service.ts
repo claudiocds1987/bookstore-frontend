@@ -44,7 +44,6 @@ export class AuthService {
       .pipe(
         tap((data: any) => {
           const token = data.token;
-          console.log('se guardo el token');
           const name = data.username;
           this.username.next(name);
           // guardo el username en localStorage para ser invocada en component main-nav

@@ -15,10 +15,9 @@ import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.scss']
+  styleUrls: ['./user-login.component.scss'],
 })
 export class UserLoginComponent implements OnInit {
-
   form: FormGroup;
   message: string;
   usernameExist: boolean = true;
@@ -35,25 +34,25 @@ export class UserLoginComponent implements OnInit {
   ) {
     this.buildForm();
     // para verificar el username en la db reactivamente
-    this.form.get('username').valueChanges
-    .pipe(
-      debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
-    )
-    .subscribe(value => {
-      console.log(value);
-      this.userService.existUsername(value)
-      .subscribe(res => {
-        if (res){
-          // username valido porque existe en la db
-          this.usernameExist = true;
-        }else{
-           // username no valido, no existe en la db
-          this.usernameExist = false;
-        }
-      }),
-      err => console.error('Error en la db al verificar el username ' + err);
-    });
-
+    this.form
+      .get('username')
+      .valueChanges.pipe(
+        debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
+      )
+      .subscribe((value) => {
+        console.log(value);
+        this.userService.existUsername(value).subscribe((res) => {
+          if (res) {
+            // username valido porque existe en la db
+            this.usernameExist = true;
+          } else {
+            // username no valido, no existe en la db
+            this.usernameExist = false;
+          }
+        }),
+          (err) =>
+            console.error('Error en la db al verificar el username ' + err);
+      });
   }
 
   ngOnInit(): void {
@@ -70,39 +69,45 @@ export class UserLoginComponent implements OnInit {
       // borrando localStorage "shoppingCart"
       if (localStorage.getItem('shoppingCart') != null) {
         localStorage.removeItem('shoppingCart');
-        console.log('localStorage del shopping cart eliminada')
       }
       // borrando la localStorage "idBooks"
       if (localStorage.getItem('idBooks') != null) {
         localStorage.removeItem('idBooks');
-        console.log('localStorage con array de idBooks eliminada');
       }
       // borrando la localStorage "token"
       if (localStorage.getItem('token') != null) {
         localStorage.removeItem('token');
-        console.log('localStorage con el token eliminada');
       }
       // borrando al localstorage "purchase"
       if (localStorage.getItem('purchase') != null) {
         localStorage.removeItem('purchase');
-        console.log('localStorage purchase eliminada');
       }
-       // borrando localstorage "orderData" creada en form-purchase.component.ts
+      // borrando localstorage "orderData" creada en form-purchase.component.ts
       if (localStorage.getItem('orderData') != null) {
         localStorage.removeItem('orderData');
-        console.log('localStorage orderData eliminada');
       }
-
     }
-
   }
 
   buildForm() {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(15)]],
-      password: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(15)]],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(15),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(15),
+        ],
+      ],
     });
-
   }
 
   // convenienza getter para facil acceso a lo campos del formulario
@@ -120,28 +125,30 @@ export class UserLoginComponent implements OnInit {
     if (this.form.valid) {
       const name = this.form.get('username').value;
       const password = this.form.get('password').value;
-      this.authService.loginUser(name, password)
-        .subscribe(
-          res => {
-            console.log('Autorizado: ' + JSON.stringify(res.username));
-            this.message = null;
-            this.alertService.showSuccess(`Bienvenido ${res.username}`, 'Login exitoso!');
-            this.router.navigate(['home']);
-          },
-          err => {
-            console.error('Acceso denegado ' + err.message);
-            // borro localStorage
-            if (localStorage.getItem('token') != null) {
-              localStorage.removeItem('token');
-              console.log('se borro la localStorage token');
-            }
-            this.alertService.showError('Nombre de usuario y/o contraseña incorrectos','');
-            this.message = 'Nombre de usuario y/o contraseña incorrectos';
+      this.authService.loginUser(name, password).subscribe(
+        (res) => {
+          console.log('Autorizado: ' + JSON.stringify(res.username));
+          this.message = null;
+          this.alertService.showSuccess(
+            `Bienvenido ${res.username}`,
+            'Login exitoso!'
+          );
+          this.router.navigate(['home']);
+        },
+        (err) => {
+          console.error('Acceso denegado ' + err.message);
+          // borro localStorage
+          if (localStorage.getItem('token') != null) {
+            localStorage.removeItem('token');
+            console.log('se borro la localStorage token');
           }
-        )
-
+          this.alertService.showError(
+            'Nombre de usuario y/o contraseña incorrectos',
+            ''
+          );
+          this.message = 'Nombre de usuario y/o contraseña incorrectos';
+        }
+      );
     }
   }
-
-
 }
