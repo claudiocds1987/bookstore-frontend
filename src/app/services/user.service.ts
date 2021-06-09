@@ -7,17 +7,6 @@ import { User} from '../models/user';
 })
 export class UserService {
   fecha = new Date();
- // URL_API = 'http://localhost:4000/users';
-
-  // objeto vacio tipo User
-  // selectedUser: User = {
-  //   idUser: 0,
-  //   email: '',
-  //   username: '',
-  //   pass: '',
-  //   registrationDate: this.fecha
-  // };
-
   userArray: User[]; // array de tipo User
 
   SERVER = 'http://localhost:3000';

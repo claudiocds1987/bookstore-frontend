@@ -13,7 +13,6 @@ export class TokenService {
   }
 
   getToken(){
-    // acordarse que el token por consola lo va a mostrar aunque refresque la pagina por estar en la localStorage
     return localStorage.getItem('token');
   }
 
