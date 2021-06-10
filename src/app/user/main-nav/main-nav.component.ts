@@ -57,7 +57,6 @@ export class MainNavComponent implements OnInit {
   }
 
   hideMenu(name: string) {
-    console.log(name);
     switch (name) {
       // cuando es click en el toogle
       case 'menu-bar':

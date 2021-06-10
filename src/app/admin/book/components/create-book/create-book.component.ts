@@ -72,15 +72,6 @@ export class CreateBookComponent implements OnInit {
     if (localStorage.getItem('adminData') !== null) {
       this.admin = JSON.parse(localStorage.getItem('adminData'));
     }
-
-    // cuando escribe el precio NO BORRAR POR LAS DUDAS
-    // this.form.valueChanges.subscribe(formulario => {
-    //   if (formulario.price){
-    //     this.form.patchValue({
-    //       price: this.currencyPipe.transform(formulario.price.replace(/\D/g, '').replace(/^0+/, ''), '', '', '1.0-0')
-    //     }, {emitEvent: false});
-    //   }
-    // });
   }
 
   ngOnInit(): void {

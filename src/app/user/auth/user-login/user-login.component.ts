@@ -40,7 +40,6 @@ export class UserLoginComponent implements OnInit {
         debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
       )
       .subscribe((value) => {
-        console.log(value);
         this.userService.existUsername(value).subscribe((res) => {
           if (res) {
             // username valido porque existe en la db
