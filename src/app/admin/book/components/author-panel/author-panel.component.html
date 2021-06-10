@@ -17,7 +17,7 @@
               <small class="text-danger">Campo requerido.</small>
             </p>
             <p *ngIf="authorName.hasError('pattern') && authorName.dirty">
-              <small class="text-danger">No ingrese números.</small>
+              <small class="text-danger">Ingrese solo letras.</small>
             </p>
             <p *ngIf="authorName.hasError('maxlength') && authorName.dirty">
               <small class="text-danger">Solo hasta 35 caracteres.</small>

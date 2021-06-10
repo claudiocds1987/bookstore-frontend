@@ -34,6 +34,7 @@ export class AuthorPanelComponent implements OnInit {
       this.admin = JSON.parse(localStorage.getItem('adminData'));
     }
 
+    // /^[a-zA-Z ]+$/ this pattern only acepts letters(not numbers or special characters)
     this.authorName = new FormControl('', [
       Validators.required,
       Validators.pattern(/^[a-zA-Z ]+$/),
