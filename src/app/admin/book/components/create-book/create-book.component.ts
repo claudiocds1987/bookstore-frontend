@@ -110,18 +110,16 @@ export class CreateBookComponent implements OnInit {
           // obtengo todos los valores del formulario
           this.book = this.form.value;
           // const precio = this.form.get('price').value;
-          // this.book.price = parseInt(precio);
-          // console.log('CACA ' + this.book.price);
           this.book.id_author = parseInt(this.selectedIdAut);
           this.book.id_editorial = parseInt(this.selectedIdEdi);
           this.book.id_category = parseInt(this.selectedIdCat);
           this.book.url_image = '';
 
           if (this.imageSelected != null) {
-            // SUBO IMAGEN ////
+            // SUBO IMAGEN
             this.uploadImage(); // Si tiene imagen la carga
           } else {
-            this.endCreateBook(); // Si no manda el formulario como va
+            this.endCreateBook(); // Si no manda el formulario sin imagen
           }
         }
       }
