@@ -1,5 +1,6 @@
-import { Component, isDevMode, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, isDevMode, OnDestroy,OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import { Book } from 'src/app/models/book';
 import { BookService } from '../../../services/book.service';
@@ -13,7 +14,9 @@ import { AlertService } from '../../../services/alert.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  
+  private unsubscribe$ = new Subject<void>(); // for unsubscribe observables
   SERVER = 'http://localhost:3000';
   bookList$: Observable<Book[]>;
   inputValue = ''; // value del input search
@@ -50,7 +53,9 @@ export class HomeComponent implements OnInit {
   }
 
   getAvailableBooksWithAuthorName() {
-    this.bookList$ = this.bookService.getAvailableBooksWithAuthorName().pipe(
+    this.bookList$ = this.bookService.getAvailableBooksWithAuthorName()
+    .pipe(
+      takeUntil(this.unsubscribe$), // para unsubscribe observalbes ver en ngOnDestroy() abajo de todo
       // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
       // y "mapealo (accede a sus elementos)" con la "variable book"
       map((books: Book[]) =>
@@ -95,7 +100,9 @@ export class HomeComponent implements OnInit {
       filter.column = this.selectValue;
       filter.value = this.inputValue;
 
-      this.bookList$ = this.bookService.filterAvailableBooks(filter).pipe(
+      this.bookList$ = this.bookService.filterAvailableBooks(filter)
+      .pipe(
+        takeUntil(this.unsubscribe$), // para unsubscribe observalbes ver en ngOnDestroy() abajo de todo
         /* explicacion: al resultado de lo que trae el servicio lo voy a modificar por eso "pipe"
         ya que necesito modificar la prop. url_image, seguido con 1er "map" creo funcion que va a guardar
         en array books: Book[] cada registro de tipo Book con la url modificada. Para esto el 2do map accede
@@ -120,7 +127,11 @@ export class HomeComponent implements OnInit {
       //   })
       // );
 
-      this.bookList$.subscribe((res) => {
+      this.bookList$
+      .pipe(
+        takeUntil(this.unsubscribe$), // para unsubscribe observalbes ver en ngOnDestroy() abajo de todo
+      )
+      .subscribe((res) => {
         if (res.length === 0) {
           this.alertService.showError(
             'No se encontraron resultados',
@@ -189,7 +200,11 @@ export class HomeComponent implements OnInit {
 
   getBookDetail(idBook: number) {
     const id = idBook.toString();
-    this.bookService.getRealDataBook(id).subscribe(
+    this.bookService.getRealDataBook(id)
+    .pipe(
+      takeUntil(this.unsubscribe$), // para unsubscribe observalbes ver en ngOnDestroy() abajo de todo
+    )
+    .subscribe(
       (res) => {
         this.book.description = res[0].description;
         this.book.id_author = res[0].id_author;
@@ -209,4 +224,10 @@ export class HomeComponent implements OnInit {
       (err) => console.error('Error al intentar obtener el libro por id ' + err)
     );
   }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
 }
