@@ -13,14 +13,7 @@ import { Order } from 'src/app/models/order';
 import { OrderDetail } from 'src/app/models/orderDetail';
 import { Sale } from 'src/app/models/sale';
 import { SaleDetail } from 'src/app/models/saleDetail';
-import { User } from 'src/app/models/user';
-import { Book } from 'src/app/models/book';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-
-// componente a mostrar cuando se utilice Material Dialog para eliminar un producto
-import { MatConfirmDialogComponent } from '../../../../mat-confirm-dialog/mat-confirm-dialog.component';
-import { ThemeService } from 'ng2-charts';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-successful-purchase',
@@ -31,17 +24,11 @@ export class SuccessfulPurchaseComponent implements OnInit {
   /* bookList: any[]; de tipo any porque en localStorage('shopingCart') trae un elemento "autor" que no existe en type Book
      si la declaro como bookList: book[]; en html cuando muestre book.autor va a marcar error.*/
   bookList: any[];
-   // array de tipo user
-  // userArray: User[] = [];
   // objetos
   order = {} as Order;
   orderDetail = {} as OrderDetail;
   sale = {} as Sale;
   saleDetail = {} as SaleDetail;
-  // fecha local
-  // currentDate = new Date();
-  // total: number;
-  // idUser: number;
 
   constructor(
     public cartService: CartService,
@@ -55,14 +42,17 @@ export class SuccessfulPurchaseComponent implements OnInit {
     private dialog: MatDialog
   ) {
     // las localstorage "purchase" y "orderData" se crean en form-pruchase.component.ts
-    if (localStorage.getItem('purchase') != null && localStorage.getItem('orderData') != null) {
+    if (
+      localStorage.getItem('purchase') != null &&
+      localStorage.getItem('orderData') != null
+    ) {
       // aca la url_image viene limpia, no hay que pasarla por funcion linkImg()
       this.bookList = JSON.parse(localStorage.getItem('purchase'));
       // obtengo los datos de la orden de la localStorage 'orderData' creada en form-purchase.component.ts
       this.order = JSON.parse(localStorage.getItem('orderData'));
       // creo la orden de compra, dentro de createOrder() se crea el detalle de la compra
       this.createOrder();
-       // creo la venta, dentro de createSaler() se crea el detalle de la venta
+      // creo la venta, dentro de createSaler() se crea el detalle de la venta
       this.createSale();
       // borrando las localstorage (menos la del username)
       localStorage.removeItem('books');
@@ -71,22 +61,8 @@ export class SuccessfulPurchaseComponent implements OnInit {
       localStorage.removeItem('orderData');
       // seteo el carrito a 0 items en el boton del carrito del componente main-nav
       this.cartService.cart.next([]);
-    }else{
+    } else {
       console.log('NO SE CREO LOCALSTORAGE PURCHASE O ORDERDATE');
-
-      // ???????????????????????????????????????????????????????????????????????????????????
-      // acordarme llenar el formualrio de lugar de envio despues boton Prueba compra
-      // this.bookList = JSON.parse(localStorage.getItem('purchase'));
-      // this.order = JSON.parse(localStorage.getItem('orderData'));
-      // this.createOrder();
-      // this.createSale();
-      // localStorage.removeItem('books');
-      // localStorage.removeItem('shoppingCart');
-      // localStorage.removeItem('purchase');
-      // localStorage.removeItem('orderData');
-      // // seteo el carrito a 0 items en el boton del carrito del componente main-nav
-      // this.cartService.cart.next([]);
-      // ??????????????????????????????????????????????????????????????????????????????????
     }
   }
 
@@ -136,7 +112,8 @@ export class SuccessfulPurchaseComponent implements OnInit {
       },
       (err) =>
         console.error(
-          'Error al intentar obtener el ultimo idOrder de la base de datos: ' + err
+          'Error al intentar obtener el ultimo idOrder de la base de datos: ' +
+            err
         )
     );
   }
@@ -155,20 +132,6 @@ export class SuccessfulPurchaseComponent implements OnInit {
       (err) => console.error('No se pudo crear la venta ' + err.error.message)
     );
   }
-  // createSale() {
-  //   this.sale.id_user = this.idUser;
-  //   this.sale.total_price = this.total;
-  //   this.sale.date = this.currentDate;
-  //   // se crea la venta
-  //   this.saleServices.createSale(this.sale).subscribe(
-  //     (res) => {
-  //       console.log('La venta fue creada');
-  //       // se crea el detalle de venta
-  //       this.createSaleDetail();
-  //     },
-  //     (err) => console.error('No se pudo crear la venta ' + err.error.message)
-  //   );
-  // }
 
   createSaleDetail() {
     let idSale;
@@ -202,5 +165,4 @@ export class SuccessfulPurchaseComponent implements OnInit {
         )
     );
   }
-
 }
