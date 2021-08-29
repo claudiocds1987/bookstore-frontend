@@ -1,12 +1,10 @@
 @import "./../../../../sass/variables";
 
 .fondo {
-  //background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
   background: $colorFondo;
   padding: 0;
-  //background: #00567e;  
+
   .box-principal {
-    //min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,7 +13,7 @@
       min-height: 100vh;
       margin-top: 55px !important;
       margin-bottom: 20px !important;
-      //background: #00567e;
+
       border: none;
       border-radius: 0;
       table {
@@ -23,26 +21,22 @@
           border: none;
         }
         .encabezado {
-         // background: #00567e;
           th {
             border: none !important;
           }
         }
         .img-book {
-          //max-width: 100%;
           max-width: 100px;
           max-height: 120px;
         }
       }
       #card-inputs {
-        // background: #005278;
         background: $colorNav;
         .img-envios {
           width: 100%;
           max-height: 80px !important;
         }
         .box-input {
-          //margin: 0 auto !important;
           width: 100%;
           padding-left: 15px;
           padding-right: 15px;
@@ -58,22 +52,19 @@
 // ::ng-deep es para modificar las propiedades de las clases de angular material que vienen por defecto.
 // porque las clases de angular material no se pueden modificar desde CSS/SCSS.
 
-::ng-deep.mat-form-field{
+::ng-deep.mat-form-field {
   width: 100%;
-  -webkit-text-fill-color:white;
-  p{
-    -webkit-text-fill-color:red;
+  -webkit-text-fill-color: white;
+  p {
+    -webkit-text-fill-color: red;
   }
 }
 
 ::ng-deep.mat-horizontal-content-container {
-  //background: #00567e;
-  padding:0 !important;
+  padding: 0 !important;
 }
 
 ::ng-deep.mat-horizontal-stepper-header-container {
-  //background: $colorNav;
-  //color: white;
   .mat-step-icon {
     background: #00567e;
   }
@@ -87,7 +78,7 @@
 }
 
 @media (min-width: 500px) {
-  #card-inputs{
+  #card-inputs {
     max-width: 380px;
     margin: 0px auto !important;
   }

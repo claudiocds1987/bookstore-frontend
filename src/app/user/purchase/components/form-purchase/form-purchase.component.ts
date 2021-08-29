@@ -35,10 +35,9 @@ import { MatSelectChange } from '@angular/material/select';
 @Component({
   selector: 'app-form-purchase',
   templateUrl: './form-purchase.component.html',
-  styleUrls: ['./form-purchase.component.scss']
+  styleUrls: ['./form-purchase.component.scss'],
 })
 export class FormPurchaseComponent implements OnInit {
-
   form: FormGroup;
   // variables para el api de pagos Stripe
   @ViewChild('cardInfo') cardInfo: ElementRef;
@@ -90,7 +89,7 @@ export class FormPurchaseComponent implements OnInit {
     'Santa Fe',
     'Santiago del Estero',
     'Tierra del Fuego',
-    'Tucuman'
+    'Tucuman',
   ];
 
   constructor(
@@ -108,10 +107,6 @@ export class FormPurchaseComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog
   ) {
-
-    // si no hago setNinutes la fecha figura como un dia antes ??
-    // this.currentDate.setMinutes(this.currentDate.getMinutes() + this.currentDate.getTimezoneOffset()); // ??
-
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
     if (localStorage.getItem('shoppingCart') != null) {
@@ -124,8 +119,8 @@ export class FormPurchaseComponent implements OnInit {
         item.quantity = 1; // seteo quantity = 1 de cada libro
       }
 
-       // aca localstorage para success-purchasess, cuando mercadopago informe compra exitosa
-       // esta localStorage se llama en successful-purchase.component.ts
+      // aca localstorage para success-purchasess, cuando mercadopago informe compra exitosa
+      // esta localStorage se llama en successful-purchase.component.ts
       localStorage.setItem('purchase', JSON.stringify(this.bookList));
       // localStorage.setItem('orderData', JSON.stringify(this.order));
 
@@ -149,29 +144,18 @@ export class FormPurchaseComponent implements OnInit {
       this.username = localStorage.getItem('username');
       // obtengo el id del usuario para el objeto order
       this.getUserId(this.username);
-      // get de provincias
-      // this.getProvincias();
     }
   }
 
-  // getProvincias(){
-  //   this.provinciaService.getProvincias().subscribe(
-  //     res => {
-  //       this.provincias = res;
-  //     },
-  //     err => console.error('No se pudo obtener todas las provincias. ' + err)
-  //   );
-  // }
-
-   // captura el value del <select> provincia
-   captureValue(event: MatSelectChange) {
+  // captura el value del <select> provincia
+  captureValue(event: MatSelectChange) {
     // console.log(event.value);
     this.order.provincia = event.value;
     this.orderData();
   }
 
-  orderData(){
-    if (this.form.valid){
+  orderData() {
+    if (this.form.valid) {
       // el objeto order esta vinculado con un [(ngModel)] en los input
       // El order.id_user se obtuvo en funcion getUserId()
       this.order.order_date = this.currentDate;
@@ -282,7 +266,7 @@ export class FormPurchaseComponent implements OnInit {
         break;
       }
     }
-     // aca localstorage para success-purchasess
+    // aca localstorage para success-purchasess
     localStorage.setItem('purchase', JSON.stringify(this.bookList));
     this.calculateTotalPrice();
   }
@@ -359,5 +343,4 @@ export class FormPurchaseComponent implements OnInit {
       this.cartService.cart.next(this.bookList);
     }
   }
-
 }

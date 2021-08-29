@@ -7,9 +7,6 @@
           <!-- creo variable temporal en memoria con as products (ver video clase 51) -->
           <div class="box">
             <h4 class="ml-2">TOTAL: {{ total | currency }}</h4>
-            <!-- <label class="text-white"
-              ><b>{{ total | currency }}</b></label
-            > -->
           </div>
 
           <div class="table-responsive" *ngIf="bookList as libros">
@@ -101,10 +98,12 @@
                 >
                   <div class="row row-input">
                     <div class="col-xs box-input">
-                      
                       <mat-form-field>
                         <mat-label>Provincia</mat-label>
-                        <mat-select formControlName="provincia" (selectionChange)="captureValue($event)">
+                        <mat-select
+                          formControlName="provincia"
+                          (selectionChange)="captureValue($event)"
+                        >
                           <mat-option
                             *ngFor="let provincia of provincias"
                             [value]="provincia"
@@ -113,40 +112,6 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
-                      <!-- <mat-form-field>
-                        <input
-                          [(ngModel)]="order.provincia"
-                          formControlName="provincia"
-                          type="text"
-                          matInput
-                          placeholder="Provincia"
-                          (keyup)="orderData()"
-                        />
-                        <div
-                          *ngIf="provinciaField.errors && provinciaField.dirty"
-                        >
-                          <p *ngIf="provinciaField.hasError('required')">
-                            <small class="text-danger"
-                              >Complete este campo.</small
-                            >
-                          </p>
-                          <p *ngIf="provinciaField.hasError('pattern')">
-                            <small class="text-danger"
-                              >Ingrese solo letras.</small
-                            >
-                          </p>
-                          <p *ngIf="provinciaField.hasError('maxlength')">
-                            <small class="text-danger"
-                              >Maximo 30 caracteres</small
-                            >
-                          </p>
-                          <p *ngIf="provinciaField.hasError('minlength')">
-                            <small class="text-danger"
-                              >Minimo 4 caracteres</small
-                            >
-                          </p>
-                        </div>
-                      </mat-form-field> -->
                     </div>
                   </div>
 
@@ -165,24 +130,16 @@
                           *ngIf="localidadField.errors && localidadField.dirty"
                         >
                           <p *ngIf="localidadField.hasError('required')">
-                            <small
-                              >Complete este campo.</small
-                            >
+                            <small>Complete este campo.</small>
                           </p>
                           <p *ngIf="localidadField.hasError('pattern')">
-                            <small
-                              >Ingrese solo letras.</small
-                            >
+                            <small>Ingrese solo letras.</small>
                           </p>
                           <p *ngIf="localidadField.hasError('maxlength')">
-                            <small
-                              >Maximo 30 caracteres</small
-                            >
+                            <small>Maximo 30 caracteres</small>
                           </p>
                           <p *ngIf="localidadField.hasError('minlength')">
-                            <small
-                              >Minimo 4 caracteres</small
-                            >
+                            <small>Minimo 4 caracteres</small>
                           </p>
                         </div>
                       </mat-form-field>
@@ -202,19 +159,13 @@
                         />
                         <div *ngIf="adressField.errors && adressField.dirty">
                           <p *ngIf="adressField.hasError('required')">
-                            <small
-                              >Complete este campo.</small
-                            >
+                            <small>Complete este campo.</small>
                           </p>
                           <p *ngIf="adressField.hasError('maxlength')">
-                            <small
-                              >Maximo 30 caracteres</small
-                            >
+                            <small>Maximo 30 caracteres</small>
                           </p>
                           <p *ngIf="adressField.hasError('minlength')">
-                            <small
-                              >Minimo 4 caracteres</small
-                            >
+                            <small>Minimo 4 caracteres</small>
                           </p>
                         </div>
                       </mat-form-field>
@@ -239,24 +190,16 @@
                           "
                         >
                           <p *ngIf="phoneNumberField.hasError('required')">
-                            <small
-                              >Complete este campo.</small
-                            >
+                            <small>Complete este campo.</small>
                           </p>
                           <p *ngIf="phoneNumberField.hasError('pattern')">
-                            <small
-                              >Ingrese solo números sin espacios.</small
-                            >
+                            <small>Ingrese solo números sin espacios.</small>
                           </p>
                           <p *ngIf="phoneNumberField.hasError('minlength')">
-                            <small
-                              >Ingrese un mínimo de 8 números.</small
-                            >
+                            <small>Ingrese un mínimo de 8 números.</small>
                           </p>
                           <p *ngIf="phoneNumberField.hasError('maxlength')">
-                            <small
-                              >Hasta 12 números permitidos.</small
-                            >
+                            <small>Hasta 12 números permitidos.</small>
                           </p>
                         </div>
                       </mat-form-field>
@@ -272,16 +215,6 @@
                   COMPRAR
                 </button>
               </mat-card>
-              <!-- <div class="text-center mt-2">
-                <button
-                  [disabled]="form.invalid"
-                  type="submit"
-                  class="btn btn-success"
-                  (click)="formu.submit()"
-                >
-                  mercado pago
-                </button>
-              </div> -->
             </form>
           </div>
         </mat-step>
