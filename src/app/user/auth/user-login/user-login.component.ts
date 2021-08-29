@@ -55,7 +55,6 @@ export class UserLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // localStorage.clear(); // borra todas las localStorage
     // al entrar a login, si hay un usuario logeado, hago logout borrando la locastorage
     if (localStorage.getItem('username') != null) {
       // borra el username de main-nav si no hay refresh la pagina
