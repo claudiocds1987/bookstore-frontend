@@ -32,8 +32,8 @@ export class InterceptorService implements HttpInterceptor {
       finalize(() => this.spinnerService.stopSpinner())
     );
 
-    //------------------------------------------------------------------------------------------
-    // En cada solicitud HTTP se va a mostrar el spinner/loader (old version)
+    //----------------(old version)-------------------------------------------------------
+    // En cada solicitud HTTP se va a mostrar el spinner/loader 
     // this.spinnerService.showSpinner();
     // return next.handle(req).pipe(
     //   // cuando finalize la petición http (termine de traer los datos) que desaparezca el spinner/loader
