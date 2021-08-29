@@ -5,8 +5,6 @@ import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
 import { Book } from '../../models/book';
 import { Router } from '@angular/router';
-// import { style } from '@angular/animations';
-// import { transform } from 'typescript';
 
 @Component({
   selector: 'app-main-nav',
@@ -24,7 +22,6 @@ export class MainNavComponent implements OnInit {
   username: string;
 
   constructor(
-    // private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private cartService: CartService,
     public alertService: AlertService,
@@ -94,39 +91,6 @@ export class MainNavComponent implements OnInit {
       default:
       // code block
     }
-
-    // // cuando es click en el toogle
-    // if (name === 'menu-bar') {
-    //   if (this.show === false) {
-    //     // se muestra el menu
-    //     this.hide = false;
-    //     this.show = true;
-    //   } else {
-    //     // se oculta el menu
-    //     this.hide = true;
-    //     this.show = false;
-    //   }
-    // } else {
-    //   // cuando hay click en item del menu
-    //   this.hide = true;
-    //   this.show = false;
-
-    //   if (name === 'home') {
-    //     console.log('deberia ir a home');
-    //     this.router.navigate(['/home']);
-    //   }
-    //   if (name === 'contact') {
-    //     console.log('deberia ir a contact');
-    //     this.router.navigate(['/contact/contact']);
-    //   }
-    //   if (name === 'login') {
-    //     console.log('deberia ir a login');
-    //     this.router.navigate(['/auth/login']);
-    //   }
-    //   if (name === 'carrito') {
-    //     this.router.navigate(['/purchase/form-purchase']);
-    //   }
-    // }
   }
 
   checkItems() {
