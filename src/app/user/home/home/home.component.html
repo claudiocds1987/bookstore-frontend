@@ -12,7 +12,7 @@
             placeholder="Buscar"
           />
           <select id="select" (change)="selectChangeHandler($event)" class="form-control">
-            <!-- <option selected value="">Opción</option>        -->
+         
             <option selected value="all">Todos</option>
             <option value="title">Título</option>
             <option value="author">Autor</option>
@@ -33,7 +33,7 @@
           "
           class="card rounded shadow-sm border-0"
         >
-          <!-- <img [src]="book.url_image" [alt]="book.name" class="crop-image" /> -->
+         
           <div class="text-center cont-img">
             <a
               class="font-italic font-weight-light"
@@ -42,8 +42,7 @@
               (click)="getBookDetail(book.id_book)"
             >
             <img [src]="book.url_image" [alt]="book.name" class="crop-image" />
-            <!-- <i class="fas fa-info-circle"></i>
-              {{ book.name }} -->
+           
             </a>
           </div>
           <div class="text-center box-btn-border">
